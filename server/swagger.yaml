@@ -1,0 +1,1035 @@
+swagger: "2.0"
+info:
+  title: BrightPath
+  description: BrightPath api
+  version: 0.0.1
+schemes:
+  - https
+  - http
+
+basePath: /api/v1
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+paths:
+  /version:
+    get:
+      security: [ ]
+      responses:
+        200:
+          description: "返回 BrightPath Api 版本号"
+          schema:
+            $ref: "#/definitions/Version"
+
+  /login:
+    post:
+      security: [ ]
+      description: "登录"
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+                description: "用户id"
+              password:
+                type: string
+                description: "密码"
+      responses:
+        200:
+          description: "登录成功"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        403:
+          description: "登录失败"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /logout:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - token
+              - userid
+            properties:
+              token:
+                type: string
+                description: "jwt"
+              userid:
+                type: string
+                description: "用户id"
+      responses:
+        200:
+          description: "登出"
+          schema:
+            $ref: "#/definitions/LogoutResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+            description: "用户不存在"
+            schema:
+                $ref: "#/definitions/ActionFailure"
+
+  /resetPassword:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - userid
+              - oldPassword
+              - newPassword
+            properties:
+              userid:
+                type: string
+                description: "用户id"
+              oldPassword:
+                type: string
+                description: "旧密码"
+              newPassword:
+                type: string
+                description: "新密码"
+      responses:
+        200:
+          description: "重置密码"
+          schema:
+              $ref: "#/definitions/ResetPasswordResponse"
+        403:
+          description: "未登录"
+          schema:
+              $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /updateAvatar:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - userid
+              - avatar
+            properties:
+              userid:
+                type: string
+                description: "用户id"
+              avatar:
+                type: string
+                description: "头像"
+      responses:
+        200:
+          description: "更新头像"
+          schema:
+            $ref: "#/definitions/UpdateAvatarResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /uploadAvatar:
+    post:
+      security: [ ]
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: "上传头像"
+        - in: formData
+          name: userid
+          type: string
+          required: true
+          description: "用户id"
+      responses:
+        200:
+          description: "上传头像成功"
+          schema:
+            $ref: "#/definitions/UploadAvatarResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /admin/resetPassword:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - userid
+              - newPassword
+            properties:
+              userid:
+                type: string
+                description: "用户id"
+              newPassword:
+                type: string
+                description: "新密码"
+      responses:
+        200:
+          description: "重置密码"
+          schema:
+            $ref: "#/definitions/AdminResetPasswordResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /admin/approveVolunteerRegistration:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - volunteerId
+              - adminId
+            properties:
+                volunteerId:
+                    type: string
+                    description: "志愿者id"
+                adminId:
+                    type: string
+                    description: "管理员id"
+      responses:
+        200:
+          description: "审核成功"
+          schema:
+            $ref: "#/definitions/AdminApproveVolunteerRegistrationResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /admin/deleteVolunteer:
+    post:
+      security: [ ]
+      parameters:
+          - in: body
+            name: data
+            required: true
+            schema:
+              type: object
+              required:
+                - volunteerId
+                - adminId
+              properties:
+                  volunteerId:
+                      type: string
+                      description: "志愿者id"
+                  adminId:
+                      type: string
+                      description: "管理员id"
+      responses:
+          200:
+            description: "删除成功"
+            schema:
+              $ref: "#/definitions/AdminDeleteVolunteerResponse"
+          403:
+            description: "未登录"
+            schema:
+              $ref: "#/definitions/UnauthorizedError"
+          404:
+            description: "用户不存在"
+            schema:
+              $ref: "#/definitions/ActionFailure"
+
+  /admin/updateVolunteerInfo:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          description: "根据志愿者id更新志愿者信息"
+          schema:
+            type: object
+            required:
+            - volunteerId
+            - volunteerName
+            - volunteerDesc
+            - email
+            - phone
+            - avatar
+            - idCardFront
+            - idCardBack
+            - idNumber
+            - realName
+            - volunteerTime
+            - isRegister
+            - integral
+            - tasks
+            - adminId
+            properties:
+              volunteerId:
+                type: string
+                description: "志愿者id"
+              volunteerName:
+                type: string
+                description: "志愿者名字"
+              volunteerDesc:
+                type: string
+                description: "志愿者描述"
+              email:
+                type: string
+                description: "邮箱"
+              phone:
+                type: string
+                description: "电话"
+              avatar:
+                type: string
+                description: "头像"
+              idCardFront:
+                type: string
+                description: "身份证正面"
+              idCardBack:
+                type: string
+                description: "身份证反面"
+              idNumber:
+                type: string
+                description: "身份证号"
+              realName:
+                type: string
+                description: "真实姓名"
+              volunteerTime:
+                type: string
+                description: "志愿者时间"
+              isRegister:
+                type: boolean
+                description: "是否注册"
+              integral:
+                type: integer
+                description: "积分"
+              tasks:
+                type: array
+                items:
+                  $ref: "#/definitions/Task"
+              adminId:
+                type: string
+                description: "管理员id"
+      responses:
+          200:
+            description: "更新成功"
+            schema:
+              $ref: "#/definitions/AdminUpdateVolunteerInfoResponse"
+          403:
+            description: "未登录"
+            schema:
+              $ref: "#/definitions/UnauthorizedError"
+          404:
+            description: "用户不存在"
+            schema:
+              $ref: "#/definitions/ActionFailure"
+
+  /admin/resetVolunteerAvatarToDefault:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - volunteerId
+              - adminId
+            properties:
+              volunteerId:
+                type: string
+                description: "志愿者id"
+              adminId:
+                type: string
+                description: "管理员id"
+      responses:
+        200:
+          description: "重置头像成功"
+          schema:
+            $ref: "#/definitions/AdminResetVolunteerAvatarToDefaultResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /admin/viewRealTimeVolunteerHelpInfo:
+    get:
+      security: [ ]
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 1
+          description: "页码"
+        - in: query
+          name: size
+          type: integer
+          default: 10
+          description: "每页数量"
+      responses:
+        200:
+          description: "实时志愿者帮助信息"
+          schema:
+            type: object
+            properties:
+              volunteers:
+                type: array
+                items:
+                  $ref: "#/definitions/AdminViewRealTimeVolunteerHelpInfoResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/register:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - volunteerName
+              - volunteerDesc
+              - email
+              - phone
+              - avatar
+              - idCardFront
+              - idCardBack
+              - idNumber
+              - realName
+              - volunteerTime
+            properties:
+              volunteerName:
+                type: string
+                description: "志愿者名字"
+              volunteerDesc:
+                type: string
+                description: "志愿者描述"
+              email:
+                type: string
+                description: "邮箱"
+              phone:
+                type: string
+                description: "电话"
+              avatar:
+                type: string
+                description: "头像"
+              idCardFront:
+                type: string
+                description: "身份证正面"
+              idCardBack:
+                type: string
+                description: "身份证反面"
+              idNumber:
+                type: string
+                description: "身份证号"
+              realName:
+                type: string
+                description: "真实姓名"
+              volunteerTime:
+                type: string
+                description: "志愿者时间"
+      responses:
+        200:
+          description: "注册成功"
+          schema:
+            $ref: "#/definitions/VolunteerRegisterResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/uploadIdBack:
+    post:
+      security: [ ]
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: "上传身份证反面"
+        - in: formData
+          name: volunteerId
+          type: string
+          required: true
+          description: "志愿者id"
+      responses:
+        200:
+          description: "上传身份证反面成功"
+          schema:
+            $ref: "#/definitions/VolunteerUploadIdBackResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/uploadIdFront:
+    post:
+      security: [ ]
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: "上传身份证正面"
+        - in: formData
+          name: volunteerId
+          type: string
+          required: true
+          description: "志愿者id"
+      responses:
+        200:
+          description: "上传身份证正面成功"
+          schema:
+            $ref: "#/definitions/VolunteerUploadIdFrontResponse"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/acceptMission:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - volunteerId
+              - taskId
+            properties:
+              volunteerId:
+                type: string
+                description: "志愿者id"
+              taskId:
+                type: string
+                description: "任务时间"
+      responses:
+        200:
+          description: "接受任务成功"
+          schema:
+            $ref: "#/definitions/VolunteerAcceptMissionResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/connectGuideCaneCamera:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            required:
+              - volunteerId
+              - guideCaneCameraId
+            properties:
+              volunteerId:
+                type: string
+                description: "志愿者id"
+              guideCaneCameraId:
+                type: string
+                description: "导盲杖摄像头id"
+      responses:
+        200:
+          description: "连接导盲杖摄像头成功"
+          schema:
+            $ref: "#/definitions/VolunteerConnectGuideCaneCameraResponse"
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+  /volunteer/viewOwnMissionHistory:
+    get:
+      security: [ ]
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 1
+          description: "页码"
+        - in: query
+          name: size
+          type: integer
+          default: 10
+          description: "每页数量"
+        - in: query
+          name: volunteerId
+          type: string
+          required: true
+          description: "志愿者id"
+      responses:
+        200:
+          description: "查看自己的任务历史"
+          schema:
+            type: object
+
+
+        403:
+          description: "未登录"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: "用户不存在"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+
+definitions:
+  Version:
+    type: object
+    properties:
+      version:
+        type: string
+        description: "版本号"
+        default: 0.0.1
+
+  PageMeta:
+    type: object
+    properties:
+      total:
+        type: integer
+      page:
+        type: integer
+        default: 1
+      size:
+        type: integer
+        default: 10
+
+  UnauthorizedError:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+        description: "没有权限"
+      code:
+        type: integer
+        description: "403"
+
+  ActionFailure:
+    type: object
+    required:
+      - success
+      - from
+      - reason
+    properties:
+      success:
+        type: boolean
+        default: false
+      from:
+        type: string
+        default: "unknown"
+      reason:
+        type: string
+        default: "unexpected stack overflow"
+
+  LoginResponse:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        description: "登录成功后返回的 jwt"
+
+  LogoutResponse:
+    type: object
+    required:
+      - message
+      - success
+    properties:
+      message:
+        type: string
+        description: "登出成功"
+      success:
+        type: boolean
+        default: true
+
+  ResetPasswordResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "密码重置成功"
+
+  UpdateAvatarResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "头像更新成功"
+
+  UploadAvatarResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "头像上传成功"
+
+  AdminResetPasswordResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "密码重置成功"
+
+  AdminApproveVolunteerRegistrationResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "审核成功"
+
+  AdminDeleteVolunteerResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "删除成功"
+
+  Volunteer:
+    type: object
+    required:
+      - volunteerId
+      - volunteerName
+      - volunteerDesc
+      - email
+      - phone
+      - avatar
+      - idCardFront
+      - idCardBack
+      - idNumber
+      - realName
+      - volunteerTime
+      - isRegister
+      - integral
+      - tasks
+    properties:
+      volunteerId:
+        type: string
+        description: "志愿者id"
+      volunteerName:
+        type: string
+        description: "志愿者名字"
+      volunteerDesc:
+        type: string
+        description: "志愿者描述"
+      email:
+        type: string
+        description: "邮箱"
+      phone:
+        type: string
+        description: "电话"
+      avatar:
+        type: string
+        description: "头像"
+      idCardFront:
+        type: string
+        description: "身份证正面"
+      idCardBack:
+        type: string
+        description: "身份证反面"
+      idNumber:
+        type: string
+        description: "身份证号"
+      realName:
+        type: string
+        description: "真实姓名"
+      volunteerTime:
+        type: string
+        description: "志愿者时间"
+      isRegister:
+        type: boolean
+        description: "是否注册"
+      integral:
+        type: integer
+        description: "积分"
+      tasks:
+        type: array
+        items:
+          $ref: "#/definitions/Task"
+
+  Task:
+    type: object
+    required:
+      - taskTime
+      - volunteerId
+      - missionId
+    properties:
+      taskTime:
+        type: string
+        description: "任务时间"
+      volunteerId:
+        type: string
+        description: "志愿者id"
+      missionId:
+        type: integer
+        description: "任务id"
+
+  AdminUpdateVolunteerInfoResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "更新成功"
+
+  AdminResetVolunteerAvatarToDefaultResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "重置头像成功"
+
+  AdminViewRealTimeVolunteerHelpInfoResponse:
+    type: object
+    required:
+      - success
+      - total
+      - size
+      - page
+      - data
+      - searchTotal
+    properties:
+      success:
+        type: boolean
+        description: "获取成功"
+      total:
+        type: integer
+        description: "总共的资产数量"
+      size:
+        type: integer
+        description: "每一页的大小"
+      page:
+        type: integer
+        description: "当前页数"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Volunteer"
+      searchTotal:
+        type: integer
+        description: "返回的总数"
+
+  VolunteerRegisterResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "注册成功"
+
+  VolunteerUploadIdBackResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "上传身份证反面成功"
+
+  VolunteerUploadIdFrontResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "上传身份证正面成功"
+
+  VolunteerAcceptMissionResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "接受任务成功"
+
+  VolunteerConnectGuideCaneCameraResponse:
+    type: object
+    required:
+      - success
+      - message
+    properties:
+      success:
+        type: boolean
+        default: true
+      message:
+        type: string
+        default: "连接导盲杖摄像头成功"
+
+  VolunteerViewOwnMissionHistoryResponse:
+    type: object
+    required:
+      - success
+      - total
+      - size
+      - page
+      - data
+      - searchTotal
+    properties:
+        success:
+            type: boolean
+            description: "获取成功"
+        total:
+            type: integer
+            description: "总共的资产数量"
+        size:
+            type: integer
+            description: "每一页的大小"
+        page:
+            type: integer
+            description: "当前页数"
+        data:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        searchTotal:
+            type: integer
+            description: "返回的总数"

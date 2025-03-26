@@ -1,9 +1,6 @@
 package DBMnager
 
 import (
-	"augeu/server/internal/pkg/DBMnager/admin"
-	"augeu/server/internal/pkg/DBMnager/task"
-	"augeu/server/internal/pkg/DBMnager/volunteer"
 	"augeu/server/internal/pkg/logger"
 	"errors"
 	"fmt"
@@ -37,9 +34,7 @@ func NewDBManager(dsn string) (*Manager, error) {
 func (manager *Manager) AutoMigrate() error {
 	logger.Info("starting to migrate databases...")
 	err := manager.DB.AutoMigrate(
-		&admin.Admin{},
-		&volunteer.Volunteer{},
-		&task.Task{},
+	// TODO： 添加数据库
 	)
 	if err != nil {
 		return fmt.Errorf("DBMnage.AutoMigrate -> %w", err)

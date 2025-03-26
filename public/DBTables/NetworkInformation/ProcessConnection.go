@@ -7,17 +7,17 @@ import (
 )
 
 type ProcessConnection struct {
-	ID               uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	ProcessName      string    `gorm:"column:process_name;not null;size:255" json:"process_name"` // 进程名
-	PID              int       `gorm:"column:pid;not null" json:"pid"`                            // 进程ID
-	Protocol         *string   `gorm:"column:protocol;size:10" json:"protocol,omitempty"`         // 协议 (TCP/UDP)
-	LocalAddress     net.IP    `gorm:"column:local_address;type:inet" json:"local_address"`       // 本地监听地址
-	LocalPort        uint16    `gorm:"column:local_port" json:"local_port"`                       // 本地监听端口 (0-65535)
-	RemoteAddress    net.IP    `gorm:"column:remote_address;type:inet" json:"remote_address"`     // 远程地址
-	RemotePort       uint16    `gorm:"column:remote_port" json:"remote_port"`                     // 远程端口 (0-65535)
-	ConnectionStatus string    `gorm:"column:connection_status;size:20" json:"connection_status"` // 连接状态
-	CreatedAt        time.Time `gorm:"autoCreateTime" json:"created_at"`
-	UpdatedAt        time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	ID               uint      `gorm:"primaryKey;autoIncrement"`
+	ProcessName      string    `gorm:"column:process_name;not null;size:255"` // 进程名
+	PID              int       `gorm:"column:pid;not null"`                   // 进程ID
+	Protocol         *string   `gorm:"column:protocol;size:10"`               // 协议 (TCP/UDP)
+	LocalAddress     net.IP    `gorm:"column:local_address;type:inet"`        // 本地监听地址
+	LocalPort        uint16    `gorm:"column:local_port"`                     // 本地监听端口 (0-65535)
+	RemoteAddress    net.IP    `gorm:"column:remote_address;type:inet"`       // 远程地址
+	RemotePort       uint16    `gorm:"column:remote_port"`                    // 远程端口 (0-65535)
+	ConnectionStatus string    `gorm:"column:connection_status;size:20"`      // 连接状态
+	CreatedAt        time.Time `gorm:"autoCreateTime"`
+	UpdatedAt        time.Time `gorm:"autoUpdateTime"`
 }
 
 func (ProcessConnection) TableName() string {

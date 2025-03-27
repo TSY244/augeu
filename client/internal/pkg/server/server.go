@@ -29,3 +29,7 @@ func NewServer(config *config2.Config) (*Server, error) {
 		Cancel:    cancel,
 	}, nil
 }
+
+func Run() {
+	// todo 处理各种任务
+}

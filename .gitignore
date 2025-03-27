@@ -1,4 +1,4 @@
 .idea/
 .Ds_Store
-server/etc/
 client/ignore/
+server/etc/

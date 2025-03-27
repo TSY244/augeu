@@ -1,8 +1,8 @@
 package main
 
 import (
+	"augeu/public/pkg/logger"
 	config2 "augeu/server/internal/pkg/config"
-	"augeu/server/internal/pkg/logger"
 	"augeu/server/internal/pkg/server"
 	"augeu/server/internal/pkg/service"
 	"context"
@@ -41,6 +41,9 @@ func init() {
 }
 
 func main() {
+
+	// 初始化配置
+	config2.Init()
 
 	config := server.Config{
 		ListenPort:       config2.CoreConfig.HttpServer.HttpPort,

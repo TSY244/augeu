@@ -1,7 +1,7 @@
 package server
 
 import (
-	"augeu/server/internal/pkg/DBMnager"
+	"augeu/public/pkg/DBMnager"
 	"context"
 	"fmt"
 	"log"
@@ -19,7 +19,7 @@ type Server struct {
 func NewServer(config *Config) (*Server, error) {
 	// dbm
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
-	dbm, err := DBMnager.NewDBManager(dsn)
+	dbm, err := DBMnager.NewDBManager(dsn, false)
 	if err != nil {
 		log.Printf("Failed to create DB manager: %v", err)
 	}

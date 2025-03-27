@@ -1,7 +1,7 @@
 package api
 
 import (
-	"augeu/server/internal/pkg/logger"
+	"augeu/public/pkg/logger"
 	"augeu/server/internal/pkg/server"
 	"augeu/server/internal/pkg/web/gen/restapi/operations"
 	"net/http"

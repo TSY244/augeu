@@ -1,0 +1,10 @@
+		Db: config2.DbConf{
+			Host:       "139.159.140.145",
+			Port:       5432,
+			Username:   "postgres",
+			Password:   "123qweASD!@##@!!@#",
+			Dbname:     "dewu",
+			TimeOut:    100000000,
+			DbFilePath: "",
+			DbType:     "postgres",
+		},

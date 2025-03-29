@@ -1,19 +1,23 @@
 package windowsLog
 
 const (
-	LoginFilePath = "LoginFilePath"
+	LoginEvenType    eventNameType = "LoginEvenType"
+	RdpFileEventType eventNameType = "RdpFileEventType"
 )
 
 var (
-	//FilePath = []string{
-	//	"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
-	//}
-	EventToFilePath = map[string][]string{
-		LoginFilePath: {
+	EventToFilePath = map[eventNameType][]string{
+		LoginEvenType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
-		"RdpFilePath": {
+		RdpFileEventType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
 	}
+)
+
+// base info key
+
+const (
+	EventIdKey = "EventID"
 )

@@ -1,12 +1,12 @@
 package windowsLog
 
 const (
-	LoginEvenType    eventNameType = "LoginEvenType"
-	RdpFileEventType eventNameType = "RdpFileEventType"
+	LoginEvenType    EventNameType = "LoginEvenType"
+	RdpFileEventType EventNameType = "RdpFileEventType"
 )
 
 var (
-	EventToFilePath = map[eventNameType][]string{
+	EventToFilePath = map[EventNameType][]string{
 		LoginEvenType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
@@ -16,8 +16,31 @@ var (
 	}
 )
 
-// base info key
+// runBase info key
 
 const (
-	EventIdKey = "EventID"
+	MachineUUIDKey = "MachineUUID"
+	EventIdKey     = "EventID"
+	EventTimeKey   = "EventTime"
+)
+
+// login event info key
+const (
+	LoginTypeKey       = "LoginType"
+	SourceIpKey        = "SourceIp"
+	UsernameKey        = "Username"
+	SubjectUsernameKey = "SubjectUsername"
+	SubjectDomainKey   = "SubjectDomain"
+	ProcessNameKey     = "ProcessName"
+)
+
+// login event value path
+// 用于解析GoEvtxMap中的值，需要提供path 去解析map 中的value
+const (
+	usernamePath        = "/Event/EventData/TargetUserName"
+	ipAddressPath       = "/Event/EventData/IpAddress"
+	logonTypePath       = "/Event/EventData/LogonType"
+	subjectUserNamePath = "/Event/EventData/SubjectUserName"
+	subjectDomainPath   = "/Event/EventData/SubjectDomainName"
+	processNamePath     = "/Event/EventData/ProcessName"
 )

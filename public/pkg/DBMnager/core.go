@@ -50,8 +50,7 @@ func (manager *Manager) AutoMigrate() error {
 
 		// log
 		&Log.ApplicationEvent{},
-		&Log.Event4624{},
-		&Log.Event4625{},
+		&Log.LoginEvent{},
 		&Log.Event7045{},
 		&Log.EventCreateProcess{},
 		&Log.EventPowerShell{},

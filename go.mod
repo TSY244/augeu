@@ -22,6 +22,8 @@ require (
 )
 
 require (
+	github.com/0xrawsec/golang-evtx v1.2.9 // indirect
+	github.com/0xrawsec/golang-utils v1.3.0 // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/docker/go-units v0.5.0 // indirect

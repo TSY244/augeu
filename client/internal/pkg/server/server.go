@@ -25,6 +25,7 @@ type Server struct {
 
 func NewServer(config *config2.Config) (*Server, error) {
 	// dbm
+
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.Db.Host, config.Db.Port, config.Db.Username, config.Db.Password, config.Db.Dbname)
 	dbm, err := DBMnager.NewDBManager(dsn, true)

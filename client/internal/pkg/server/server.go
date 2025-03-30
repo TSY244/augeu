@@ -2,11 +2,14 @@ package server
 
 import (
 	config2 "augeu/client/internal/pkg/config"
-	msg2 "augeu/client/internal/pkg/msg"
+	"augeu/client/internal/pkg/msg"
+	"augeu/client/internal/pkg/systeminfo"
 	_const "augeu/client/internal/utils/const"
+	"augeu/client/internal/utils/utils"
 	"augeu/public/pkg/DBMnager"
 	augueMq "augeu/public/pkg/augeuMq"
 	"augeu/public/pkg/logger"
+	utils2 "augeu/public/util/utils"
 	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -21,6 +24,7 @@ type Server struct {
 	Cancel        context.CancelFunc
 	WebsocketConn *websocket.Conn
 	Conf          *config2.Config
+	clientId      string
 }
 
 func NewServer(config *config2.Config) (*Server, error) {
@@ -59,17 +63,47 @@ func NewServer(config *config2.Config) (*Server, error) {
 
 func (s *Server) Run() {
 	go s.cmdHandler()
-	for {
-		// 接受websocket消息
-		var msg msg2.JsonMsg
-		err := s.WebsocketConn.ReadJSON(&msg)
-		if err != nil {
-			logger.Errorf("Failed to read websocket message: %v", err)
-			continue
-		}
-		fmt.Printf("Received message: %s\n", msg)
 
+	s.receiveClientId()
+	go s.ReadMsg()
+
+	structmsg, err := systeminfo.GetSystemInfo()
+	if err != nil {
+		panic(err)
 	}
+	uuid, err := systeminfo.GetUuid()
+	if err != nil {
+		panic(err)
+	}
+	ips, err := utils2.GetIps()
+	if err != nil {
+		panic(err)
+	}
+	tempData := msg.HelloMsg{
+		UUID:       uuid,
+		IP:         ips,
+		SystemInfo: *structmsg,
+	}
+	msgStr, err := utils.StructToJson(tempData)
+	if err != nil {
+		panic(err)
+	}
+	baseMsg := msg.JsonMsg{
+		Type:     msg.MessageType,
+		ClientId: s.clientId,
+		Message:  msgStr,
+	}
+	baseMsgStr, err := utils.StructToJson(baseMsg)
+	if err != nil {
+		panic(err)
+	}
+	err = s.WebsocketConn.WriteMessage(websocket.TextMessage, []byte(baseMsgStr))
+	if err != nil {
+		panic(err)
+	}
+
+	select {}
+
 }
 
 // -------------------------------------- private --------------------------------------
@@ -116,4 +150,30 @@ func (s *Server) handleCmd(cmd string) {
 	default:
 		logger.Error("unknown cmd: ", cmd)
 	}
+}
+
+func (s *Server) ReadMsg() {
+	for {
+		_, msg, err := s.WebsocketConn.ReadMessage()
+		if err != nil {
+			logger.Error("Failed to read message: ", err)
+			continue
+		}
+		logger.Info("Received message: ", string(msg))
+	}
+}
+
+func (s *Server) receiveClientId() {
+	_, tempMsg, err := s.WebsocketConn.ReadMessage()
+	if err != nil {
+		logger.Error("Failed to read message: ", err)
+		return
+	}
+	structMsg := msg.WelcomeMsg{}
+	err = utils.JsonToStruct(tempMsg, &structMsg)
+	if err != nil {
+		logger.Error("Failed to unmarshal message: ", err)
+		return
+	}
+	s.clientId = structMsg.ClientId
 }

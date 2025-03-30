@@ -29,6 +29,17 @@ type HelloMsg struct {
 	SystemInfo SystemInfo `json:"system_info"`
 }
 
+type ClintConnectMsg struct {
+	Type     string `json:"type"`
+	ClientId string `json:"clientId"`
+}
+
+type WelcomeMsg struct {
+	Type     string `json:"type"`
+	ClientId string `json:"clientId"`
+	Message  string `json:"message"`
+}
+
 type SystemInfo struct {
 	OSName    string  `json:"os_name"`
 	OSVersion string  `json:"os_version"`

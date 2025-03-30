@@ -9,3 +9,7 @@ const (
 	LoginEvenType    = "LoginEvenType"
 	RdpFileEventType = "RdpFileEventType"
 )
+
+const (
+	MessageType = "message"
+)

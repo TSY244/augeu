@@ -1,4 +1,4 @@
-package _const
+package machine
 
 // local machine
 const (

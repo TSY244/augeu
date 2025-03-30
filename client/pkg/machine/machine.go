@@ -1,7 +1,6 @@
 package machine
 
 import (
-	_const "augeu/client/internal/utils/const"
 	"golang.org/x/sys/windows/registry"
 )
 
@@ -17,12 +16,12 @@ func GetWindowsGuid() (string, error) {
 	if WindowsId != "" {
 		return WindowsId, nil
 	}
-	key, err := registry.OpenKey(registry.LOCAL_MACHINE, _const.GuidKeyPath, registry.QUERY_VALUE)
+	key, err := registry.OpenKey(registry.LOCAL_MACHINE, GuidKeyPath, registry.QUERY_VALUE)
 	if err != nil {
 		return "", err
 	}
 	defer key.Close()
-	value, _, err := key.GetStringValue(_const.GuidKeyName)
+	value, _, err := key.GetStringValue(GuidKeyName)
 	if err != nil {
 		return "", err
 	}

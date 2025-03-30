@@ -1,4 +1,4 @@
-package augue_mq
+package augueMq
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ type MqCell struct {
 	lock    sync.Mutex // 对 MqCell 的操作加锁
 }
 
-// 创建一个新的 MqCell
+// NewMqCell 创建一个新的 MqCell
 func NewMqCell(size int) *MqCell {
 	if size <= 0 {
 		size = 1
@@ -28,7 +28,7 @@ func NewMqCell(size int) *MqCell {
 	}
 }
 
-// 添加消息到 MqCell
+// Set 添加消息到 MqCell
 func (m *MqCell) Set(msg interface{}) error {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -47,7 +47,7 @@ func (m *MqCell) Set(msg interface{}) error {
 	return nil
 }
 
-// 从 MqCell 中获取消息
+// Get 从 MqCell 中获取消息
 func (m *MqCell) Get() (interface{}, error) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -64,7 +64,7 @@ func (m *MqCell) Get() (interface{}, error) {
 	return <-m.cell, nil
 }
 
-// 退出并关闭 MqCell
+// Exit 退出并关闭 MqCell
 func (m *MqCell) Exit() {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -77,7 +77,7 @@ func (m *MqCell) Exit() {
 	m.isExit = true
 }
 
-// 检查 MqCell 是否已退出
+// IsExit 检查 MqCell 是否已退出
 func (m *MqCell) IsExit() bool {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -85,7 +85,7 @@ func (m *MqCell) IsExit() bool {
 	return m.isExit
 }
 
-// 清空 MqCell 并重置状态
+// Clear 清空 MqCell 并重置状态
 func (m *MqCell) Clear() {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -94,7 +94,7 @@ func (m *MqCell) Clear() {
 	m.isExit = false
 }
 
-// 获取当前 MqCell 中存储的消息数量
+// GetSize 获取当前 MqCell 中存储的消息数量
 func (m *MqCell) GetSize() int {
 	m.lock.Lock()
 	defer m.lock.Unlock()

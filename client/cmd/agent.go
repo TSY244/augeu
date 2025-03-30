@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"augeu/client/internal/pkg/config"
@@ -7,16 +7,14 @@ import (
 )
 
 func main() {
-	conf := config.Config{
-		Websocket: config.WebsocketConf{
-			RemoteAddr: "",
-			RemotePort: 0,
-		},
-	}
-
-	server, err := server.NewServer(&conf)
+	conf, err := config.Init()
 	if err != nil {
 		panic(err)
 	}
 
+	agentServer, err := server.NewServer(conf)
+	if err != nil {
+		panic(err)
+	}
+	agentServer.Run()
 }

@@ -2,3 +2,4 @@
 .Ds_Store
 client/ignore/
 server/etc/
+client/etc/config.yaml

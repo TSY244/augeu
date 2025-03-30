@@ -1,4 +1,4 @@
-package augue_mq
+package augueMq
 
 import "errors"
 

@@ -30,8 +30,15 @@ type HelloMsg struct {
 }
 
 type SystemInfo struct {
-	OSName    string   `json:"os_name"`
-	OSVersion string   `json:"os_version"`
-	OSArch    string   `json:"os_arch"`
-	PatchIds  []string `json:"patch_ids"`
+	OSName    string  `json:"os_name"`
+	OSVersion string  `json:"os_version"`
+	OSArch    string  `json:"os_arch"`
+	Patchs    []Patch `json:"patchs"`
+}
+
+type Patch struct {
+	Description string
+	HotFixID    string
+	InstalledBy string
+	InstalledOn string
 }

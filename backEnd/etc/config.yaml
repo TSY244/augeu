@@ -1,0 +1,25 @@
+
+HttpServerConf:
+  Port: "8080"
+  ListenOn: "0.0.0.0"
+  EnableStaticAuth: false
+
+
+databaseConf:
+  Host: "139.159.140.145"
+  Port: 5432
+  Username: "postgres"
+  Password: "123qweASD!@#QWEASD"
+  Dbname: "dewu"
+  TimeOut: 100000000
+  DbFilePath: ""
+  DbType: "postgres" # mysql, postgres, sqlite3
+
+LogConf:
+  FileName: "./logs/ac2v1_server.log"
+  MaxSize: 10
+  MaxBackups: 5
+  MaxAge: 3
+  Compress: true
+  Level: "info" # debug, info, warn, error, dpanic, panic, fatal
+  PrintToConsole: true

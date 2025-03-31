@@ -61,9 +61,6 @@ func NewServer(config *config2.Config) (*Server, error) {
 func (s *Server) Run() {
 	go s.cmdHandler()
 
-	s.receiveClientId()
-	go s.ReadMsg()
-
 	structmsg, err := systeminfo.GetSystemInfo()
 	if err != nil {
 		panic(err)
@@ -161,16 +158,5 @@ func (s *Server) ReadMsg() {
 }
 
 func (s *Server) receiveClientId() {
-	_, tempMsg, err := s.WebsocketConn.ReadMessage()
-	if err != nil {
-		logger.Error("Failed to read message: ", err)
-		return
-	}
-	structMsg := msg.WelcomeMsg{}
-	err = utils.JsonToStruct(tempMsg, &structMsg)
-	if err != nil {
-		logger.Error("Failed to unmarshal message: ", err)
-		return
-	}
-	s.clientId = structMsg.ClientId
+
 }

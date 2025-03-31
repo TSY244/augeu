@@ -1,5 +1,5 @@
 .idea/
 .Ds_Store
-client/ignore/
-server/etc/
-client/etc/config.yaml
+agent/ignore/
+backEnd/etc/
+agent/etc/config.yaml

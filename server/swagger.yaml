@@ -24,7 +24,27 @@ paths:
           schema:
             $ref: "#/definitions/Version"
 
-
+  /getClientId:
+    post:
+      security: [ ]
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: "客户端名称"
+              secret:
+                type: string
+                description: "客户端密钥"
+      responses:
+        200:
+          description: "返回 BrightPath Api 版本号"
+          schema:
+            $ref: "#/definitions/GetClientIdResponse"
 
 definitions:
   Version:
@@ -77,4 +97,15 @@ definitions:
         type: string
         default: "unexpected stack overflow"
 
- 
+  GetClientIdResponse:
+    type: object
+    required:
+      - success
+      - clientId
+    properties:
+      success:
+        type: boolean
+        default: true
+      clientId:
+        type: string
+        default: "unknown"

@@ -18,7 +18,7 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.20.0
 	go.uber.org/zap v1.27.0
-	golang.org/x/net v0.37.0
+	golang.org/x/net v0.33.0
 	golang.org/x/sys v0.31.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12

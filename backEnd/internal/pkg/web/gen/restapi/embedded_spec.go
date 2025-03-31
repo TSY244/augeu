@@ -129,6 +129,9 @@ func init() {
           "type": "string",
           "default": "unknown"
         },
+        "jwt": {
+          "type": "string"
+        },
         "success": {
           "type": "boolean",
           "default": true
@@ -291,6 +294,9 @@ func init() {
         "clientId": {
           "type": "string",
           "default": "unknown"
+        },
+        "jwt": {
+          "type": "string"
         },
         "success": {
           "type": "boolean",

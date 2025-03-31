@@ -23,6 +23,9 @@ type GetClientIDResponse struct {
 	// Required: true
 	ClientID *string `json:"clientId"`
 
+	// jwt
+	Jwt string `json:"jwt,omitempty"`
+
 	// success
 	// Required: true
 	Success bool `json:"success"`

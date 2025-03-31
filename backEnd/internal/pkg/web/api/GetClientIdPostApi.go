@@ -6,6 +6,7 @@ import (
 	"augeu/backEnd/internal/pkg/web/gen/restapi/operations"
 	"augeu/backEnd/internal/utils/consts/web"
 	"augeu/backEnd/internal/utils/utils"
+	"augeu/public/pkg/augeuJwt"
 	"augeu/public/pkg/logger"
 	"augeu/public/pkg/snowNumbers"
 	"augeu/public/util/convert"
@@ -43,9 +44,25 @@ func (apiManager *ApiManager) GetClientIdPostApiHandlerFunc() operations.PostGet
 			})
 		}
 
+		info := augeuJwt.Info{
+			ClientId: clientId,
+			Uuid:     getClientIdParams.Data.UUID,
+		}
+
+		strJwt, err := augeuJwt.NewJwt(info)
+		if err != nil {
+			logger.Errorf("GetClientIdPostApiHandlerFunc -> augeuJwt.NewJwt -> %v", err)
+			return operations.NewPostGetClientIDInternalServerError().WithPayload(&models.ActionFailure{
+				From:    utils.StrP(apiName),
+				Reason:  utils.StrP(web.InternalError),
+				Success: web.Fail,
+			})
+		}
+
 		return operations.NewPostGetClientIDOK().WithPayload(&models.GetClientIDResponse{
 			Success:  web.Success,
 			ClientID: utils.StrP(clientId),
+			Jwt:      strJwt,
 		})
 	}
 }

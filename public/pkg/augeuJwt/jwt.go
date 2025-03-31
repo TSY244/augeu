@@ -1,15 +1,15 @@
-package utils
+package augeuJwt
 
 import "github.com/golang-jwt/jwt/v4"
 
 const (
-	SIGNING_KEY = "123asdQWE1qa@WS#ED,./l;'p[]"
+	SIGNING_KEY = "1drftvgybhnjkDERFTGYIJMKO@#$%^&*"
 )
 
 // Role 0: admin, 1: member
 type Info struct {
-	Name string
-	Role int
+	ClientId string
+	Uuid     string // windows uuid
 }
 
 type InfoClaims struct {

@@ -8,6 +8,7 @@ import (
 	"context"
 	"os"
 	"strings"
+	"time"
 )
 
 type Server struct {
@@ -49,11 +50,17 @@ func NewServer(config *config2.Config) (*Server, error) {
 func (s *Server) Run() {
 	go s.cmdHandler()
 	s.receiveClientId()
-	select {}
+	s.core()
 
 }
 
 // -------------------------------------- private --------------------------------------
+
+func (s *Server) core() {
+	for {
+		time.Sleep(10 * time.Second)
+	}
+}
 
 func initMq(ctx context.Context) error {
 	augueMq.Init(_const.MqMaxSize)
@@ -99,16 +106,16 @@ func (s *Server) handleCmd(cmd string) {
 	}
 }
 
-func (s *Server) ReadMsg() {
-	for {
-		_, msg, err := s.WebsocketConn.ReadMessage()
-		if err != nil {
-			logger.Error("Failed to read message: ", err)
-			continue
-		}
-		logger.Info("Received message: ", string(msg))
-	}
-}
+//func (s *Server) ReadMsg() {
+//	for {
+//		_, msg, err := s.WebsocketConn.ReadMessage()
+//		if err != nil {
+//			logger.Error("Failed to read message: ", err)
+//			continue
+//		}
+//		logger.Info("Received message: ", string(msg))
+//	}
+//}
 
 func (s *Server) receiveClientId() {
 	clientId, err := s.GetClientId()

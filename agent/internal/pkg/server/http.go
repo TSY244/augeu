@@ -25,7 +25,7 @@ func (s *Server) GetClientId() (string, error) {
 		return "", err
 	}
 
-	ret, err := augeuHttp.PostRequestWithJson(s.Conf.RemoteAddr+GetClientIdApiPath, map[string]string, string(jsonData))
+	ret, err := augeuHttp.PostRequestWithJson(s.Conf.RemoteAddr+GetClientIdApiPath, map[string]string{}, string(jsonData))
 	if err != nil {
 		return "", err
 	}

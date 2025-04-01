@@ -3,6 +3,7 @@ package windowsWmi
 import (
 	"errors"
 	"fmt"
+	"github.com/StackExchange/wmi"
 )
 
 // QueryUuid 查询系统UUID

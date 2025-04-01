@@ -6,12 +6,9 @@ package operations
 // Editing this file might prove futile when you re-run the generate command
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 )
 
 // PostGetClientIDHandlerFunc turns a function with the right signature into a post get client ID handler
@@ -56,44 +53,4 @@ func (o *PostGetClientID) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	res := o.Handler.Handle(Params) // actually handle the request
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// PostGetClientIDBody post get client ID body
-//
-// swagger:model PostGetClientIDBody
-type PostGetClientIDBody struct {
-
-	// 客户端密钥
-	Secret string `json:"secret,omitempty"`
-
-	// 客户端名称
-	UUID string `json:"uuid,omitempty"`
-}
-
-// Validate validates this post get client ID body
-func (o *PostGetClientIDBody) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this post get client ID body based on context it is used
-func (o *PostGetClientIDBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *PostGetClientIDBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *PostGetClientIDBody) UnmarshalBinary(b []byte) error {
-	var res PostGetClientIDBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

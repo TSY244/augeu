@@ -3,9 +3,9 @@ package service
 import (
 	"augeu/backEnd/internal/pkg/server"
 	"augeu/backEnd/internal/pkg/web/api"
-	"augeu/backEnd/internal/pkg/web/gen/restapi"
-	"augeu/backEnd/internal/pkg/web/gen/restapi/operations"
 	"augeu/public/pkg/logger"
+	restapi2 "augeu/public/pkg/swaggerCore/restapi"
+	"augeu/public/pkg/swaggerCore/restapi/operations"
 	"context"
 	"errors"
 	"github.com/go-openapi/loads"
@@ -15,7 +15,7 @@ func StartApi(bPServer *server.Server) error {
 	if bPServer == nil {
 		return errors.New("server is nil")
 	}
-	swaSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
+	swaSpec, err := loads.Embedded(restapi2.SwaggerJSON, restapi2.FlatSwaggerJSON)
 	if err != nil {
 		return err
 	}
@@ -25,7 +25,7 @@ func StartApi(bPServer *server.Server) error {
 	apiManager := api.NewApiManager(bPServer)
 	apiManager.InitApi(apiBase)
 
-	webServer := restapi.NewServer(apiBase)
+	webServer := restapi2.NewServer(apiBase)
 	webServer.Port = bPServer.Config.ListenPort
 	webServer.ConfigureAPI()
 	webServer.SetHandler(
@@ -42,7 +42,7 @@ func StartApi(bPServer *server.Server) error {
 	return nil
 }
 
-func serveDaemonWithCtx(webServer *restapi.Server, ctx context.Context) {
+func serveDaemonWithCtx(webServer *restapi2.Server, ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():

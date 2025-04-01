@@ -2,8 +2,8 @@ package api
 
 import (
 	"augeu/backEnd/internal/pkg/server"
-	"augeu/backEnd/internal/pkg/web/gen/restapi/operations"
 	"augeu/public/pkg/logger"
+	"augeu/public/pkg/swaggerCore/restapi/operations"
 	"net/http"
 	"time"
 )

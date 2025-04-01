@@ -30,16 +30,8 @@ paths:
       parameters:
         - in: body
           name: data
-          required: true
           schema:
-            type: object
-            properties:
-              uuid:
-                type: string
-                description: "客户端名称"
-              secret:
-                type: string
-                description: "客户端密钥"
+            $ref: "#/definitions/GetClientIdRequest"
       responses:
         200:
           description: "返回 BrightPath Api 版本号"
@@ -104,6 +96,19 @@ definitions:
       reason:
         type: string
         default: "unexpected stack overflow"
+
+  GetClientIdRequest:
+    type: object
+    required:
+      - uuid
+      - secret
+    properties:
+      uuid:
+        type: string
+        description: "客户端名称"
+      secret:
+        type: string
+        description: "客户端密钥"
 
   GetClientIdResponse:
     type: object

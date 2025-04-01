@@ -10,10 +10,10 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"augeu/backEnd/internal/pkg/web/gen/restapi/operations"
+	"augeu/public/pkg/swaggerCore/restapi/operations"
 )
 
-//go:generate swagger generate server --target ../../gen --name Augeu --spec ../../../../../swagger.yaml --principal models.Principle
+//go:generate swagger generate server --target ../../swaggerCore --name Augeu --spec ../../../../backEnd/swagger.yaml --principal models.Principle
 
 func configureFlags(api *operations.AugeuAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }

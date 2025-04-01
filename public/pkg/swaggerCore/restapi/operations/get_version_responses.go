@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"augeu/backEnd/internal/pkg/web/gen/models"
+	"augeu/public/pkg/swaggerCore/models"
 )
 
 // GetVersionOKCode is the HTTP code returned for type GetVersionOK

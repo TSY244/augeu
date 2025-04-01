@@ -6,13 +6,14 @@ package operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/validate"
+
+	"augeu/public/pkg/swaggerCore/models"
 )
 
 // NewPostGetClientIDParams creates a new PostGetClientIDParams object
@@ -33,10 +34,9 @@ type PostGetClientIDParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*
-	  Required: true
 	  In: body
 	*/
-	Data PostGetClientIDBody
+	Data *models.GetClientIDRequest
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,13 +50,9 @@ func (o *PostGetClientIDParams) BindRequest(r *http.Request, route *middleware.M
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body PostGetClientIDBody
+		var body models.GetClientIDRequest
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
-			if err == io.EOF {
-				res = append(res, errors.Required("data", "body", ""))
-			} else {
-				res = append(res, errors.NewParseError("data", "body", "", err))
-			}
+			res = append(res, errors.NewParseError("data", "body", "", err))
 		} else {
 			// validate body object
 			if err := body.Validate(route.Formats); err != nil {
@@ -69,11 +65,9 @@ func (o *PostGetClientIDParams) BindRequest(r *http.Request, route *middleware.M
 			}
 
 			if len(res) == 0 {
-				o.Data = body
+				o.Data = &body
 			}
 		}
-	} else {
-		res = append(res, errors.Required("data", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

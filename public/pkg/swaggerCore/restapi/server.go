@@ -24,7 +24,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	"golang.org/x/net/netutil"
 
-	"augeu/backEnd/internal/pkg/web/gen/restapi/operations"
+	"augeu/public/pkg/swaggerCore/restapi/operations"
 )
 
 const (

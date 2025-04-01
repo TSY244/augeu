@@ -43,19 +43,8 @@ func init() {
           {
             "name": "data",
             "in": "body",
-            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "secret": {
-                  "description": "客户端密钥",
-                  "type": "string"
-                },
-                "uuid": {
-                  "description": "客户端名称",
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/GetClientIdRequest"
             }
           }
         ],
@@ -115,6 +104,23 @@ func init() {
         "success": {
           "type": "boolean",
           "default": false
+        }
+      }
+    },
+    "GetClientIdRequest": {
+      "type": "object",
+      "required": [
+        "uuid",
+        "secret"
+      ],
+      "properties": {
+        "secret": {
+          "description": "客户端密钥",
+          "type": "string"
+        },
+        "uuid": {
+          "description": "客户端名称",
+          "type": "string"
         }
       }
     },
@@ -209,19 +215,8 @@ func init() {
           {
             "name": "data",
             "in": "body",
-            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "secret": {
-                  "description": "客户端密钥",
-                  "type": "string"
-                },
-                "uuid": {
-                  "description": "客户端名称",
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/GetClientIdRequest"
             }
           }
         ],
@@ -281,6 +276,23 @@ func init() {
         "success": {
           "type": "boolean",
           "default": false
+        }
+      }
+    },
+    "GetClientIdRequest": {
+      "type": "object",
+      "required": [
+        "uuid",
+        "secret"
+      ],
+      "properties": {
+        "secret": {
+          "description": "客户端密钥",
+          "type": "string"
+        },
+        "uuid": {
+          "description": "客户端名称",
+          "type": "string"
         }
       }
     },

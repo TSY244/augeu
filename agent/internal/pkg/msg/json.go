@@ -23,11 +23,6 @@ type JsonMsg struct {
 	ClientId string `json:"clientId"`
 	Message  string `json:"message"`
 }
-type HelloMsg struct {
-	UUID       string     `json:"uuid"`
-	IP         *[]string  `json:"ip"`
-	SystemInfo SystemInfo `json:"system_info"`
-}
 
 type ClintConnectMsg struct {
 	Type     string `json:"type"`
@@ -40,6 +35,11 @@ type WelcomeMsg struct {
 	Message  string `json:"message"`
 }
 
+type HelloMsg struct {
+	UUID       string     `json:"uuid"`
+	IP         *[]string  `json:"ip"`
+	SystemInfo SystemInfo `json:"system_info"`
+}
 type SystemInfo struct {
 	OSName    string  `json:"os_name"`
 	OSVersion string  `json:"os_version"`

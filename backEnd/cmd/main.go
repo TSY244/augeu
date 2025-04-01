@@ -56,11 +56,15 @@ func main() {
 		DBUser:           config2.CoreConfig.DbConfig.Username,
 		DBPassword:       config2.CoreConfig.DbConfig.Password,
 		DBName:           config2.CoreConfig.DbConfig.Dbname,
+		CoreConfig:       &config2.CoreConfig,
 	}
 	DwServer, err := server.NewServer(&config)
 	if err != nil {
 		logger.Fatalf("Failed to create server: %v", err)
 	}
+
+	// 启动websocket服务
+	DwServer.RunWebsocket()
 
 	cancelCtxSilence = append(cancelCtxSilence, DwServer.Cancel)
 

@@ -97,19 +97,6 @@ definitions:
         type: string
         default: "unexpected stack overflow"
 
-  GetClientIdRequest:
-    type: object
-    required:
-      - uuid
-      - secret
-    properties:
-      uuid:
-        type: string
-        description: "客户端名称"
-      secret:
-        type: string
-        description: "客户端密钥"
-
   GetClientIdResponse:
     type: object
     required:
@@ -124,3 +111,70 @@ definitions:
         default: "unknown"
       jwt:
         type: string
+
+  GetClientIdRequest:
+    type: object
+    required:
+      - uuid
+      - secret
+      - ip
+      - system_info
+    properties:
+      uuid:
+        type: string
+        description: "唯一标识符"
+      secret:
+        type: string
+        description: "密钥"
+      ip:
+        type: array
+        items:
+          type: string
+        description: "IP 地址列表"
+      system_info:
+        $ref: "#/definitions/SystemInfo"
+        description: "系统信息"
+
+  SystemInfo:
+    type: object
+    required:
+      - os_name
+      - os_version
+      - os_arch
+      - patchs
+    properties:
+      os_name:
+        type: string
+        description: "操作系统名称"
+      os_version:
+        type: string
+        description: "操作系统版本"
+      os_arch:
+        type: string
+        description: "操作系统架构"
+      patchs:
+        type: array
+        items:
+          $ref: "#/definitions/Patch"
+        description: "补丁列表"
+
+  Patch:
+    type: object
+    required:
+      - Description
+      - HotFixID
+      - InstalledBy
+      - InstalledOn
+    properties:
+      Description:
+        type: string
+        description: "补丁描述"
+      HotFixID:
+        type: string
+        description: "热修复 ID"
+      InstalledBy:
+        type: string
+        description: "安装者"
+      InstalledOn:
+        type: string
+        description: "安装时间"

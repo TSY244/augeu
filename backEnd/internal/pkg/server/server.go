@@ -4,6 +4,7 @@ import (
 	"augeu/backEnd/internal/pkg/DBMnager"
 	"context"
 	"fmt"
+	"github.com/gorilla/websocket"
 )
 
 type Server struct {
@@ -12,10 +13,12 @@ type Server struct {
 	Quit    bool
 	Config  *Config
 	// DB manager
-	DBM *DBMnager.Manager
+	DBM             *DBMnager.Manager
+	WebsocketServer *websocket.Conn
 }
 
 func NewServer(config *Config) (*Server, error) {
+
 	// dbm
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)

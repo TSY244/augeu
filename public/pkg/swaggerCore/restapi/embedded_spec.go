@@ -111,15 +111,28 @@ func init() {
       "type": "object",
       "required": [
         "uuid",
-        "secret"
+        "secret",
+        "ip",
+        "system_info"
       ],
       "properties": {
+        "ip": {
+          "description": "IP 地址列表",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "secret": {
-          "description": "客户端密钥",
+          "description": "密钥",
           "type": "string"
         },
+        "system_info": {
+          "description": "系统信息",
+          "$ref": "#/definitions/SystemInfo"
+        },
         "uuid": {
-          "description": "客户端名称",
+          "description": "唯一标识符",
           "type": "string"
         }
       }
@@ -157,6 +170,63 @@ func init() {
         },
         "total": {
           "type": "integer"
+        }
+      }
+    },
+    "Patch": {
+      "type": "object",
+      "required": [
+        "Description",
+        "HotFixID",
+        "InstalledBy",
+        "InstalledOn"
+      ],
+      "properties": {
+        "Description": {
+          "description": "补丁描述",
+          "type": "string"
+        },
+        "HotFixID": {
+          "description": "热修复 ID",
+          "type": "string"
+        },
+        "InstalledBy": {
+          "description": "安装者",
+          "type": "string"
+        },
+        "InstalledOn": {
+          "description": "安装时间",
+          "type": "string"
+        }
+      }
+    },
+    "SystemInfo": {
+      "type": "object",
+      "required": [
+        "os_name",
+        "os_version",
+        "os_arch",
+        "patchs"
+      ],
+      "properties": {
+        "os_arch": {
+          "description": "操作系统架构",
+          "type": "string"
+        },
+        "os_name": {
+          "description": "操作系统名称",
+          "type": "string"
+        },
+        "os_version": {
+          "description": "操作系统版本",
+          "type": "string"
+        },
+        "patchs": {
+          "description": "补丁列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Patch"
+          }
         }
       }
     },
@@ -283,15 +353,28 @@ func init() {
       "type": "object",
       "required": [
         "uuid",
-        "secret"
+        "secret",
+        "ip",
+        "system_info"
       ],
       "properties": {
+        "ip": {
+          "description": "IP 地址列表",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "secret": {
-          "description": "客户端密钥",
+          "description": "密钥",
           "type": "string"
         },
+        "system_info": {
+          "description": "系统信息",
+          "$ref": "#/definitions/SystemInfo"
+        },
         "uuid": {
-          "description": "客户端名称",
+          "description": "唯一标识符",
           "type": "string"
         }
       }
@@ -329,6 +412,63 @@ func init() {
         },
         "total": {
           "type": "integer"
+        }
+      }
+    },
+    "Patch": {
+      "type": "object",
+      "required": [
+        "Description",
+        "HotFixID",
+        "InstalledBy",
+        "InstalledOn"
+      ],
+      "properties": {
+        "Description": {
+          "description": "补丁描述",
+          "type": "string"
+        },
+        "HotFixID": {
+          "description": "热修复 ID",
+          "type": "string"
+        },
+        "InstalledBy": {
+          "description": "安装者",
+          "type": "string"
+        },
+        "InstalledOn": {
+          "description": "安装时间",
+          "type": "string"
+        }
+      }
+    },
+    "SystemInfo": {
+      "type": "object",
+      "required": [
+        "os_name",
+        "os_version",
+        "os_arch",
+        "patchs"
+      ],
+      "properties": {
+        "os_arch": {
+          "description": "操作系统架构",
+          "type": "string"
+        },
+        "os_name": {
+          "description": "操作系统名称",
+          "type": "string"
+        },
+        "os_version": {
+          "description": "操作系统版本",
+          "type": "string"
+        },
+        "patchs": {
+          "description": "补丁列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Patch"
+          }
         }
       }
     },

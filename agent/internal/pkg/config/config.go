@@ -1,18 +1,13 @@
 package config
 
 import (
-	"augeu/public/pkg/config"
 	"flag"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Db        config.DbConf `mapstructure:"databaseConf"`
-	Websocket WebsocketConf `mapstructure:"websocket"`
-}
-
-type WebsocketConf struct {
-	RemoteAddr string `mapstructure:"remoteAddr"`
+	RemoteAddr string
+	Secret     string
 }
 
 var path string

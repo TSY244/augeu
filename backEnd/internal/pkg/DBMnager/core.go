@@ -40,7 +40,10 @@ func (manager *Manager) AutoMigrate() error {
 	logger.Info("starting to migrate databases...")
 	err := manager.DB.AutoMigrate(
 		// host info
-		&HostInfo2.AccountInfo{},
+		&HostInfo2.Patch{},
+		&HostInfo2.Account{},
+		&HostInfo2.System{},
+		&HostInfo2.IPAddress{},
 		&HostInfo2.ImageHijack{},
 		&HostInfo2.ServiceInfo{},
 		&HostInfo2.ScheduledTask{},

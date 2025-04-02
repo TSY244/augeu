@@ -1,10 +1,11 @@
 package systeminfo
 
 import (
-	"augeu/agent/internal/pkg/msg"
 	"augeu/agent/internal/utils/convert"
 	"augeu/agent/pkg/windowsWmi"
-	"os"
+	"augeu/public/pkg/swaggerCore/models"
+	convert2 "augeu/public/util/convert"
+	"runtime"
 )
 
 //type nil struct {
@@ -14,7 +15,7 @@ import (
 //	InstalledOn string
 //}
 
-func GetSystemInfo() (*msg.SystemInfo, error) {
+func GetSystemInfo() (*models.SystemInfo, error) {
 	osName, err := windowsWmi.QueryOsName()
 	if err != nil {
 		return nil, err
@@ -28,10 +29,10 @@ func GetSystemInfo() (*msg.SystemInfo, error) {
 		return nil, err
 	}
 	msgHotFixs := convert.ArrayCopy(hotFix, convert.WmiPatchToMsgPatch)
-	return &msg.SystemInfo{
-		OSName:    osName,
-		OSVersion: osVersion,
-		OSArch:    os.Getenv("PROCESSOR_ARCHITECTURE"),
+	return &models.SystemInfo{
+		OsName:    convert2.StrPtr(osName),
+		OsVersion: convert2.StrPtr(osVersion),
+		OsArch:    convert2.StrPtr(runtime.GOARCH),
 		Patchs:    msgHotFixs,
 	}, nil
 }

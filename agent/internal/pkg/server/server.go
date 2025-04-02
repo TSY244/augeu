@@ -6,6 +6,7 @@ import (
 	augueMq "augeu/public/pkg/augeuMq"
 	"augeu/public/pkg/logger"
 	"context"
+	"golang.org/x/net/websocket"
 	"os"
 	"strings"
 	"time"
@@ -13,11 +14,12 @@ import (
 
 type Server struct {
 	//DbManager     *DBMnager.Manager
-	RootCtx context.Context
-	Cancel  context.CancelFunc
-	//WebsocketConn *websocket.Conn
-	Conf     *config2.Config
-	clientId string
+	RootCtx       context.Context
+	Cancel        context.CancelFunc
+	WebsocketConn *websocket.Conn
+	Conf          *config2.Config
+	ClientId      string
+	Jwt           string
 }
 
 func NewServer(config *config2.Config) (*Server, error) {
@@ -38,18 +40,28 @@ func NewServer(config *config2.Config) (*Server, error) {
 		return nil, err
 	}
 
+	// websocket
+	ws, err := websocket.Dial(config.WebsocketAddr, "", config.WebsocketAddr)
+	if err != nil {
+		logger.Errorf("Failed to connect to websocket: %v", err)
+		cancel()
+		return nil, err
+	}
+
 	return &Server{
 		//DbManager:     dbm,
-		RootCtx: rootCtx,
-		Cancel:  cancel,
-		//WebsocketConn: ws,
-		Conf: config,
+		RootCtx:       rootCtx,
+		Cancel:        cancel,
+		WebsocketConn: ws,
+		Conf:          config,
 	}, nil
 }
 
 func (s *Server) Run() {
 	go s.cmdHandler()
-	s.receiveClientId()
+	s.receiveClientId() // 获取 ClientId
+	s.sendClientId()    // 建立websocket连接
+
 	s.core()
 
 }
@@ -106,22 +118,27 @@ func (s *Server) handleCmd(cmd string) {
 	}
 }
 
-//func (s *Server) ReadMsg() {
-//	for {
-//		_, msg, err := s.WebsocketConn.ReadMessage()
-//		if err != nil {
-//			logger.Error("Failed to read message: ", err)
-//			continue
-//		}
-//		logger.Info("Received message: ", string(msg))
-//	}
-//}
+func (s *Server) sendClientId() {
+	clientId := s.ClientId
+	if clientId == "" {
+		logger.Error("ClientId is empty")
+		return
+	}
+	_, err := s.WebsocketConn.Write([]byte(clientId))
+	if err != nil {
+		logger.Error("Failed to send client id: ", err)
+		return
+	}
+	logger.Info("Sent client id: ", clientId)
+}
 
 func (s *Server) receiveClientId() {
-	clientId, err := s.GetClientId()
+	jwt, clientId, err := s.GetClientId()
 	if err != nil {
 		panic(err)
 	}
-	s.clientId = clientId
+	s.ClientId = clientId
+	s.Jwt = jwt
 	logger.Info("Received client id: ", clientId)
+	logger.Info("Received jwt: ", jwt)
 }

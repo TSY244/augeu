@@ -11,20 +11,22 @@ import (
 )
 
 var (
-	secret     = flag.String("s", "", "server 提供的 secret")
-	remoteAddr = flag.String("r", "", "server api 地址，请注意加上/api/v1，举个栗子：http://127.0.0.1/api/v1")
+	secret        = flag.String("s", "", "server 提供的 secret")
+	remoteAddr    = flag.String("r", "", "server api 地址，请注意加上/api/v1，举个栗子：http://127.0.0.1/api/v1")
+	websocketAddr = flag.String("ws", "", "server 提供的websocket 地址，注意使用ws://开头")
 )
 
 func main() {
 	flag.Parse()
-	if *secret == "" || *remoteAddr == "" {
+	if *secret == "" || *remoteAddr == "" || *websocketAddr == "" {
 		flag.Usage()
-		panic("secret or remoteAddr is empty")
+		panic("Please provide all parameters")
 	}
 
 	conf := config.Config{
-		RemoteAddr: *remoteAddr,
-		Secret:     *secret,
+		RemoteAddr:    *remoteAddr,
+		Secret:        *secret,
+		WebsocketAddr: *websocketAddr,
 	}
 
 	agentServer, err := server.NewServer(&conf)

@@ -1,7 +1,6 @@
 package api
 
 import (
-	"augeu/backEnd/internal/pkg/DBMnager"
 	"augeu/backEnd/internal/pkg/DBMnager/TokenTable"
 	"augeu/backEnd/internal/pkg/DBMnager/UserInfo"
 	"augeu/backEnd/internal/utils/consts/web"
@@ -66,7 +65,7 @@ func (apiManager *ApiManager) LoginPostApiHandlerFunc() operations2.PostLoginHan
 		password := *credentials.Password
 		if err := UserInfo.CheckUser(apiManager.s.DBM.DB, name, password); err != nil {
 			reason := "用户名或密码错误"
-			if !errors.Is(err, DBMnager.ErrUserNameOrPassword) {
+			if !errors.Is(err, UserInfo.ErrUserNameOrPassword) {
 				logger.Errorf("LoginPostApiHandlerFunc -> UserInfo.CheckUser -> %v", err)
 				reason = "内部错误"
 			}

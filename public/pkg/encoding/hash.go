@@ -1,8 +1,12 @@
 package encoding
 
-import "crypto/md5"
+import (
+	"crypto/md5"
+	"encoding/hex"
+)
 
 func Md5Hash(str string) string {
-	md5Str := md5.Sum([]byte(str))
-	return string(md5Str[:])
+	h := md5.New()
+	md5Str := h.Sum([]byte(str))
+	return hex.EncodeToString(md5Str)
 }

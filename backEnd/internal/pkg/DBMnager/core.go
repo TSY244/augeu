@@ -6,6 +6,7 @@ import (
 	"augeu/backEnd/internal/pkg/DBMnager/NetworkInformation"
 	OperateTraces2 "augeu/backEnd/internal/pkg/DBMnager/OperateTraces"
 	"augeu/backEnd/internal/pkg/DBMnager/TokenTable"
+	"augeu/backEnd/internal/pkg/DBMnager/UserInfo"
 	"augeu/public/pkg/logger"
 	"errors"
 	"fmt"
@@ -48,6 +49,9 @@ func (manager *Manager) AutoMigrate() error {
 		&HostInfo2.ServiceInfo{},
 		&HostInfo2.ScheduledTask{},
 		&HostInfo2.StartupItem{},
+
+		// user info
+		&UserInfo.UserInfo{},
 
 		// log
 		&Log2.ApplicationEvent{},

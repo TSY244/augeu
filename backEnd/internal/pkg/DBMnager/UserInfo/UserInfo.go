@@ -6,6 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	ErrUserNameOrPassword = errors.New("user name or password error")
+)
+
 // UserInfo 用户信息表
 type UserInfo struct {
 	gorm.Model        // 包含ID、CreatedAt、UpdatedAt、DeletedAt字段
@@ -32,7 +36,7 @@ func CheckUser(db *gorm.DB, userName, password string) error {
 		return err
 	}
 	if user.Password != encoding.Md5Hash(password) {
-		return errors.New("用户名或密码错误")
+		return ErrUserNameOrPassword
 	}
 	return nil
 }

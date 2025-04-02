@@ -3,3 +3,4 @@
 agent/ignore/
 backEnd/etc/
 agent/etc/config.yaml
+token.txt

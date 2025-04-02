@@ -48,7 +48,8 @@ func (apiManager *ApiManager) HookHttpMiddleware(handler http.Handler) http.Hand
 func (apiManager *ApiManager) InitApi(swapi *operations.AugeuAPI) {
 	//todo add api handler
 	swapi.GetVersionHandler = apiManager.GetVersionApiHandlerFunc()
-
 	swapi.PostGetClientIDHandler = apiManager.GetClientIdPostApiHandlerFunc()
+	swapi.PostLoginHandler = apiManager.LoginPostApiHandlerFunc()
+	swapi.PostRegisterHandler = apiManager.RegisterPostApi()
 
 }

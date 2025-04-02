@@ -15,6 +15,7 @@ type Server struct {
 	// DB manager
 	DBM             *DBMnager.Manager
 	WebsocketServer *websocket.Conn
+	//Secrete         string // 减少查询数据库次数
 }
 
 func NewServer(config *Config) (*Server, error) {

@@ -78,8 +78,11 @@ func (apiManager *ApiManager) GetClientIdPostApiHandlerFunc() operations2.PostGe
 		}
 
 		info := augeuJwt.Info{
-			ClientId: clientId,
-			Uuid:     *getClientIdParams.Data.UUID,
+			Role: augeuJwt.RoleAgent,
+			ClientInfo: augeuJwt.AgentInfo{
+				ClientId: clientId,
+				Uuid:     *data.UUID,
+			},
 		}
 
 		strJwt, err := augeuJwt.NewJwt(info)

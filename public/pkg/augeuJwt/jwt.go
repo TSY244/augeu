@@ -6,8 +6,23 @@ const (
 	SIGNING_KEY = "1drftvgybhnjkDERFTGYIJMKO@#$%^&*"
 )
 
-// Role 0: admin, 1: member
+const (
+	RoleUser  = 0
+	RoleAgent = 1
+)
+
+// Role 0: User, 1: Agent
 type Info struct {
+	Role       int
+	UserInfo   UserInfo
+	ClientInfo AgentInfo
+}
+
+type UserInfo struct {
+	Name string
+}
+
+type AgentInfo struct {
 	ClientId string
 	Uuid     string // windows uuid
 }

@@ -48,6 +48,12 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		PostGetClientIDHandler: PostGetClientIDHandlerFunc(func(params PostGetClientIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostGetClientID has not yet been implemented")
 		}),
+		PostLoginHandler: PostLoginHandlerFunc(func(params PostLoginParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostLogin has not yet been implemented")
+		}),
+		PostRegisterHandler: PostRegisterHandlerFunc(func(params PostRegisterParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostRegister has not yet been implemented")
+		}),
 	}
 }
 
@@ -88,6 +94,10 @@ type AugeuAPI struct {
 	GetVersionHandler GetVersionHandler
 	// PostGetClientIDHandler sets the operation handler for the post get client ID operation
 	PostGetClientIDHandler PostGetClientIDHandler
+	// PostLoginHandler sets the operation handler for the post login operation
+	PostLoginHandler PostLoginHandler
+	// PostRegisterHandler sets the operation handler for the post register operation
+	PostRegisterHandler PostRegisterHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -170,6 +180,12 @@ func (o *AugeuAPI) Validate() error {
 	}
 	if o.PostGetClientIDHandler == nil {
 		unregistered = append(unregistered, "PostGetClientIDHandler")
+	}
+	if o.PostLoginHandler == nil {
+		unregistered = append(unregistered, "PostLoginHandler")
+	}
+	if o.PostRegisterHandler == nil {
+		unregistered = append(unregistered, "PostRegisterHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -267,6 +283,14 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/getClientId"] = NewPostGetClientID(o.context, o.PostGetClientIDHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/login"] = NewPostLogin(o.context, o.PostLoginHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/register"] = NewPostRegister(o.context, o.PostRegisterHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

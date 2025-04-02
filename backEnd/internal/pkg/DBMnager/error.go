@@ -1,7 +1,11 @@
 package DBMnager
 
-import "gorm.io/gorm"
+import (
+	"errors"
+	"gorm.io/gorm"
+)
 
 var (
-	ErrDuplicateEntry = gorm.ErrDuplicatedKey
+	ErrDuplicateEntry     = gorm.ErrDuplicatedKey
+	ErrUserNameOrPassword = errors.New("user name or password error")
 )

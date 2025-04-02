@@ -47,6 +47,16 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.PostGetClientID has not yet been implemented")
 		})
 	}
+	if api.PostLoginHandler == nil {
+		api.PostLoginHandler = operations.PostLoginHandlerFunc(func(params operations.PostLoginParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostLogin has not yet been implemented")
+		})
+	}
+	if api.PostRegisterHandler == nil {
+		api.PostRegisterHandler = operations.PostRegisterHandlerFunc(func(params operations.PostRegisterParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostRegister has not yet been implemented")
+		})
+	}
 
 	api.PreServerShutdown = func() {}
 

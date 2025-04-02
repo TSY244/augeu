@@ -84,7 +84,7 @@ func main() {
 	} else {
 		token = utils.GenerateToken()
 	}
-
+	//DwServer.Secrete = token
 	logger.Infof("token: %s", token)
 
 	ips, err := utils2.GetIps()

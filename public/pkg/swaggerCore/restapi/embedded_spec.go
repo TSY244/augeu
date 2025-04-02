@@ -70,6 +70,76 @@ func init() {
         }
       }
     },
+    "/login": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功，返回 JWT 令牌",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "用户名或密码错误",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "注册成功",
+            "schema": {
+              "$ref": "#/definitions/RegisterResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
@@ -104,6 +174,23 @@ func init() {
         "success": {
           "type": "boolean",
           "default": false
+        }
+      }
+    },
+    "BadRequestError": {
+      "type": "object",
+      "required": [
+        "message",
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "400",
+          "type": "integer"
+        },
+        "message": {
+          "description": "输入参数错误",
+          "type": "string"
         }
       }
     },
@@ -157,6 +244,47 @@ func init() {
         }
       }
     },
+    "LoginRequest": {
+      "type": "object",
+      "required": [
+        "secrete",
+        "name",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "description": "用户名",
+          "type": "string"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string"
+        },
+        "secrete": {
+          "description": "server 提供的secrete",
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "jwt"
+      ],
+      "properties": {
+        "jwt": {
+          "description": "JWT 令牌",
+          "type": "string",
+          "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
     "PageMeta": {
       "type": "object",
       "properties": {
@@ -197,6 +325,45 @@ func init() {
         "InstalledOn": {
           "description": "安装时间",
           "type": "string"
+        }
+      }
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "required": [
+        "userName",
+        "passWord",
+        "secrete"
+      ],
+      "properties": {
+        "passWord": {
+          "description": "密码",
+          "type": "string"
+        },
+        "secrete": {
+          "description": "server 提供的token",
+          "type": "string"
+        },
+        "userName": {
+          "description": "用户名",
+          "type": "string"
+        }
+      }
+    },
+    "RegisterResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "default": "注册成功"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -312,6 +479,76 @@ func init() {
         }
       }
     },
+    "/login": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功，返回 JWT 令牌",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "用户名或密码错误",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "注册成功",
+            "schema": {
+              "$ref": "#/definitions/RegisterResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
@@ -346,6 +583,23 @@ func init() {
         "success": {
           "type": "boolean",
           "default": false
+        }
+      }
+    },
+    "BadRequestError": {
+      "type": "object",
+      "required": [
+        "message",
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "400",
+          "type": "integer"
+        },
+        "message": {
+          "description": "输入参数错误",
+          "type": "string"
         }
       }
     },
@@ -399,6 +653,47 @@ func init() {
         }
       }
     },
+    "LoginRequest": {
+      "type": "object",
+      "required": [
+        "secrete",
+        "name",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "description": "用户名",
+          "type": "string"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string"
+        },
+        "secrete": {
+          "description": "server 提供的secrete",
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "jwt"
+      ],
+      "properties": {
+        "jwt": {
+          "description": "JWT 令牌",
+          "type": "string",
+          "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
     "PageMeta": {
       "type": "object",
       "properties": {
@@ -439,6 +734,45 @@ func init() {
         "InstalledOn": {
           "description": "安装时间",
           "type": "string"
+        }
+      }
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "required": [
+        "userName",
+        "passWord",
+        "secrete"
+      ],
+      "properties": {
+        "passWord": {
+          "description": "密码",
+          "type": "string"
+        },
+        "secrete": {
+          "description": "server 提供的token",
+          "type": "string"
+        },
+        "userName": {
+          "description": "用户名",
+          "type": "string"
+        }
+      }
+    },
+    "RegisterResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "default": "注册成功"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
         }
       }
     },

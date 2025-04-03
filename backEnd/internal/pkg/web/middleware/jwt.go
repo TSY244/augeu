@@ -111,16 +111,9 @@ func CheckAgentRole(r *http.Request, s *server.Server) middleware.Responder {
 		})
 	}
 	// 检测 uuid
-	sgentInfo, err := HostInfo.GetAgentInfoByClientId(s.DBM.DB, clientId)
+	_, err = HostInfo.GetAgentInfoByUuid(s.DBM.DB, uuid)
 	if err != nil {
-		logger.Errorf("UploadLoginEventApiHandlerFunc -> GetAgentInfoByClientId err:%v", err)
-		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
-			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
-			Message: convert.StrPtr("uuid is invalid"),
-		})
-	}
-	if sgentInfo.UUID != uuid {
-		logger.Errorf("UploadLoginEventApiHandlerFunc -> uuid is invalid")
+		logger.Errorf("UploadLoginEventApiHandlerFunc -> GetAgentInfoByUuid err:%v", err)
 		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
 			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
 			Message: convert.StrPtr("uuid is invalid"),

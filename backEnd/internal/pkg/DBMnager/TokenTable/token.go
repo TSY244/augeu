@@ -2,6 +2,7 @@ package TokenTable
 
 import (
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"time"
 )
 
@@ -9,7 +10,7 @@ type Token struct {
 	CreateAt time.Time      `gorm:"autoCreateTime"`
 	DeleteAt gorm.DeletedAt `gorm:"index"`
 	Creator  string         `gorm:"column:creator"`
-	Token    string
+	Token    string         `gorm:"primarykey"`
 }
 
 func (Token) TableName() string {
@@ -17,11 +18,16 @@ func (Token) TableName() string {
 }
 
 func GeneratorToken(creator, token string, db *gorm.DB) error {
-	return db.Create(&Token{
-		Creator:  creator,
-		Token:    token,
-		DeleteAt: gorm.DeletedAt{Time: time.Now().AddDate(0, 0, 7)},
-	}).Error
+	// 忽视冲突
+	return db.
+		Clauses(clause.OnConflict{
+			DoNothing: true, // 冲突时什么也不做
+		}).
+		Create(&Token{
+			Creator:  creator,
+			Token:    token,
+			DeleteAt: gorm.DeletedAt{Time: time.Now().AddDate(0, 0, 7)},
+		}).Error
 }
 
 func GetToken(db *gorm.DB) (string, error) {

@@ -84,6 +84,20 @@ func (manager *Manager) AutoMigrate() error {
 	if err != nil {
 		return fmt.Errorf("DBMnage.AutoMigrate -> %w", err)
 	}
+
+	// 创建索引
+	if err := CreateIndex(manager.DB); err != nil {
+		return fmt.Errorf("DBMnage.CreateIndex -> %w", err)
+	}
+
+	return nil
+}
+
+func CreateIndex(db *gorm.DB) error {
+	err := Log2.TableUniqueConstraints(db)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

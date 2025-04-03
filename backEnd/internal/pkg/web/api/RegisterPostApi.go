@@ -12,18 +12,18 @@ import (
 	"strings"
 )
 
-func (apiManager *ApiManager) RegisterPostApi() operations2.PostRegisterHandlerFunc {
+func (apiManager *ApiManager) RegisterPostApiHandlerFunc() operations2.PostRegisterHandlerFunc {
 	return func(postRegisterParams operations2.PostRegisterParams) middleware.Responder {
 		// 检测是否是本地的请求
 		remoteAddr := postRegisterParams.HTTPRequest.RemoteAddr
-		if !strings.Contains(remoteAddr, "127.0.0.1") {
+		if !strings.Contains(remoteAddr, "127.0.0.1") { // ? 可能存在绕过？
 			return operations2.NewPostRegisterBadRequest().WithPayload(&models.BadRequestError{
 				Code:    convert.Int64P(int64(operations2.PostRegisterBadRequestCode)),
 				Message: convert.StrPtr("非法请求"),
 			})
 		}
 
-		apiName := "RegisterPostApi"
+		apiName := "RegisterPostApiHandlerFunc"
 		name := postRegisterParams.Data.UserName
 		password := postRegisterParams.Data.PassWord
 		secrete := postRegisterParams.Data.Secrete

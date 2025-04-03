@@ -17,7 +17,7 @@ import (
 const GetVersionOKCode int = 200
 
 /*
-GetVersionOK 返回 BrightPath Api 版本号
+GetVersionOK 返回 Augeu Api 版本号
 
 swagger:response getVersionOK
 */

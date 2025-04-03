@@ -17,7 +17,7 @@ import (
 const PostGetClientIDOKCode int = 200
 
 /*
-PostGetClientIDOK 返回 BrightPath Api 版本号
+PostGetClientIDOK 返回 Augeu Api 版本号
 
 swagger:response postGetClientIdOK
 */

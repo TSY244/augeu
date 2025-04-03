@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  augeu_server:
+    build: .
+    ports:
+      - "18080:8080"  # HTTP 端口
+      - "19191:59191"  # WebSocket 端口
+    restart: always

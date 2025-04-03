@@ -1,8 +1,17 @@
 package Log
 
 import (
+	"context"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"time"
+)
+
+var (
+	configIgnore = clause.OnConflict{
+		Columns:   []clause.Column{{Name: "uuid"}, {Name: "event_time"}, {Name: "login_type"}, {Name: "source_ip"}},
+		DoNothing: true,
+	}
 )
 
 type LoginEvent struct {
@@ -16,10 +25,22 @@ type LoginEvent struct {
 	ProcessName     string         `json:"process_name"`     // 进程名称
 	CreateAt        time.Time      `gorm:"autoCreateTime"`   // 这条sql 记录创建的时间
 	DeleteAt        gorm.DeletedAt `gorm:"index"`
-	ID              uint           `gorm:"primaryKey;autoIncrement"`      // 主键
+	ID              uint           `gorm:"autoIncrement"`                 // 主键
 	UUID            string         `gorm:"type:varchar(255);column:uuid"` // windows 主机的uuid
 }
 
 func (LoginEvent) TableName() string {
 	return "login_event"
+}
+
+func InsertLoginEvent(ctx context.Context, db *gorm.DB, loginEvent *LoginEvent) error {
+	return db.WithContext(ctx).Clauses(configIgnore).Create(loginEvent).Error
+}
+
+func InsertLoginEventBatch(ctx context.Context, db *gorm.DB, loginEvents []*LoginEvent, benchSize ...int) error {
+	size := 500
+	if len(benchSize) > 0 {
+		size = benchSize[0]
+	}
+	return db.WithContext(ctx).Clauses(configIgnore).CreateInBatches(loginEvents, size).Error
 }

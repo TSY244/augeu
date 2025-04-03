@@ -66,3 +66,12 @@ func (Patch) TableName() string {
 func InsertHostInfo(db *gorm.DB, account *Account) error {
 	return db.Create(account).Error
 }
+
+func GetAgentInfoByClientId(db *gorm.DB, clientId string) (*Account, error) {
+	var account Account
+	err := db.Preload("System").Preload("IPAddresses").Where("client_id = ?", clientId).First(&account).Error
+	if err != nil {
+		return nil, err
+	}
+	return &account, nil
+}

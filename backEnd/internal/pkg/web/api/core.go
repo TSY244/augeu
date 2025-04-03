@@ -33,7 +33,7 @@ func (apiManager *ApiManager) HookHttpMiddleware(handler http.Handler) http.Hand
 					r.Response.StatusCode, r.Response.ContentLength,
 				)
 			} else {
-				logger.Info("[%v] [%v] %v len:%v cost:%v",
+				logger.Infof("[%v] [%v] %v len:%v cost:%v",
 					r.RemoteAddr, r.Method, r.RequestURI, r.ContentLength, duration.String())
 			}
 		}()
@@ -50,6 +50,6 @@ func (apiManager *ApiManager) InitApi(swapi *operations.AugeuAPI) {
 	swapi.GetVersionHandler = apiManager.GetVersionApiHandlerFunc()
 	swapi.PostGetClientIDHandler = apiManager.GetClientIdPostApiHandlerFunc()
 	swapi.PostLoginHandler = apiManager.LoginPostApiHandlerFunc()
-	swapi.PostRegisterHandler = apiManager.RegisterPostApi()
+	swapi.PostRegisterHandler = apiManager.RegisterPostApiHandlerFunc()
 
 }

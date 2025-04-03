@@ -54,6 +54,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		PostRegisterHandler: PostRegisterHandlerFunc(func(params PostRegisterParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostRegister has not yet been implemented")
 		}),
+		PostUploadLoginEventHandler: PostUploadLoginEventHandlerFunc(func(params PostUploadLoginEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUploadLoginEvent has not yet been implemented")
+		}),
 	}
 }
 
@@ -98,6 +101,8 @@ type AugeuAPI struct {
 	PostLoginHandler PostLoginHandler
 	// PostRegisterHandler sets the operation handler for the post register operation
 	PostRegisterHandler PostRegisterHandler
+	// PostUploadLoginEventHandler sets the operation handler for the post upload login event operation
+	PostUploadLoginEventHandler PostUploadLoginEventHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -186,6 +191,9 @@ func (o *AugeuAPI) Validate() error {
 	}
 	if o.PostRegisterHandler == nil {
 		unregistered = append(unregistered, "PostRegisterHandler")
+	}
+	if o.PostUploadLoginEventHandler == nil {
+		unregistered = append(unregistered, "PostUploadLoginEventHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -291,6 +299,10 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/register"] = NewPostRegister(o.context, o.PostRegisterHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/upload/loginEvent"] = NewPostUploadLoginEvent(o.context, o.PostUploadLoginEventHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

@@ -50,7 +50,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "返回 BrightPath Api 版本号",
+            "description": "返回 Augeu Api 版本号",
             "schema": {
               "$ref": "#/definitions/GetClientIdResponse"
             }
@@ -140,12 +140,53 @@ func init() {
         }
       }
     },
+    "/upload/loginEvent": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "eventLog",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UploadLoginEventRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "事件日志上传成功",
+            "schema": {
+              "$ref": "#/definitions/UploadLoginEventResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
         "responses": {
           "200": {
-            "description": "返回 BrightPath Api 版本号",
+            "description": "返回 Augeu Api 版本号",
             "schema": {
               "$ref": "#/definitions/Version"
             }
@@ -241,6 +282,59 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "LoginEvent": {
+      "type": "object",
+      "required": [
+        "EventID",
+        "EventTime",
+        "MachineUUID",
+        "LoginType",
+        "Username",
+        "SubjectDomain",
+        "SourceIP",
+        "SubjectUser",
+        "ProcessName"
+      ],
+      "properties": {
+        "EventID": {
+          "description": "事件ID，4624表示成功登录",
+          "type": "integer"
+        },
+        "EventTime": {
+          "description": "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）",
+          "type": "string",
+          "format": "date-time"
+        },
+        "LoginType": {
+          "description": "登录类型（Unknown表示无法识别的类型）",
+          "type": "string"
+        },
+        "MachineUUID": {
+          "description": "设备唯一标识符（UUID格式）",
+          "type": "string"
+        },
+        "ProcessName": {
+          "description": "触发登录的进程名（-表示无）",
+          "type": "string"
+        },
+        "SourceIP": {
+          "description": "源IP地址（-表示无）",
+          "type": "string"
+        },
+        "SubjectDomain": {
+          "description": "登录用户所属域（-表示无）",
+          "type": "string"
+        },
+        "SubjectUser": {
+          "description": "登录会话用户（-表示无）",
+          "type": "string"
+        },
+        "Username": {
+          "description": "登录用户名（SYSTEM表示系统账户）",
+          "type": "string"
         }
       }
     },
@@ -411,6 +505,29 @@ func init() {
         "message": {
           "description": "没有权限",
           "type": "string"
+        }
+      }
+    },
+    "UploadLoginEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/LoginEvent"
+      }
+    },
+    "UploadLoginEventResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "default": "事件日志上传成功"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -459,7 +576,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "返回 BrightPath Api 版本号",
+            "description": "返回 Augeu Api 版本号",
             "schema": {
               "$ref": "#/definitions/GetClientIdResponse"
             }
@@ -549,12 +666,53 @@ func init() {
         }
       }
     },
+    "/upload/loginEvent": {
+      "post": {
+        "security": [],
+        "parameters": [
+          {
+            "name": "eventLog",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UploadLoginEventRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "事件日志上传成功",
+            "schema": {
+              "$ref": "#/definitions/UploadLoginEventResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
         "responses": {
           "200": {
-            "description": "返回 BrightPath Api 版本号",
+            "description": "返回 Augeu Api 版本号",
             "schema": {
               "$ref": "#/definitions/Version"
             }
@@ -650,6 +808,59 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "LoginEvent": {
+      "type": "object",
+      "required": [
+        "EventID",
+        "EventTime",
+        "MachineUUID",
+        "LoginType",
+        "Username",
+        "SubjectDomain",
+        "SourceIP",
+        "SubjectUser",
+        "ProcessName"
+      ],
+      "properties": {
+        "EventID": {
+          "description": "事件ID，4624表示成功登录",
+          "type": "integer"
+        },
+        "EventTime": {
+          "description": "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）",
+          "type": "string",
+          "format": "date-time"
+        },
+        "LoginType": {
+          "description": "登录类型（Unknown表示无法识别的类型）",
+          "type": "string"
+        },
+        "MachineUUID": {
+          "description": "设备唯一标识符（UUID格式）",
+          "type": "string"
+        },
+        "ProcessName": {
+          "description": "触发登录的进程名（-表示无）",
+          "type": "string"
+        },
+        "SourceIP": {
+          "description": "源IP地址（-表示无）",
+          "type": "string"
+        },
+        "SubjectDomain": {
+          "description": "登录用户所属域（-表示无）",
+          "type": "string"
+        },
+        "SubjectUser": {
+          "description": "登录会话用户（-表示无）",
+          "type": "string"
+        },
+        "Username": {
+          "description": "登录用户名（SYSTEM表示系统账户）",
+          "type": "string"
         }
       }
     },
@@ -820,6 +1031,29 @@ func init() {
         "message": {
           "description": "没有权限",
           "type": "string"
+        }
+      }
+    },
+    "UploadLoginEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/LoginEvent"
+      }
+    },
+    "UploadLoginEventResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "default": "事件日志上传成功"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
         }
       }
     },

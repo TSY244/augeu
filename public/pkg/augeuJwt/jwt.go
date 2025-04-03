@@ -3,7 +3,7 @@ package augeuJwt
 import "github.com/golang-jwt/jwt/v4"
 
 const (
-	SIGNING_KEY = "1drftvgybhnjkDERFTGYIJMKO@#$%^&*"
+	SIGNING_KEY = "23456789sdfghjxrdcftvgFVGYBHNJKM@#$%^&*"
 )
 
 const (

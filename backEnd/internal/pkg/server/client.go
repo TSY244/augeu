@@ -76,3 +76,14 @@ func (s *Server) RemoveClient(conn *websocket2.Conn) {
 	defer locker.Unlock()
 	delete(ClientMap, conn)
 }
+
+func (s *Server) CheckClientId(clientId string) bool {
+	locker.RLock()
+	defer locker.RUnlock()
+	for _, v := range ClientMap {
+		if v == clientId {
+			return true
+		}
+	}
+	return false
+}

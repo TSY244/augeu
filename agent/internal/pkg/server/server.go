@@ -3,6 +3,7 @@ package server
 import (
 	config2 "augeu/agent/internal/pkg/config"
 	_const "augeu/agent/internal/utils/const"
+	"augeu/agent/pkg/windowsLog"
 	augueMq "augeu/public/pkg/augeuMq"
 	"augeu/public/pkg/logger"
 	"context"
@@ -20,6 +21,7 @@ type Server struct {
 	Conf          *config2.Config
 	ClientId      string
 	Jwt           string
+	Header        map[string]string
 }
 
 func NewServer(config *config2.Config) (*Server, error) {
@@ -84,7 +86,6 @@ func (s *Server) Run() {
 	go s.cmdHandler()
 	s.receiveClientId() // 获取 ClientId
 	s.sendClientId()    // 建立websocket连接
-
 	s.core()
 
 }
@@ -92,9 +93,17 @@ func (s *Server) Run() {
 // -------------------------------------- private --------------------------------------
 
 func (s *Server) core() {
-	for {
+	windowsLog.RegisterFunctionMap(windowsLog.LoginEvenType, s.PushLoginEvent)
+	//for {
+	err := s.GetLoginEventInfo()
+	if err != nil {
+		logger.Errorf("Failed to get login event info: %v", err)
 		time.Sleep(10 * time.Second)
+		//continue
 	}
+
+	time.Sleep(10 * time.Second)
+	//}
 }
 
 func initMq(ctx context.Context) error {
@@ -162,6 +171,9 @@ func (s *Server) receiveClientId() {
 	}
 	s.ClientId = clientId
 	s.Jwt = jwt
+	s.Header = map[string]string{
+		"Authorization": jwt,
+	}
 	logger.Info("Received client id: ", clientId)
 	logger.Info("Received jwt: ", jwt)
 }

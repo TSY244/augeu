@@ -6,7 +6,7 @@ import (
 	augueMq "augeu/public/pkg/augeuMq"
 	"augeu/public/pkg/logger"
 	"context"
-	"golang.org/x/net/websocket"
+	"github.com/gorilla/websocket"
 	"os"
 	"strings"
 	"time"
@@ -41,12 +41,35 @@ func NewServer(config *config2.Config) (*Server, error) {
 	}
 
 	// websocket
-	ws, err := websocket.Dial(config.WebsocketAddr, "", config.WebsocketAddr)
+	ws, resp, err := websocket.DefaultDialer.Dial(config.WebsocketAddr, nil)
 	if err != nil {
-		logger.Errorf("Failed to connect to websocket: %v", err)
+		logger.Errorf("Failed to dial websocket: %v", err)
 		cancel()
 		return nil, err
 	}
+	if resp.StatusCode != 101 {
+		logger.Errorf("Failed to dial websocket: %v", resp.Status)
+		cancel()
+		return nil, err
+	}
+	go func() {
+		for {
+			select {
+			case <-rootCtx.Done():
+				logger.Info("websocket connection closed")
+				return
+			default:
+			}
+
+			_, _, err := ws.ReadMessage()
+			if err != nil {
+				logger.Errorf("Lost Connection to server: %v", err)
+				cancel()
+				return
+			}
+
+		}
+	}()
 
 	return &Server{
 		//DbManager:     dbm,
@@ -124,7 +147,7 @@ func (s *Server) sendClientId() {
 		logger.Error("ClientId is empty")
 		return
 	}
-	_, err := s.WebsocketConn.Write([]byte(clientId))
+	err := s.WebsocketConn.WriteMessage(websocket.TextMessage, []byte(clientId))
 	if err != nil {
 		logger.Error("Failed to send client id: ", err)
 		return

@@ -1,8 +1,17 @@
 package HostInfo
 
 import (
+	"errors"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"time"
+)
+
+var (
+	configIgnore = clause.OnConflict{
+		Columns:   []clause.Column{{Name: "uuid"}},
+		DoNothing: true,
+	}
 )
 
 // Account 账号信息表
@@ -64,12 +73,47 @@ func (Patch) TableName() string {
 }
 
 func InsertHostInfo(db *gorm.DB, account *Account) error {
-	return db.Create(account).Error
+	return db.Transaction(func(tx *gorm.DB) error {
+		// 1. 先查询是否存在记录
+		var existing Account
+		if err := tx.First(&existing, "uuid = ?", account.UUID).Error; err != nil {
+			if !errors.Is(gorm.ErrRecordNotFound, err) {
+				return err // 其他查询错误
+			}
+			// 2. 不存在则创建（包含关联IP）
+			return tx.Create(account).Error
+		}
+
+		// 3. 存在则执行更新（仅更新非自动字段+关联IP）
+		updateFields := Account{
+			ClientID:    account.ClientID,
+			System:      account.System,
+			IPAddresses: account.IPAddresses,
+		}
+
+		// 主表更新（排除自动管理字段）
+		if err := tx.Model(&existing).
+			Select("client_id", "system"). // 明确指定更新字段
+			Updates(updateFields).Error; err != nil {
+			return err
+		}
+
+		// 4. 处理多对多关联（替换IP列表）
+		if err := tx.Model(&existing).
+			Association("IPAddresses").
+			Replace(account.IPAddresses); err != nil {
+			return err
+		}
+
+		// 更新成功后同步回传最新数据
+		*account = existing
+		return nil
+	})
 }
 
-func GetAgentInfoByClientId(db *gorm.DB, clientId string) (*Account, error) {
+func GetAgentInfoByUuid(db *gorm.DB, clientId string) (*Account, error) {
 	var account Account
-	err := db.Preload("System").Preload("IPAddresses").Where("client_id = ?", clientId).First(&account).Error
+	err := db.Preload("System").Preload("IPAddresses").Where("uuid = ?", clientId).First(&account).Error
 	if err != nil {
 		return nil, err
 	}

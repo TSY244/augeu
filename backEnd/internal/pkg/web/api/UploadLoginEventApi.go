@@ -38,10 +38,7 @@ func (apiManager *ApiManager) UploadLoginEventApiHandlerFunc() operations2.PostU
 		dbData := convert2.ArrayCopy(event, convert2.LoginEvent2Db)
 		instertData := make([]*Log.LoginEvent, 0)
 		for _, data := range dbData {
-			if data.UUID != uuid {
-				logger.Errorf("UploadLoginEventApiHandlerFunc -> uuid is invalid, data.UUID: %v, uuid: %v", data.UUID, uuid)
-				continue
-			}
+			data.UUID = uuid
 			instertData = append(instertData, &data)
 		}
 		if err := Log.InsertLoginEventBatch(apiManager.s.RootCtx, apiManager.s.DBM.DB, instertData); err != nil {

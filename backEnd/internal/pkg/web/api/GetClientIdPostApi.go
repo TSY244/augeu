@@ -1,7 +1,6 @@
 package api
 
 import (
-	"augeu/backEnd/internal/pkg/DBMnager"
 	"augeu/backEnd/internal/pkg/DBMnager/HostInfo"
 	"augeu/backEnd/internal/pkg/DBMnager/TokenTable"
 	"augeu/backEnd/internal/utils/consts/web"
@@ -13,7 +12,6 @@ import (
 	models2 "augeu/public/pkg/swaggerCore/models"
 	operations2 "augeu/public/pkg/swaggerCore/restapi/operations"
 	"augeu/public/util/convert"
-	"errors"
 	"github.com/go-openapi/runtime/middleware"
 )
 
@@ -56,15 +54,15 @@ func (apiManager *ApiManager) GetClientIdPostApiHandlerFunc() operations2.PostGe
 
 		clientData := convert2.GetClientIDRequest2Db(*getClientIdParams.Data)
 		if err := HostInfo.InsertHostInfo(apiManager.s.DBM.DB, &clientData); err != nil {
-			if !errors.Is(err, DBMnager.ErrDuplicateEntry) {
-				logger.Errorf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
-				return operations2.NewPostGetClientIDInternalServerError().WithPayload(&models2.ActionFailure{
-					From:    utils.StrP(apiName),
-					Reason:  utils.StrP(web.InternalError),
-					Success: web.Fail,
-				})
-			}
-			logger.Warnf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
+
+			logger.Errorf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
+			return operations2.NewPostGetClientIDInternalServerError().WithPayload(&models2.ActionFailure{
+				From:    utils.StrP(apiName),
+				Reason:  utils.StrP(web.InternalError),
+				Success: web.Fail,
+			})
+
+			//logger.Warnf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
 		}
 
 		clientId, err := snowNumbers.GetAnStrID()

@@ -19,40 +19,24 @@ import (
 // swagger:model GetClientIdRequest
 type GetClientIDRequest struct {
 
-	// IP 地址列表
+	// client info
 	// Required: true
-	IP []string `json:"ip"`
+	ClientInfo *ClientInfo `json:"client_info"`
 
 	// 密钥
 	// Required: true
 	Secret *string `json:"secret"`
-
-	// 系统信息
-	// Required: true
-	SystemInfo *SystemInfo `json:"system_info"`
-
-	// 唯一标识符
-	// Required: true
-	UUID *string `json:"uuid"`
 }
 
 // Validate validates this get client Id request
 func (m *GetClientIDRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateIP(formats); err != nil {
+	if err := m.validateClientInfo(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateSecret(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateSystemInfo(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateUUID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -62,10 +46,21 @@ func (m *GetClientIDRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *GetClientIDRequest) validateIP(formats strfmt.Registry) error {
+func (m *GetClientIDRequest) validateClientInfo(formats strfmt.Registry) error {
 
-	if err := validate.Required("ip", "body", m.IP); err != nil {
+	if err := validate.Required("client_info", "body", m.ClientInfo); err != nil {
 		return err
+	}
+
+	if m.ClientInfo != nil {
+		if err := m.ClientInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("client_info")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("client_info")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -80,40 +75,11 @@ func (m *GetClientIDRequest) validateSecret(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *GetClientIDRequest) validateSystemInfo(formats strfmt.Registry) error {
-
-	if err := validate.Required("system_info", "body", m.SystemInfo); err != nil {
-		return err
-	}
-
-	if m.SystemInfo != nil {
-		if err := m.SystemInfo.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("system_info")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("system_info")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *GetClientIDRequest) validateUUID(formats strfmt.Registry) error {
-
-	if err := validate.Required("uuid", "body", m.UUID); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // ContextValidate validate this get client Id request based on the context it is used
 func (m *GetClientIDRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateSystemInfo(ctx, formats); err != nil {
+	if err := m.contextValidateClientInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -123,15 +89,15 @@ func (m *GetClientIDRequest) ContextValidate(ctx context.Context, formats strfmt
 	return nil
 }
 
-func (m *GetClientIDRequest) contextValidateSystemInfo(ctx context.Context, formats strfmt.Registry) error {
+func (m *GetClientIDRequest) contextValidateClientInfo(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.SystemInfo != nil {
+	if m.ClientInfo != nil {
 
-		if err := m.SystemInfo.ContextValidate(ctx, formats); err != nil {
+		if err := m.ClientInfo.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("system_info")
+				return ve.ValidateName("client_info")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("system_info")
+				return ce.ValidateName("client_info")
 			}
 			return err
 		}

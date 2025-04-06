@@ -42,6 +42,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		GetGetClientsHandler: GetGetClientsHandlerFunc(func(params GetGetClientsParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetGetClients has not yet been implemented")
+		}),
 		GetVersionHandler: GetVersionHandlerFunc(func(params GetVersionParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetVersion has not yet been implemented")
 		}),
@@ -138,6 +141,8 @@ type AugeuAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// GetGetClientsHandler sets the operation handler for the get get clients operation
+	GetGetClientsHandler GetGetClientsHandler
 	// GetVersionHandler sets the operation handler for the get version operation
 	GetVersionHandler GetVersionHandler
 	// PostGetApplicationEventHandler sets the operation handler for the post get application event operation
@@ -255,6 +260,9 @@ func (o *AugeuAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.GetGetClientsHandler == nil {
+		unregistered = append(unregistered, "GetGetClientsHandler")
+	}
 	if o.GetVersionHandler == nil {
 		unregistered = append(unregistered, "GetVersionHandler")
 	}
@@ -403,6 +411,10 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/get/clients"] = NewGetGetClients(o.context, o.GetGetClientsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

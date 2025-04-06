@@ -60,3 +60,138 @@ func (o *PostGetSecurityEventOK) WriteResponse(rw http.ResponseWriter, producer 
 		panic(err) // let the recovery middleware deal with this
 	}
 }
+
+// PostGetSecurityEventBadRequestCode is the HTTP code returned for type PostGetSecurityEventBadRequest
+const PostGetSecurityEventBadRequestCode int = 400
+
+/*
+PostGetSecurityEventBadRequest 输入参数错误
+
+swagger:response postGetSecurityEventBadRequest
+*/
+type PostGetSecurityEventBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.BadRequestError `json:"body,omitempty"`
+}
+
+// NewPostGetSecurityEventBadRequest creates PostGetSecurityEventBadRequest with default headers values
+func NewPostGetSecurityEventBadRequest() *PostGetSecurityEventBadRequest {
+
+	return &PostGetSecurityEventBadRequest{}
+}
+
+// WithPayload adds the payload to the post get security event bad request response
+func (o *PostGetSecurityEventBadRequest) WithPayload(payload *models.BadRequestError) *PostGetSecurityEventBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get security event bad request response
+func (o *PostGetSecurityEventBadRequest) SetPayload(payload *models.BadRequestError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetSecurityEventBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetSecurityEventForbiddenCode is the HTTP code returned for type PostGetSecurityEventForbidden
+const PostGetSecurityEventForbiddenCode int = 403
+
+/*
+PostGetSecurityEventForbidden 没有权限
+
+swagger:response postGetSecurityEventForbidden
+*/
+type PostGetSecurityEventForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.UnauthorizedError `json:"body,omitempty"`
+}
+
+// NewPostGetSecurityEventForbidden creates PostGetSecurityEventForbidden with default headers values
+func NewPostGetSecurityEventForbidden() *PostGetSecurityEventForbidden {
+
+	return &PostGetSecurityEventForbidden{}
+}
+
+// WithPayload adds the payload to the post get security event forbidden response
+func (o *PostGetSecurityEventForbidden) WithPayload(payload *models.UnauthorizedError) *PostGetSecurityEventForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get security event forbidden response
+func (o *PostGetSecurityEventForbidden) SetPayload(payload *models.UnauthorizedError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetSecurityEventForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetSecurityEventInternalServerErrorCode is the HTTP code returned for type PostGetSecurityEventInternalServerError
+const PostGetSecurityEventInternalServerErrorCode int = 500
+
+/*
+PostGetSecurityEventInternalServerError 内部错误
+
+swagger:response postGetSecurityEventInternalServerError
+*/
+type PostGetSecurityEventInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ActionFailure `json:"body,omitempty"`
+}
+
+// NewPostGetSecurityEventInternalServerError creates PostGetSecurityEventInternalServerError with default headers values
+func NewPostGetSecurityEventInternalServerError() *PostGetSecurityEventInternalServerError {
+
+	return &PostGetSecurityEventInternalServerError{}
+}
+
+// WithPayload adds the payload to the post get security event internal server error response
+func (o *PostGetSecurityEventInternalServerError) WithPayload(payload *models.ActionFailure) *PostGetSecurityEventInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get security event internal server error response
+func (o *PostGetSecurityEventInternalServerError) SetPayload(payload *models.ActionFailure) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetSecurityEventInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}

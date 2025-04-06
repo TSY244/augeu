@@ -60,3 +60,138 @@ func (o *PostGetApplicationEventOK) WriteResponse(rw http.ResponseWriter, produc
 		panic(err) // let the recovery middleware deal with this
 	}
 }
+
+// PostGetApplicationEventBadRequestCode is the HTTP code returned for type PostGetApplicationEventBadRequest
+const PostGetApplicationEventBadRequestCode int = 400
+
+/*
+PostGetApplicationEventBadRequest 输入参数错误
+
+swagger:response postGetApplicationEventBadRequest
+*/
+type PostGetApplicationEventBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.BadRequestError `json:"body,omitempty"`
+}
+
+// NewPostGetApplicationEventBadRequest creates PostGetApplicationEventBadRequest with default headers values
+func NewPostGetApplicationEventBadRequest() *PostGetApplicationEventBadRequest {
+
+	return &PostGetApplicationEventBadRequest{}
+}
+
+// WithPayload adds the payload to the post get application event bad request response
+func (o *PostGetApplicationEventBadRequest) WithPayload(payload *models.BadRequestError) *PostGetApplicationEventBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get application event bad request response
+func (o *PostGetApplicationEventBadRequest) SetPayload(payload *models.BadRequestError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetApplicationEventBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetApplicationEventForbiddenCode is the HTTP code returned for type PostGetApplicationEventForbidden
+const PostGetApplicationEventForbiddenCode int = 403
+
+/*
+PostGetApplicationEventForbidden 没有权限
+
+swagger:response postGetApplicationEventForbidden
+*/
+type PostGetApplicationEventForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.UnauthorizedError `json:"body,omitempty"`
+}
+
+// NewPostGetApplicationEventForbidden creates PostGetApplicationEventForbidden with default headers values
+func NewPostGetApplicationEventForbidden() *PostGetApplicationEventForbidden {
+
+	return &PostGetApplicationEventForbidden{}
+}
+
+// WithPayload adds the payload to the post get application event forbidden response
+func (o *PostGetApplicationEventForbidden) WithPayload(payload *models.UnauthorizedError) *PostGetApplicationEventForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get application event forbidden response
+func (o *PostGetApplicationEventForbidden) SetPayload(payload *models.UnauthorizedError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetApplicationEventForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetApplicationEventInternalServerErrorCode is the HTTP code returned for type PostGetApplicationEventInternalServerError
+const PostGetApplicationEventInternalServerErrorCode int = 500
+
+/*
+PostGetApplicationEventInternalServerError 内部错误
+
+swagger:response postGetApplicationEventInternalServerError
+*/
+type PostGetApplicationEventInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ActionFailure `json:"body,omitempty"`
+}
+
+// NewPostGetApplicationEventInternalServerError creates PostGetApplicationEventInternalServerError with default headers values
+func NewPostGetApplicationEventInternalServerError() *PostGetApplicationEventInternalServerError {
+
+	return &PostGetApplicationEventInternalServerError{}
+}
+
+// WithPayload adds the payload to the post get application event internal server error response
+func (o *PostGetApplicationEventInternalServerError) WithPayload(payload *models.ActionFailure) *PostGetApplicationEventInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get application event internal server error response
+func (o *PostGetApplicationEventInternalServerError) SetPayload(payload *models.ActionFailure) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetApplicationEventInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}

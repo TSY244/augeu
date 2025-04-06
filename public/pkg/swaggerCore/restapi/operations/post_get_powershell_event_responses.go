@@ -60,3 +60,138 @@ func (o *PostGetPowershellEventOK) WriteResponse(rw http.ResponseWriter, produce
 		panic(err) // let the recovery middleware deal with this
 	}
 }
+
+// PostGetPowershellEventBadRequestCode is the HTTP code returned for type PostGetPowershellEventBadRequest
+const PostGetPowershellEventBadRequestCode int = 400
+
+/*
+PostGetPowershellEventBadRequest 输入参数错误
+
+swagger:response postGetPowershellEventBadRequest
+*/
+type PostGetPowershellEventBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.BadRequestError `json:"body,omitempty"`
+}
+
+// NewPostGetPowershellEventBadRequest creates PostGetPowershellEventBadRequest with default headers values
+func NewPostGetPowershellEventBadRequest() *PostGetPowershellEventBadRequest {
+
+	return &PostGetPowershellEventBadRequest{}
+}
+
+// WithPayload adds the payload to the post get powershell event bad request response
+func (o *PostGetPowershellEventBadRequest) WithPayload(payload *models.BadRequestError) *PostGetPowershellEventBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get powershell event bad request response
+func (o *PostGetPowershellEventBadRequest) SetPayload(payload *models.BadRequestError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetPowershellEventBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetPowershellEventForbiddenCode is the HTTP code returned for type PostGetPowershellEventForbidden
+const PostGetPowershellEventForbiddenCode int = 403
+
+/*
+PostGetPowershellEventForbidden 没有权限
+
+swagger:response postGetPowershellEventForbidden
+*/
+type PostGetPowershellEventForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.UnauthorizedError `json:"body,omitempty"`
+}
+
+// NewPostGetPowershellEventForbidden creates PostGetPowershellEventForbidden with default headers values
+func NewPostGetPowershellEventForbidden() *PostGetPowershellEventForbidden {
+
+	return &PostGetPowershellEventForbidden{}
+}
+
+// WithPayload adds the payload to the post get powershell event forbidden response
+func (o *PostGetPowershellEventForbidden) WithPayload(payload *models.UnauthorizedError) *PostGetPowershellEventForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get powershell event forbidden response
+func (o *PostGetPowershellEventForbidden) SetPayload(payload *models.UnauthorizedError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetPowershellEventForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetPowershellEventInternalServerErrorCode is the HTTP code returned for type PostGetPowershellEventInternalServerError
+const PostGetPowershellEventInternalServerErrorCode int = 500
+
+/*
+PostGetPowershellEventInternalServerError 内部错误
+
+swagger:response postGetPowershellEventInternalServerError
+*/
+type PostGetPowershellEventInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ActionFailure `json:"body,omitempty"`
+}
+
+// NewPostGetPowershellEventInternalServerError creates PostGetPowershellEventInternalServerError with default headers values
+func NewPostGetPowershellEventInternalServerError() *PostGetPowershellEventInternalServerError {
+
+	return &PostGetPowershellEventInternalServerError{}
+}
+
+// WithPayload adds the payload to the post get powershell event internal server error response
+func (o *PostGetPowershellEventInternalServerError) WithPayload(payload *models.ActionFailure) *PostGetPowershellEventInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get powershell event internal server error response
+func (o *PostGetPowershellEventInternalServerError) SetPayload(payload *models.ActionFailure) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetPowershellEventInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}

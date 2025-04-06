@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"augeu/public/pkg/swaggerCore/models"
 )
 
 // PostUpdataSecurityEventOKCode is the HTTP code returned for type PostUpdataSecurityEventOK
@@ -20,6 +22,11 @@ PostUpdataSecurityEventOK 上传成功
 swagger:response postUpdataSecurityEventOK
 */
 type PostUpdataSecurityEventOK struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.SuccessResponse `json:"body,omitempty"`
 }
 
 // NewPostUpdataSecurityEventOK creates PostUpdataSecurityEventOK with default headers values
@@ -28,10 +35,25 @@ func NewPostUpdataSecurityEventOK() *PostUpdataSecurityEventOK {
 	return &PostUpdataSecurityEventOK{}
 }
 
+// WithPayload adds the payload to the post updata security event o k response
+func (o *PostUpdataSecurityEventOK) WithPayload(payload *models.SuccessResponse) *PostUpdataSecurityEventOK {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post updata security event o k response
+func (o *PostUpdataSecurityEventOK) SetPayload(payload *models.SuccessResponse) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *PostUpdataSecurityEventOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(200)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }

@@ -57,6 +57,58 @@ func init() {
                 "$ref": "#/definitions/ApplicationEvent"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/get/clients": {
+      "get": {
+        "summary": "查询客户端列表",
+        "responses": {
+          "200": {
+            "description": "成功返回客户端列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetClientsResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -81,6 +133,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/LoginEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -107,6 +177,24 @@ func init() {
                 "$ref": "#/definitions/EventPowerShell"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -131,6 +219,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/EventCreateProcess"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -157,6 +263,24 @@ func init() {
                 "$ref": "#/definitions/EventRDPLogon"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -181,6 +305,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/SecurityEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -207,6 +349,24 @@ func init() {
                 "$ref": "#/definitions/ServiceInfo"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -231,6 +391,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/SystemEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -357,7 +535,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -379,7 +578,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -401,7 +621,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -423,7 +664,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/RDPEventUpload"
+            }
           }
         }
       }
@@ -445,7 +689,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
           }
         }
       }
@@ -467,7 +714,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -489,7 +757,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -613,6 +902,31 @@ func init() {
         }
       }
     },
+    "ClientInfo": {
+      "type": "object",
+      "required": [
+        "uuid",
+        "ip",
+        "SystemInfo"
+      ],
+      "properties": {
+        "SystemInfo": {
+          "description": "系统信息",
+          "$ref": "#/definitions/SystemInfo"
+        },
+        "ip": {
+          "description": "IP 地址列表",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "uuid": {
+          "description": "唯一标识符",
+          "type": "string"
+        }
+      }
+    },
     "CommonQuery": {
       "type": "object",
       "properties": {
@@ -712,29 +1026,15 @@ func init() {
     "GetClientIdRequest": {
       "type": "object",
       "required": [
-        "uuid",
         "secret",
-        "ip",
-        "system_info"
+        "client_info"
       ],
       "properties": {
-        "ip": {
-          "description": "IP 地址列表",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "client_info": {
+          "$ref": "#/definitions/ClientInfo"
         },
         "secret": {
           "description": "密钥",
-          "type": "string"
-        },
-        "system_info": {
-          "description": "系统信息",
-          "$ref": "#/definitions/SystemInfo"
-        },
-        "uuid": {
-          "description": "唯一标识符",
           "type": "string"
         }
       }
@@ -756,6 +1056,17 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "GetClientsResponse": {
+      "type": "object",
+      "properties": {
+        "clients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClientInfo"
+          }
         }
       }
     },
@@ -1055,6 +1366,31 @@ func init() {
         },
         "UUID": {
           "type": "string"
+        }
+      }
+    },
+    "SuccessResponse": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "success"
+      ],
+      "properties": {
+        "code": {
+          "description": "状态码",
+          "type": "integer",
+          "default": 0
+        },
+        "message": {
+          "description": "状态描述",
+          "type": "string",
+          "default": "success"
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -1200,6 +1536,58 @@ func init() {
                 "$ref": "#/definitions/ApplicationEvent"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/get/clients": {
+      "get": {
+        "summary": "查询客户端列表",
+        "responses": {
+          "200": {
+            "description": "成功返回客户端列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetClientsResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1224,6 +1612,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/LoginEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -1250,6 +1656,24 @@ func init() {
                 "$ref": "#/definitions/EventPowerShell"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1274,6 +1698,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/EventCreateProcess"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -1300,6 +1742,24 @@ func init() {
                 "$ref": "#/definitions/EventRDPLogon"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1324,6 +1784,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/SecurityEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -1350,6 +1828,24 @@ func init() {
                 "$ref": "#/definitions/ServiceInfo"
               }
             }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1374,6 +1870,24 @@ func init() {
               "items": {
                 "$ref": "#/definitions/SystemEvent"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -1500,7 +2014,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1522,7 +2057,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1544,7 +2100,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1566,7 +2143,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/RDPEventUpload"
+            }
           }
         }
       }
@@ -1588,7 +2168,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
           }
         }
       }
@@ -1610,7 +2193,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1632,7 +2236,28 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "上传成功"
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
           }
         }
       }
@@ -1756,6 +2381,31 @@ func init() {
         }
       }
     },
+    "ClientInfo": {
+      "type": "object",
+      "required": [
+        "uuid",
+        "ip",
+        "SystemInfo"
+      ],
+      "properties": {
+        "SystemInfo": {
+          "description": "系统信息",
+          "$ref": "#/definitions/SystemInfo"
+        },
+        "ip": {
+          "description": "IP 地址列表",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "uuid": {
+          "description": "唯一标识符",
+          "type": "string"
+        }
+      }
+    },
     "CommonQuery": {
       "type": "object",
       "properties": {
@@ -1855,29 +2505,15 @@ func init() {
     "GetClientIdRequest": {
       "type": "object",
       "required": [
-        "uuid",
         "secret",
-        "ip",
-        "system_info"
+        "client_info"
       ],
       "properties": {
-        "ip": {
-          "description": "IP 地址列表",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "client_info": {
+          "$ref": "#/definitions/ClientInfo"
         },
         "secret": {
           "description": "密钥",
-          "type": "string"
-        },
-        "system_info": {
-          "description": "系统信息",
-          "$ref": "#/definitions/SystemInfo"
-        },
-        "uuid": {
-          "description": "唯一标识符",
           "type": "string"
         }
       }
@@ -1899,6 +2535,17 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "GetClientsResponse": {
+      "type": "object",
+      "properties": {
+        "clients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClientInfo"
+          }
         }
       }
     },
@@ -2198,6 +2845,31 @@ func init() {
         },
         "UUID": {
           "type": "string"
+        }
+      }
+    },
+    "SuccessResponse": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "success"
+      ],
+      "properties": {
+        "code": {
+          "description": "状态码",
+          "type": "integer",
+          "default": 0
+        },
+        "message": {
+          "description": "状态描述",
+          "type": "string",
+          "default": "success"
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean",
+          "default": true
         }
       }
     },

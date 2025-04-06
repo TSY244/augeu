@@ -37,6 +37,11 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
+	if api.GetGetClientsHandler == nil {
+		api.GetGetClientsHandler = operations.GetGetClientsHandlerFunc(func(params operations.GetGetClientsParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetGetClients has not yet been implemented")
+		})
+	}
 	if api.GetVersionHandler == nil {
 		api.GetVersionHandler = operations.GetVersionHandlerFunc(func(params operations.GetVersionParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetVersion has not yet been implemented")

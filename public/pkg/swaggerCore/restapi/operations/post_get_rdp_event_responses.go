@@ -60,3 +60,138 @@ func (o *PostGetRdpEventOK) WriteResponse(rw http.ResponseWriter, producer runti
 		panic(err) // let the recovery middleware deal with this
 	}
 }
+
+// PostGetRdpEventBadRequestCode is the HTTP code returned for type PostGetRdpEventBadRequest
+const PostGetRdpEventBadRequestCode int = 400
+
+/*
+PostGetRdpEventBadRequest 输入参数错误
+
+swagger:response postGetRdpEventBadRequest
+*/
+type PostGetRdpEventBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.BadRequestError `json:"body,omitempty"`
+}
+
+// NewPostGetRdpEventBadRequest creates PostGetRdpEventBadRequest with default headers values
+func NewPostGetRdpEventBadRequest() *PostGetRdpEventBadRequest {
+
+	return &PostGetRdpEventBadRequest{}
+}
+
+// WithPayload adds the payload to the post get rdp event bad request response
+func (o *PostGetRdpEventBadRequest) WithPayload(payload *models.BadRequestError) *PostGetRdpEventBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get rdp event bad request response
+func (o *PostGetRdpEventBadRequest) SetPayload(payload *models.BadRequestError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetRdpEventBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetRdpEventForbiddenCode is the HTTP code returned for type PostGetRdpEventForbidden
+const PostGetRdpEventForbiddenCode int = 403
+
+/*
+PostGetRdpEventForbidden 没有权限
+
+swagger:response postGetRdpEventForbidden
+*/
+type PostGetRdpEventForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.UnauthorizedError `json:"body,omitempty"`
+}
+
+// NewPostGetRdpEventForbidden creates PostGetRdpEventForbidden with default headers values
+func NewPostGetRdpEventForbidden() *PostGetRdpEventForbidden {
+
+	return &PostGetRdpEventForbidden{}
+}
+
+// WithPayload adds the payload to the post get rdp event forbidden response
+func (o *PostGetRdpEventForbidden) WithPayload(payload *models.UnauthorizedError) *PostGetRdpEventForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get rdp event forbidden response
+func (o *PostGetRdpEventForbidden) SetPayload(payload *models.UnauthorizedError) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetRdpEventForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+// PostGetRdpEventInternalServerErrorCode is the HTTP code returned for type PostGetRdpEventInternalServerError
+const PostGetRdpEventInternalServerErrorCode int = 500
+
+/*
+PostGetRdpEventInternalServerError 内部错误
+
+swagger:response postGetRdpEventInternalServerError
+*/
+type PostGetRdpEventInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ActionFailure `json:"body,omitempty"`
+}
+
+// NewPostGetRdpEventInternalServerError creates PostGetRdpEventInternalServerError with default headers values
+func NewPostGetRdpEventInternalServerError() *PostGetRdpEventInternalServerError {
+
+	return &PostGetRdpEventInternalServerError{}
+}
+
+// WithPayload adds the payload to the post get rdp event internal server error response
+func (o *PostGetRdpEventInternalServerError) WithPayload(payload *models.ActionFailure) *PostGetRdpEventInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the post get rdp event internal server error response
+func (o *PostGetRdpEventInternalServerError) SetPayload(payload *models.ActionFailure) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PostGetRdpEventInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}

@@ -133,6 +133,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/LoginEvent'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/rdpEvent:
     post:
@@ -147,6 +159,8 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/RDPEventUpload"
 
   /get/rdpEvent:
     post:
@@ -163,6 +177,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/EventRDPLogon'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/serviceEvent:
     post:
@@ -177,6 +203,20 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/serviceEvent:
     post:
@@ -193,6 +233,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ServiceInfo'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/processEvent:
     post:
@@ -207,6 +259,20 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/processEvent:
     post:
@@ -223,6 +289,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/EventCreateProcess'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/powershellEvent:
     post:
@@ -237,6 +315,20 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/powershellEvent:
     post:
@@ -253,6 +345,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/EventPowerShell'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/systemEvent:
     post:
@@ -264,9 +368,24 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SystemEvent'
+
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/systemEvent:
     post:
@@ -283,6 +402,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SystemEvent'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/applicationEvent:
     post:
@@ -297,6 +428,20 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/applicationEvent:
     post:
@@ -313,6 +458,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ApplicationEvent'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /updata/securityEvent:
     post:
@@ -327,6 +484,8 @@ paths:
       responses:
         200:
           description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
 
   /get/securityEvent:
     post:
@@ -343,6 +502,42 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SecurityEvent'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+
+  /get/clients:
+    get:
+      summary: 查询客户端列表
+      responses:
+        200:
+          description: 成功返回客户端列表
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetClientsResponse'
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+
 
 
 
@@ -355,6 +550,27 @@ definitions:
         type: string
         description: "版本号"
         default: 0.0.1
+
+  SuccessResponse:
+    type: object
+    required:
+      - code
+      - message
+      - success
+    properties:
+      code:
+        type: integer
+        default: 0
+        description: "状态码"
+      message:
+        type: string
+        default: "success"
+        description: "状态描述"
+      success:
+        type: boolean
+        default: true
+        description: "是否成功"
+
 
   PageMeta:
     type: object
@@ -413,28 +629,38 @@ definitions:
       jwt:
         type: string
 
-  GetClientIdRequest:
+  ClientInfo:
     type: object
     required:
       - uuid
-      - secret
       - ip
-      - system_info
+      - SystemInfo
     properties:
       uuid:
         type: string
         description: "唯一标识符"
-      secret:
-        type: string
-        description: "密钥"
       ip:
         type: array
         items:
           type: string
         description: "IP 地址列表"
-      system_info:
+      SystemInfo:
         $ref: "#/definitions/SystemInfo"
         description: "系统信息"
+
+
+  GetClientIdRequest:
+    type: object
+    required:
+      - secret
+      - client_info
+    properties:
+      secret:
+        type: string
+        description: "密钥"
+      client_info:
+        $ref: "#/definitions/ClientInfo"
+
 
   SystemInfo:
     type: object
@@ -828,3 +1054,11 @@ definitions:
         type: string
       Description:
         type: string
+
+  GetClientsResponse:
+    type: object
+    properties:
+      clients:
+        type: array
+        items:
+          $ref: '#/definitions/ClientInfo'

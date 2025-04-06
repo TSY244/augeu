@@ -118,6 +118,235 @@ paths:
           schema:
             $ref: "#/definitions/UnauthorizedError"
 
+  /get/loginEvent:
+    post:
+      summary: 查询登录事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/LoginEventQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LoginEvent'
+
+  /updata/rdpEvent:
+    post:
+      summary: 上传RDP事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RDPEventUpload'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/rdpEvent:
+    post:
+      summary: 查询RDP事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EventRDPLogon'
+
+  /updata/serviceEvent:
+    post:
+      summary: 上传服务事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceEventUpload'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/serviceEvent:
+    post:
+      summary: 查询服务事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回服务事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceInfo'
+
+  /updata/processEvent:
+    post:
+      summary: 上传创建进程事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EventCreateProcess'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/processEvent:
+    post:
+      summary: 查询创建进程事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EventCreateProcess'
+
+  /updata/powershellEvent:
+    post:
+      summary: 上传PowerShell事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EventPowerShell'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/powershellEvent:
+    post:
+      summary: 查询PowerShell事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EventPowerShell'
+
+  /updata/systemEvent:
+    post:
+      summary: 上传系统日志事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SystemEvent'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/systemEvent:
+    post:
+      summary: 查询系统日志事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SystemEvent'
+
+  /updata/applicationEvent:
+    post:
+      summary: 上传应用日志事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationEvent'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/applicationEvent:
+    post:
+      summary: 查询应用日志事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationEvent'
+
+  /updata/securityEvent:
+    post:
+      summary: 上传安全日志事件
+      parameters:
+        - in: body
+          name: events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SecurityEvent'
+      responses:
+        200:
+          description: 上传成功
+
+  /get/securityEvent:
+    post:
+      summary: 查询安全日志事件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CommonQuery'
+      responses:
+        200:
+          description: 成功返回事件数组
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SecurityEvent'
+
+
+
+
 definitions:
   Version:
     type: object
@@ -388,3 +617,214 @@ definitions:
         type: string
         default: "事件日志上传成功"
 
+  QueryEvent:
+    type: object
+    properties:
+      event_type:
+        type: string
+        enum:
+          - login
+          - rdp
+          - service
+          - user
+          - createProcessLog
+          - powershell
+          - lsass
+          - system
+          - application
+          - security
+      uuid:
+        type: string
+        description: "UUID"
+        example: "1234567890"
+      clientId:
+        type: string
+        description: "Client ID"
+      ip:
+        type: string
+        description: "IP"
+        example: "127.0.0.1"
+      eventId:
+        type: integer
+        description: "Event ID"
+
+  LoginEventQuery:
+    type: object
+    properties:
+      clientId:
+        type: string
+      Uuid:
+        type: string
+      ip:
+        type: string
+
+  CommonQuery:
+    type: object
+    properties:
+      clientId:
+        type: string
+      Uuid:
+        type: string
+      ip:
+        type: string
+
+  RDPEventUpload:
+    type: object
+    properties:
+      event_id:
+        type: string
+      description:
+        type: string
+
+  ServiceEventUpload:
+    type: object
+    properties:
+      event_id:
+        type: string
+      description:
+        type: string
+
+#  LoginEvent:
+#    type: object
+#    properties:
+#      EventId:
+#        type: integer
+#      EventTime:
+#        type: string
+#        format: date-time
+#      LoginType:
+#        type: string
+#      SourceIp:
+#        type: string
+#      Username:
+#        type: string
+#      SubjectUsername:
+#        type: string
+#      SubjectDomain:
+#        type: string
+#      ProcessName:
+#        type: string
+#      UUID:
+#        type: string
+
+  EventRDPLogon:
+    type: object
+    properties:
+      CreateAt:
+        type: string
+        format: date-time
+      ID:
+        type: integer
+      UUID:
+        type: string
+      EventID:
+        type: string
+      LoginName:
+        type: string
+      Address:
+        type: string
+      Domain:
+        type: string
+      Description:
+        type: string
+
+  ServiceInfo:
+    type: object
+    properties:
+      ID:
+        type: integer
+      ServiceName:
+        type: string
+      ImagePath:
+        type: string
+      StartType:
+        type: string
+      Account:
+        type: string
+      Description:
+        type: string
+      UUID:
+        type: string
+      EventID:
+        type: string
+
+  EventCreateProcess:
+    type: object
+    properties:
+      ID:
+        type: integer
+      UUID:
+        type: string
+      EventID:
+        type: string
+      Create_User:
+        type: string
+      Create_User_Domain:
+        type: string
+      NewProcessName:
+        type: string
+      ParentProcessName:
+        type: string
+      CommandLine:
+        type: string
+      Description:
+        type: string
+
+  EventPowerShell:
+    type: object
+    properties:
+      ID:
+        type: integer
+      UUID:
+        type: string
+      EventID:
+        type: string
+      Command:
+        type: string
+      Description:
+        type: string
+
+  SystemEvent:
+    type: object
+    properties:
+      ID:
+        type: integer
+      UUID:
+        type: string
+      EventID:
+        type: string
+      LevelDisplayName:
+        type: string
+      Description:
+        type: string
+
+  ApplicationEvent:
+    type: object
+    properties:
+      ID:
+        type: integer
+      UUID:
+        type: string
+      CreateTime:
+        type: string
+        format: date-time
+      EventID:
+        type: string
+      LevelDisplayName:
+        type: string
+      Description:
+        type: string
+
+  SecurityEvent:
+    type: object
+    properties:
+      ID:
+        type: integer
+      UUID:
+        type: string
+      EventID:
+        type: string
+      LevelDisplayName:
+        type: string
+      Description:
+        type: string

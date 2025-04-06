@@ -36,6 +36,206 @@ func init() {
   },
   "basePath": "/api/v1",
   "paths": {
+    "/get/applicationEvent": {
+      "post": {
+        "summary": "查询应用日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/loginEvent": {
+      "post": {
+        "summary": "查询登录事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginEventQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LoginEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/powershellEvent": {
+      "post": {
+        "summary": "查询PowerShell事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventPowerShell"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/processEvent": {
+      "post": {
+        "summary": "查询创建进程事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventCreateProcess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/rdpEvent": {
+      "post": {
+        "summary": "查询RDP事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventRDPLogon"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/securityEvent": {
+      "post": {
+        "summary": "查询安全日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SecurityEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/serviceEvent": {
+      "post": {
+        "summary": "查询服务事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回服务事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ServiceInfo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/systemEvent": {
+      "post": {
+        "summary": "查询系统日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemEvent"
+              }
+            }
+          }
+        }
+      }
+    },
     "/getClientId": {
       "post": {
         "security": [],
@@ -140,6 +340,160 @@ func init() {
         }
       }
     },
+    "/updata/applicationEvent": {
+      "post": {
+        "summary": "上传应用日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/powershellEvent": {
+      "post": {
+        "summary": "上传PowerShell事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventPowerShell"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/processEvent": {
+      "post": {
+        "summary": "上传创建进程事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventCreateProcess"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/rdpEvent": {
+      "post": {
+        "summary": "上传RDP事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RDPEventUpload"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/securityEvent": {
+      "post": {
+        "summary": "上传安全日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SecurityEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/serviceEvent": {
+      "post": {
+        "summary": "上传服务事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ServiceEventUpload"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/systemEvent": {
+      "post": {
+        "summary": "上传系统日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
     "/upload/loginEvent": {
       "post": {
         "security": [],
@@ -218,6 +572,30 @@ func init() {
         }
       }
     },
+    "ApplicationEvent": {
+      "type": "object",
+      "properties": {
+        "CreateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
     "BadRequestError": {
       "type": "object",
       "required": [
@@ -231,6 +609,102 @@ func init() {
         },
         "message": {
           "description": "输入参数错误",
+          "type": "string"
+        }
+      }
+    },
+    "CommonQuery": {
+      "type": "object",
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        }
+      }
+    },
+    "EventCreateProcess": {
+      "type": "object",
+      "properties": {
+        "CommandLine": {
+          "type": "string"
+        },
+        "Create_User": {
+          "type": "string"
+        },
+        "Create_User_Domain": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "NewProcessName": {
+          "type": "string"
+        },
+        "ParentProcessName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "EventPowerShell": {
+      "type": "object",
+      "properties": {
+        "Command": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "EventRDPLogon": {
+      "type": "object",
+      "properties": {
+        "Address": {
+          "type": "string"
+        },
+        "CreateAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Domain": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LoginName": {
+          "type": "string"
+        },
+        "UUID": {
           "type": "string"
         }
       }
@@ -338,6 +812,20 @@ func init() {
         }
       }
     },
+    "LoginEventQuery": {
+      "type": "object",
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        }
+      }
+    },
     "LoginRequest": {
       "type": "object",
       "required": [
@@ -422,6 +910,55 @@ func init() {
         }
       }
     },
+    "QueryEvent": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "description": "Client ID",
+          "type": "string"
+        },
+        "eventId": {
+          "description": "Event ID",
+          "type": "integer"
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "login",
+            "rdp",
+            "service",
+            "user",
+            "createProcessLog",
+            "powershell",
+            "lsass",
+            "system",
+            "application",
+            "security"
+          ]
+        },
+        "ip": {
+          "description": "IP",
+          "type": "string",
+          "example": "127.0.0.1"
+        },
+        "uuid": {
+          "description": "UUID",
+          "type": "string",
+          "example": "1234567890"
+        }
+      }
+    },
+    "RDPEventUpload": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
+        }
+      }
+    },
     "RegisterRequest": {
       "type": "object",
       "required": [
@@ -458,6 +995,86 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "SecurityEvent": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceEventUpload": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceInfo": {
+      "type": "object",
+      "properties": {
+        "Account": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "ImagePath": {
+          "type": "string"
+        },
+        "ServiceName": {
+          "type": "string"
+        },
+        "StartType": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "SystemEvent": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
         }
       }
     },
@@ -562,6 +1179,206 @@ func init() {
   },
   "basePath": "/api/v1",
   "paths": {
+    "/get/applicationEvent": {
+      "post": {
+        "summary": "查询应用日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/loginEvent": {
+      "post": {
+        "summary": "查询登录事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginEventQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LoginEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/powershellEvent": {
+      "post": {
+        "summary": "查询PowerShell事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventPowerShell"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/processEvent": {
+      "post": {
+        "summary": "查询创建进程事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventCreateProcess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/rdpEvent": {
+      "post": {
+        "summary": "查询RDP事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventRDPLogon"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/securityEvent": {
+      "post": {
+        "summary": "查询安全日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SecurityEvent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/serviceEvent": {
+      "post": {
+        "summary": "查询服务事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回服务事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ServiceInfo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/systemEvent": {
+      "post": {
+        "summary": "查询系统日志事件",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CommonQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功返回事件数组",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemEvent"
+              }
+            }
+          }
+        }
+      }
+    },
     "/getClientId": {
       "post": {
         "security": [],
@@ -666,6 +1483,160 @@ func init() {
         }
       }
     },
+    "/updata/applicationEvent": {
+      "post": {
+        "summary": "上传应用日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/powershellEvent": {
+      "post": {
+        "summary": "上传PowerShell事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventPowerShell"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/processEvent": {
+      "post": {
+        "summary": "上传创建进程事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventCreateProcess"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/rdpEvent": {
+      "post": {
+        "summary": "上传RDP事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RDPEventUpload"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/securityEvent": {
+      "post": {
+        "summary": "上传安全日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SecurityEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/serviceEvent": {
+      "post": {
+        "summary": "上传服务事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ServiceEventUpload"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
+    "/updata/systemEvent": {
+      "post": {
+        "summary": "上传系统日志事件",
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemEvent"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功"
+          }
+        }
+      }
+    },
     "/upload/loginEvent": {
       "post": {
         "security": [],
@@ -744,6 +1715,30 @@ func init() {
         }
       }
     },
+    "ApplicationEvent": {
+      "type": "object",
+      "properties": {
+        "CreateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
     "BadRequestError": {
       "type": "object",
       "required": [
@@ -757,6 +1752,102 @@ func init() {
         },
         "message": {
           "description": "输入参数错误",
+          "type": "string"
+        }
+      }
+    },
+    "CommonQuery": {
+      "type": "object",
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        }
+      }
+    },
+    "EventCreateProcess": {
+      "type": "object",
+      "properties": {
+        "CommandLine": {
+          "type": "string"
+        },
+        "Create_User": {
+          "type": "string"
+        },
+        "Create_User_Domain": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "NewProcessName": {
+          "type": "string"
+        },
+        "ParentProcessName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "EventPowerShell": {
+      "type": "object",
+      "properties": {
+        "Command": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "EventRDPLogon": {
+      "type": "object",
+      "properties": {
+        "Address": {
+          "type": "string"
+        },
+        "CreateAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Domain": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LoginName": {
+          "type": "string"
+        },
+        "UUID": {
           "type": "string"
         }
       }
@@ -864,6 +1955,20 @@ func init() {
         }
       }
     },
+    "LoginEventQuery": {
+      "type": "object",
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        }
+      }
+    },
     "LoginRequest": {
       "type": "object",
       "required": [
@@ -948,6 +2053,55 @@ func init() {
         }
       }
     },
+    "QueryEvent": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "description": "Client ID",
+          "type": "string"
+        },
+        "eventId": {
+          "description": "Event ID",
+          "type": "integer"
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "login",
+            "rdp",
+            "service",
+            "user",
+            "createProcessLog",
+            "powershell",
+            "lsass",
+            "system",
+            "application",
+            "security"
+          ]
+        },
+        "ip": {
+          "description": "IP",
+          "type": "string",
+          "example": "127.0.0.1"
+        },
+        "uuid": {
+          "description": "UUID",
+          "type": "string",
+          "example": "1234567890"
+        }
+      }
+    },
+    "RDPEventUpload": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
+        }
+      }
+    },
     "RegisterRequest": {
       "type": "object",
       "required": [
@@ -984,6 +2138,86 @@ func init() {
         "success": {
           "type": "boolean",
           "default": true
+        }
+      }
+    },
+    "SecurityEvent": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceEventUpload": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceInfo": {
+      "type": "object",
+      "properties": {
+        "Account": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "ImagePath": {
+          "type": "string"
+        },
+        "ServiceName": {
+          "type": "string"
+        },
+        "StartType": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
+        }
+      }
+    },
+    "SystemEvent": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "EventID": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "LevelDisplayName": {
+          "type": "string"
+        },
+        "UUID": {
+          "type": "string"
         }
       }
     },

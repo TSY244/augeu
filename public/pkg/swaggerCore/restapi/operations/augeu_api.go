@@ -45,14 +45,59 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		GetVersionHandler: GetVersionHandlerFunc(func(params GetVersionParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetVersion has not yet been implemented")
 		}),
+		PostGetApplicationEventHandler: PostGetApplicationEventHandlerFunc(func(params PostGetApplicationEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetApplicationEvent has not yet been implemented")
+		}),
 		PostGetClientIDHandler: PostGetClientIDHandlerFunc(func(params PostGetClientIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostGetClientID has not yet been implemented")
+		}),
+		PostGetLoginEventHandler: PostGetLoginEventHandlerFunc(func(params PostGetLoginEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetLoginEvent has not yet been implemented")
+		}),
+		PostGetPowershellEventHandler: PostGetPowershellEventHandlerFunc(func(params PostGetPowershellEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetPowershellEvent has not yet been implemented")
+		}),
+		PostGetProcessEventHandler: PostGetProcessEventHandlerFunc(func(params PostGetProcessEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetProcessEvent has not yet been implemented")
+		}),
+		PostGetRdpEventHandler: PostGetRdpEventHandlerFunc(func(params PostGetRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetRdpEvent has not yet been implemented")
+		}),
+		PostGetSecurityEventHandler: PostGetSecurityEventHandlerFunc(func(params PostGetSecurityEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetSecurityEvent has not yet been implemented")
+		}),
+		PostGetServiceEventHandler: PostGetServiceEventHandlerFunc(func(params PostGetServiceEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetServiceEvent has not yet been implemented")
+		}),
+		PostGetSystemEventHandler: PostGetSystemEventHandlerFunc(func(params PostGetSystemEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetSystemEvent has not yet been implemented")
 		}),
 		PostLoginHandler: PostLoginHandlerFunc(func(params PostLoginParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostLogin has not yet been implemented")
 		}),
 		PostRegisterHandler: PostRegisterHandlerFunc(func(params PostRegisterParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostRegister has not yet been implemented")
+		}),
+		PostUpdataApplicationEventHandler: PostUpdataApplicationEventHandlerFunc(func(params PostUpdataApplicationEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataApplicationEvent has not yet been implemented")
+		}),
+		PostUpdataPowershellEventHandler: PostUpdataPowershellEventHandlerFunc(func(params PostUpdataPowershellEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataPowershellEvent has not yet been implemented")
+		}),
+		PostUpdataProcessEventHandler: PostUpdataProcessEventHandlerFunc(func(params PostUpdataProcessEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataProcessEvent has not yet been implemented")
+		}),
+		PostUpdataRdpEventHandler: PostUpdataRdpEventHandlerFunc(func(params PostUpdataRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataRdpEvent has not yet been implemented")
+		}),
+		PostUpdataSecurityEventHandler: PostUpdataSecurityEventHandlerFunc(func(params PostUpdataSecurityEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataSecurityEvent has not yet been implemented")
+		}),
+		PostUpdataServiceEventHandler: PostUpdataServiceEventHandlerFunc(func(params PostUpdataServiceEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataServiceEvent has not yet been implemented")
+		}),
+		PostUpdataSystemEventHandler: PostUpdataSystemEventHandlerFunc(func(params PostUpdataSystemEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUpdataSystemEvent has not yet been implemented")
 		}),
 		PostUploadLoginEventHandler: PostUploadLoginEventHandlerFunc(func(params PostUploadLoginEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostUploadLoginEvent has not yet been implemented")
@@ -95,12 +140,42 @@ type AugeuAPI struct {
 
 	// GetVersionHandler sets the operation handler for the get version operation
 	GetVersionHandler GetVersionHandler
+	// PostGetApplicationEventHandler sets the operation handler for the post get application event operation
+	PostGetApplicationEventHandler PostGetApplicationEventHandler
 	// PostGetClientIDHandler sets the operation handler for the post get client ID operation
 	PostGetClientIDHandler PostGetClientIDHandler
+	// PostGetLoginEventHandler sets the operation handler for the post get login event operation
+	PostGetLoginEventHandler PostGetLoginEventHandler
+	// PostGetPowershellEventHandler sets the operation handler for the post get powershell event operation
+	PostGetPowershellEventHandler PostGetPowershellEventHandler
+	// PostGetProcessEventHandler sets the operation handler for the post get process event operation
+	PostGetProcessEventHandler PostGetProcessEventHandler
+	// PostGetRdpEventHandler sets the operation handler for the post get rdp event operation
+	PostGetRdpEventHandler PostGetRdpEventHandler
+	// PostGetSecurityEventHandler sets the operation handler for the post get security event operation
+	PostGetSecurityEventHandler PostGetSecurityEventHandler
+	// PostGetServiceEventHandler sets the operation handler for the post get service event operation
+	PostGetServiceEventHandler PostGetServiceEventHandler
+	// PostGetSystemEventHandler sets the operation handler for the post get system event operation
+	PostGetSystemEventHandler PostGetSystemEventHandler
 	// PostLoginHandler sets the operation handler for the post login operation
 	PostLoginHandler PostLoginHandler
 	// PostRegisterHandler sets the operation handler for the post register operation
 	PostRegisterHandler PostRegisterHandler
+	// PostUpdataApplicationEventHandler sets the operation handler for the post updata application event operation
+	PostUpdataApplicationEventHandler PostUpdataApplicationEventHandler
+	// PostUpdataPowershellEventHandler sets the operation handler for the post updata powershell event operation
+	PostUpdataPowershellEventHandler PostUpdataPowershellEventHandler
+	// PostUpdataProcessEventHandler sets the operation handler for the post updata process event operation
+	PostUpdataProcessEventHandler PostUpdataProcessEventHandler
+	// PostUpdataRdpEventHandler sets the operation handler for the post updata rdp event operation
+	PostUpdataRdpEventHandler PostUpdataRdpEventHandler
+	// PostUpdataSecurityEventHandler sets the operation handler for the post updata security event operation
+	PostUpdataSecurityEventHandler PostUpdataSecurityEventHandler
+	// PostUpdataServiceEventHandler sets the operation handler for the post updata service event operation
+	PostUpdataServiceEventHandler PostUpdataServiceEventHandler
+	// PostUpdataSystemEventHandler sets the operation handler for the post updata system event operation
+	PostUpdataSystemEventHandler PostUpdataSystemEventHandler
 	// PostUploadLoginEventHandler sets the operation handler for the post upload login event operation
 	PostUploadLoginEventHandler PostUploadLoginEventHandler
 
@@ -183,14 +258,59 @@ func (o *AugeuAPI) Validate() error {
 	if o.GetVersionHandler == nil {
 		unregistered = append(unregistered, "GetVersionHandler")
 	}
+	if o.PostGetApplicationEventHandler == nil {
+		unregistered = append(unregistered, "PostGetApplicationEventHandler")
+	}
 	if o.PostGetClientIDHandler == nil {
 		unregistered = append(unregistered, "PostGetClientIDHandler")
+	}
+	if o.PostGetLoginEventHandler == nil {
+		unregistered = append(unregistered, "PostGetLoginEventHandler")
+	}
+	if o.PostGetPowershellEventHandler == nil {
+		unregistered = append(unregistered, "PostGetPowershellEventHandler")
+	}
+	if o.PostGetProcessEventHandler == nil {
+		unregistered = append(unregistered, "PostGetProcessEventHandler")
+	}
+	if o.PostGetRdpEventHandler == nil {
+		unregistered = append(unregistered, "PostGetRdpEventHandler")
+	}
+	if o.PostGetSecurityEventHandler == nil {
+		unregistered = append(unregistered, "PostGetSecurityEventHandler")
+	}
+	if o.PostGetServiceEventHandler == nil {
+		unregistered = append(unregistered, "PostGetServiceEventHandler")
+	}
+	if o.PostGetSystemEventHandler == nil {
+		unregistered = append(unregistered, "PostGetSystemEventHandler")
 	}
 	if o.PostLoginHandler == nil {
 		unregistered = append(unregistered, "PostLoginHandler")
 	}
 	if o.PostRegisterHandler == nil {
 		unregistered = append(unregistered, "PostRegisterHandler")
+	}
+	if o.PostUpdataApplicationEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataApplicationEventHandler")
+	}
+	if o.PostUpdataPowershellEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataPowershellEventHandler")
+	}
+	if o.PostUpdataProcessEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataProcessEventHandler")
+	}
+	if o.PostUpdataRdpEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataRdpEventHandler")
+	}
+	if o.PostUpdataSecurityEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataSecurityEventHandler")
+	}
+	if o.PostUpdataServiceEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataServiceEventHandler")
+	}
+	if o.PostUpdataSystemEventHandler == nil {
+		unregistered = append(unregistered, "PostUpdataSystemEventHandler")
 	}
 	if o.PostUploadLoginEventHandler == nil {
 		unregistered = append(unregistered, "PostUploadLoginEventHandler")
@@ -290,7 +410,39 @@ func (o *AugeuAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/get/applicationEvent"] = NewPostGetApplicationEvent(o.context, o.PostGetApplicationEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/getClientId"] = NewPostGetClientID(o.context, o.PostGetClientIDHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/loginEvent"] = NewPostGetLoginEvent(o.context, o.PostGetLoginEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/powershellEvent"] = NewPostGetPowershellEvent(o.context, o.PostGetPowershellEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/processEvent"] = NewPostGetProcessEvent(o.context, o.PostGetProcessEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/rdpEvent"] = NewPostGetRdpEvent(o.context, o.PostGetRdpEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/securityEvent"] = NewPostGetSecurityEvent(o.context, o.PostGetSecurityEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/serviceEvent"] = NewPostGetServiceEvent(o.context, o.PostGetServiceEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/systemEvent"] = NewPostGetSystemEvent(o.context, o.PostGetSystemEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -299,6 +451,34 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/register"] = NewPostRegister(o.context, o.PostRegisterHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/applicationEvent"] = NewPostUpdataApplicationEvent(o.context, o.PostUpdataApplicationEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/powershellEvent"] = NewPostUpdataPowershellEvent(o.context, o.PostUpdataPowershellEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/processEvent"] = NewPostUpdataProcessEvent(o.context, o.PostUpdataProcessEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/rdpEvent"] = NewPostUpdataRdpEvent(o.context, o.PostUpdataRdpEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/securityEvent"] = NewPostUpdataSecurityEvent(o.context, o.PostUpdataSecurityEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/serviceEvent"] = NewPostUpdataServiceEvent(o.context, o.PostUpdataServiceEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/updata/systemEvent"] = NewPostUpdataSystemEvent(o.context, o.PostUpdataSystemEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

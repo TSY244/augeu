@@ -42,9 +42,49 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetVersion has not yet been implemented")
 		})
 	}
+	if api.PostGetApplicationEventHandler == nil {
+		api.PostGetApplicationEventHandler = operations.PostGetApplicationEventHandlerFunc(func(params operations.PostGetApplicationEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetApplicationEvent has not yet been implemented")
+		})
+	}
 	if api.PostGetClientIDHandler == nil {
 		api.PostGetClientIDHandler = operations.PostGetClientIDHandlerFunc(func(params operations.PostGetClientIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.PostGetClientID has not yet been implemented")
+		})
+	}
+	if api.PostGetLoginEventHandler == nil {
+		api.PostGetLoginEventHandler = operations.PostGetLoginEventHandlerFunc(func(params operations.PostGetLoginEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetLoginEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetPowershellEventHandler == nil {
+		api.PostGetPowershellEventHandler = operations.PostGetPowershellEventHandlerFunc(func(params operations.PostGetPowershellEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetPowershellEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetProcessEventHandler == nil {
+		api.PostGetProcessEventHandler = operations.PostGetProcessEventHandlerFunc(func(params operations.PostGetProcessEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetProcessEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetRdpEventHandler == nil {
+		api.PostGetRdpEventHandler = operations.PostGetRdpEventHandlerFunc(func(params operations.PostGetRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetRdpEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetSecurityEventHandler == nil {
+		api.PostGetSecurityEventHandler = operations.PostGetSecurityEventHandlerFunc(func(params operations.PostGetSecurityEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetSecurityEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetServiceEventHandler == nil {
+		api.PostGetServiceEventHandler = operations.PostGetServiceEventHandlerFunc(func(params operations.PostGetServiceEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetServiceEvent has not yet been implemented")
+		})
+	}
+	if api.PostGetSystemEventHandler == nil {
+		api.PostGetSystemEventHandler = operations.PostGetSystemEventHandlerFunc(func(params operations.PostGetSystemEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetSystemEvent has not yet been implemented")
 		})
 	}
 	if api.PostLoginHandler == nil {
@@ -55,6 +95,41 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 	if api.PostRegisterHandler == nil {
 		api.PostRegisterHandler = operations.PostRegisterHandlerFunc(func(params operations.PostRegisterParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.PostRegister has not yet been implemented")
+		})
+	}
+	if api.PostUpdataApplicationEventHandler == nil {
+		api.PostUpdataApplicationEventHandler = operations.PostUpdataApplicationEventHandlerFunc(func(params operations.PostUpdataApplicationEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataApplicationEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataPowershellEventHandler == nil {
+		api.PostUpdataPowershellEventHandler = operations.PostUpdataPowershellEventHandlerFunc(func(params operations.PostUpdataPowershellEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataPowershellEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataProcessEventHandler == nil {
+		api.PostUpdataProcessEventHandler = operations.PostUpdataProcessEventHandlerFunc(func(params operations.PostUpdataProcessEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataProcessEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataRdpEventHandler == nil {
+		api.PostUpdataRdpEventHandler = operations.PostUpdataRdpEventHandlerFunc(func(params operations.PostUpdataRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataRdpEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataSecurityEventHandler == nil {
+		api.PostUpdataSecurityEventHandler = operations.PostUpdataSecurityEventHandlerFunc(func(params operations.PostUpdataSecurityEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataSecurityEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataServiceEventHandler == nil {
+		api.PostUpdataServiceEventHandler = operations.PostUpdataServiceEventHandlerFunc(func(params operations.PostUpdataServiceEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataServiceEvent has not yet been implemented")
+		})
+	}
+	if api.PostUpdataSystemEventHandler == nil {
+		api.PostUpdataSystemEventHandler = operations.PostUpdataSystemEventHandlerFunc(func(params operations.PostUpdataSystemEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUpdataSystemEvent has not yet been implemented")
 		})
 	}
 	if api.PostUploadLoginEventHandler == nil {

@@ -125,14 +125,12 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/LoginEventQuery'
+            $ref: '#/definitions/GetLoginEventRequest'
       responses:
         200:
           description: 成功返回事件数组
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/LoginEvent'
+            $ref: "#/definitions/GetLoginEventResponse"
         400:
           description: "输入参数错误"
           schema:
@@ -575,12 +573,32 @@ definitions:
     properties:
       total:
         type: integer
+        default: 0
       page:
         type: integer
         default: 1
       size:
         type: integer
         default: 10
+
+  PageAndSize:
+    type: object
+    required:
+      - page
+      - size
+    properties:
+      page:
+        type: integer
+        default: 1
+        description: "页码"
+        example: 1
+      size:
+        type: integer
+        default: 10
+        description:
+          "每页数量"
+
+
 
   UnauthorizedError:
     type: object
@@ -872,8 +890,10 @@ definitions:
         type: integer
         description: "Event ID"
 
-  LoginEventQuery:
+  GetLoginEventRequest:
     type: object
+    required:
+      - pageAndSize
     properties:
       clientId:
         type: string
@@ -881,6 +901,8 @@ definitions:
         type: string
       ip:
         type: string
+      pageAndSize:
+        $ref: "#/definitions/PageAndSize"
 
   CommonQuery:
     type: object
@@ -1060,3 +1082,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ClientInfo'
+
+
+  GetLoginEventResponse:
+    type: object
+    required:
+      - data
+      - page
+      - success
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/LoginEvent'
+      page:
+        $ref: '#/definitions/PageMeta'
+      success:
+        type: boolean
+        default: true
+

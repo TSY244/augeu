@@ -4,6 +4,8 @@ import (
 	"augeu/backEnd/internal/pkg/DBMnager/HostInfo"
 	"augeu/backEnd/internal/pkg/DBMnager/Log"
 	"augeu/public/pkg/swaggerCore/models"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 	"time"
 )
 
@@ -85,4 +87,18 @@ func DbIpaddress2StrSlice(ipAddresses []HostInfo.IPAddress) []string {
 		ipAddressesStrSlice = append(ipAddressesStrSlice, ipAddress.Value)
 	}
 	return ipAddressesStrSlice
+}
+
+func DbLoginEvent2modelLogEvent(loginEvent Log.LoginEvent) *models.LoginEvent {
+	// time.time -> strfmt.DateTime
+	evnetTime := strfmt.DateTime(loginEvent.EventTime)
+	return &models.LoginEvent{
+		EventID:       swag.Int64(loginEvent.EventId),
+		EventTime:     &evnetTime,
+		LoginType:     swag.String(loginEvent.LoginType),
+		MachineUUID:   swag.String(loginEvent.UUID),
+		ProcessName:   swag.String(loginEvent.ProcessName),
+		SourceIP:      swag.String(loginEvent.SourceIp),
+		SubjectDomain: swag.String(loginEvent.SubjectDomain),
+	}
 }

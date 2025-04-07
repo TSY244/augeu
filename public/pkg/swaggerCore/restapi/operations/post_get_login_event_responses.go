@@ -26,7 +26,7 @@ type PostGetLoginEventOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models.LoginEvent `json:"body,omitempty"`
+	Payload *models.GetLoginEventResponse `json:"body,omitempty"`
 }
 
 // NewPostGetLoginEventOK creates PostGetLoginEventOK with default headers values
@@ -36,13 +36,13 @@ func NewPostGetLoginEventOK() *PostGetLoginEventOK {
 }
 
 // WithPayload adds the payload to the post get login event o k response
-func (o *PostGetLoginEventOK) WithPayload(payload []*models.LoginEvent) *PostGetLoginEventOK {
+func (o *PostGetLoginEventOK) WithPayload(payload *models.GetLoginEventResponse) *PostGetLoginEventOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the post get login event o k response
-func (o *PostGetLoginEventOK) SetPayload(payload []*models.LoginEvent) {
+func (o *PostGetLoginEventOK) SetPayload(payload *models.GetLoginEventResponse) {
 	o.Payload = payload
 }
 
@@ -50,14 +50,11 @@ func (o *PostGetLoginEventOK) SetPayload(payload []*models.LoginEvent) {
 func (o *PostGetLoginEventOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = make([]*models.LoginEvent, 0, 50)
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

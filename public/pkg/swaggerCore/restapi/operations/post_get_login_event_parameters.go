@@ -36,7 +36,7 @@ type PostGetLoginEventParams struct {
 	/*
 	  In: body
 	*/
-	Body *models.LoginEventQuery
+	Body *models.GetLoginEventRequest
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *PostGetLoginEventParams) BindRequest(r *http.Request, route *middleware
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.LoginEventQuery
+		var body models.GetLoginEventRequest
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {

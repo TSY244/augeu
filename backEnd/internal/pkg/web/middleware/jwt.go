@@ -4,6 +4,7 @@ import (
 	"augeu/backEnd/internal/pkg/DBMnager/HostInfo"
 	"augeu/backEnd/internal/pkg/DBMnager/UserInfo"
 	"augeu/backEnd/internal/pkg/server"
+	"augeu/backEnd/internal/utils/consts/web"
 	"augeu/public/pkg/augeuJwt"
 	"augeu/public/pkg/logger"
 	"augeu/public/pkg/swaggerCore/models"
@@ -143,17 +144,19 @@ func CheckUserRole(r *http.Request, s *server.Server) middleware.Responder {
 	userName, err := GetUserName(r)
 	if err != nil {
 		logger.Errorf("CheckUserRole -> GetUserName err:%v", err)
-		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
-			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
-			Message: convert.StrPtr("get user is error"),
+		return operations2.NewPostLoginInternalServerError().WithPayload(&models.ActionFailure{
+			From:    convert.StrPtr("check jwt"),
+			Reason:  convert.StrPtr("get user name is error"),
+			Success: web.Fail,
 		})
 	}
 	user, err := UserInfo.GetUserByName(s.DBM.DB, userName)
 	if err != nil {
 		logger.Errorf("CheckUserRole -> GetUserByName err:%v", err)
-		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
-			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
-			Message: convert.StrPtr("get user is invalid"),
+		return operations2.NewPostLoginInternalServerError().WithPayload(&models.ActionFailure{
+			From:    convert.StrPtr("check jwt"),
+			Reason:  convert.StrPtr("get user name is error"),
+			Success: web.Fail,
 		})
 	}
 	if user.UserName != info.UserInfo.Name {
@@ -166,6 +169,7 @@ func CheckUserRole(r *http.Request, s *server.Server) middleware.Responder {
 	return nil
 }
 
+// 存在绕过风险，不意见使用
 func CheckJwt(r *http.Request, s *server.Server) middleware.Responder {
 	info, err := GetInfo(r)
 	if err != nil {
@@ -179,4 +183,5 @@ func CheckJwt(r *http.Request, s *server.Server) middleware.Responder {
 		return CheckUserRole(r, s)
 	}
 	return CheckAgentRole(r, s)
+
 }

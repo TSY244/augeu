@@ -77,5 +77,6 @@ func (apiManager *ApiManager) InitApi(swapi *operations.AugeuAPI) {
 	swapi.PostRegisterHandler = apiManager.RegisterPostApiHandlerFunc()
 	swapi.PostUploadLoginEventHandler = apiManager.UploadLoginEventApiHandlerFunc()
 	swapi.GetGetClientsHandler = apiManager.GetClientsGetHandlerFunc()
+	swapi.PostGetLoginEventHandler = apiManager.GetLoginEventGetApi()
 
 }

@@ -118,7 +118,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/LoginEventQuery"
+              "$ref": "#/definitions/GetLoginEventRequest"
             }
           }
         ],
@@ -126,10 +126,7 @@ func init() {
           "200": {
             "description": "成功返回事件数组",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/LoginEvent"
-              }
+              "$ref": "#/definitions/GetLoginEventResponse"
             }
           },
           "400": {
@@ -1067,6 +1064,49 @@ func init() {
         }
       }
     },
+    "GetLoginEventRequest": {
+      "type": "object",
+      "required": [
+        "pageAndSize"
+      ],
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "pageAndSize": {
+          "$ref": "#/definitions/PageAndSize"
+        }
+      }
+    },
+    "GetLoginEventResponse": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LoginEvent"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
     "LoginEvent": {
       "type": "object",
       "required": [
@@ -1120,20 +1160,6 @@ func init() {
         }
       }
     },
-    "LoginEventQuery": {
-      "type": "object",
-      "properties": {
-        "Uuid": {
-          "type": "string"
-        },
-        "clientId": {
-          "type": "string"
-        },
-        "ip": {
-          "type": "string"
-        }
-      }
-    },
     "LoginRequest": {
       "type": "object",
       "required": [
@@ -1175,6 +1201,26 @@ func init() {
         }
       }
     },
+    "PageAndSize": {
+      "type": "object",
+      "required": [
+        "page",
+        "size"
+      ],
+      "properties": {
+        "page": {
+          "description": "页码",
+          "type": "integer",
+          "default": 1,
+          "example": 1
+        },
+        "size": {
+          "description": "每页数量",
+          "type": "integer",
+          "default": 10
+        }
+      }
+    },
     "PageMeta": {
       "type": "object",
       "properties": {
@@ -1187,7 +1233,8 @@ func init() {
           "default": 10
         },
         "total": {
-          "type": "integer"
+          "type": "integer",
+          "default": 0
         }
       }
     },
@@ -1594,7 +1641,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/LoginEventQuery"
+              "$ref": "#/definitions/GetLoginEventRequest"
             }
           }
         ],
@@ -1602,10 +1649,7 @@ func init() {
           "200": {
             "description": "成功返回事件数组",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/LoginEvent"
-              }
+              "$ref": "#/definitions/GetLoginEventResponse"
             }
           },
           "400": {
@@ -2543,6 +2587,49 @@ func init() {
         }
       }
     },
+    "GetLoginEventRequest": {
+      "type": "object",
+      "required": [
+        "pageAndSize"
+      ],
+      "properties": {
+        "Uuid": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "pageAndSize": {
+          "$ref": "#/definitions/PageAndSize"
+        }
+      }
+    },
+    "GetLoginEventResponse": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LoginEvent"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
     "LoginEvent": {
       "type": "object",
       "required": [
@@ -2596,20 +2683,6 @@ func init() {
         }
       }
     },
-    "LoginEventQuery": {
-      "type": "object",
-      "properties": {
-        "Uuid": {
-          "type": "string"
-        },
-        "clientId": {
-          "type": "string"
-        },
-        "ip": {
-          "type": "string"
-        }
-      }
-    },
     "LoginRequest": {
       "type": "object",
       "required": [
@@ -2651,6 +2724,26 @@ func init() {
         }
       }
     },
+    "PageAndSize": {
+      "type": "object",
+      "required": [
+        "page",
+        "size"
+      ],
+      "properties": {
+        "page": {
+          "description": "页码",
+          "type": "integer",
+          "default": 1,
+          "example": 1
+        },
+        "size": {
+          "description": "每页数量",
+          "type": "integer",
+          "default": 10
+        }
+      }
+    },
     "PageMeta": {
       "type": "object",
       "properties": {
@@ -2663,7 +2756,8 @@ func init() {
           "default": 10
         },
         "total": {
-          "type": "integer"
+          "type": "integer",
+          "default": 0
         }
       }
     },

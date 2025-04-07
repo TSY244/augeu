@@ -83,3 +83,33 @@ func InsertLoginEventBatch(ctx context.Context, db *gorm.DB, loginEvents []*Logi
 		CreateInBatches(loginEvents, size).
 		Error
 }
+
+type QueryLoginEventParams struct {
+	UUID     string
+	ClientId string
+	SourceIp string
+	Page     int64
+	Size     int64
+}
+
+func QueryLoginEvent(ctx context.Context, db *gorm.DB, params *QueryLoginEventParams) ([]LoginEvent, int64, error) {
+	loginEvents := make([]LoginEvent, 0)
+	var count int64
+	query := db.WithContext(ctx).Model(&LoginEvent{}).Count(&count)
+	if params.UUID != "" {
+		query = query.Where("uuid = ?", params.UUID)
+	}
+	if params.ClientId != "" {
+		query = query.Where("event_id = ?", params.ClientId)
+	}
+	if params.SourceIp != "" {
+		query = query.Where("source_ip = ?", params.SourceIp)
+	}
+	if err := query.
+		Offset(int(params.Page * params.Size)).
+		Limit(int(params.Size)).
+		Find(&loginEvents).Error; err != nil {
+		return nil, count, err
+	}
+	return loginEvents, count, nil
+}

@@ -86,10 +86,7 @@ func init() {
           "200": {
             "description": "成功返回客户端列表",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/GetClientsResponse"
-              }
+              "$ref": "#/definitions/GetClientsResponse"
             }
           },
           "400": {
@@ -1565,10 +1562,7 @@ func init() {
           "200": {
             "description": "成功返回客户端列表",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/GetClientsResponse"
-              }
+              "$ref": "#/definitions/GetClientsResponse"
             }
           },
           "400": {

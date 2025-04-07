@@ -522,9 +522,7 @@ paths:
         200:
           description: 成功返回客户端列表
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/GetClientsResponse'
+            $ref: '#/definitions/GetClientsResponse'
         400:
           description: "输入参数错误"
           schema:

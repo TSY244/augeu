@@ -53,6 +53,18 @@ func (apiManager *ApiManager) GetClientIdPostApiHandlerFunc() operations2.PostGe
 		}
 
 		clientData := convert2.GetClientIDRequest2Db(*getClientIdParams.Data)
+
+		clientId, err := snowNumbers.GetAnStrID()
+		if err != nil {
+			logger.Errorf("GetClientIdPostApiHandlerFunc -> snowNumbers.GetAnStrID -> %v", err)
+			return operations2.NewPostGetClientIDInternalServerError().WithPayload(&models2.ActionFailure{
+				From:    utils.StrP(apiName),
+				Reason:  utils.StrP(web.InternalError),
+				Success: web.Fail,
+			})
+		}
+
+		clientData.ClientID = clientId
 		if err := HostInfo.InsertHostInfo(apiManager.s.DBM.DB, &clientData); err != nil {
 
 			logger.Errorf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
@@ -65,21 +77,11 @@ func (apiManager *ApiManager) GetClientIdPostApiHandlerFunc() operations2.PostGe
 			//logger.Warnf("GetClientIdPostApiHandlerFunc -> HostInfo.InsertHostInfo -> %v", err)
 		}
 
-		clientId, err := snowNumbers.GetAnStrID()
-		if err != nil {
-			logger.Errorf("GetClientIdPostApiHandlerFunc -> snowNumbers.GetAnStrID -> %v", err)
-			return operations2.NewPostGetClientIDInternalServerError().WithPayload(&models2.ActionFailure{
-				From:    utils.StrP(apiName),
-				Reason:  utils.StrP(web.InternalError),
-				Success: web.Fail,
-			})
-		}
-
 		info := augeuJwt.Info{
 			Role: augeuJwt.RoleAgent,
 			ClientInfo: augeuJwt.AgentInfo{
 				ClientId: clientId,
-				Uuid:     *data.UUID,
+				Uuid:     *data.ClientInfo.UUID,
 			},
 		}
 

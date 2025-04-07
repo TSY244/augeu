@@ -40,3 +40,12 @@ func CheckUser(db *gorm.DB, userName, password string) error {
 	}
 	return nil
 }
+
+func GetUserByName(db *gorm.DB, userName string) (*UserInfo, error) {
+	var user UserInfo
+	err := db.Where("user_name = ?", userName).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

@@ -26,7 +26,7 @@ type GetGetClientsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models.GetClientsResponse `json:"body,omitempty"`
+	Payload *models.GetClientsResponse `json:"body,omitempty"`
 }
 
 // NewGetGetClientsOK creates GetGetClientsOK with default headers values
@@ -36,13 +36,13 @@ func NewGetGetClientsOK() *GetGetClientsOK {
 }
 
 // WithPayload adds the payload to the get get clients o k response
-func (o *GetGetClientsOK) WithPayload(payload []*models.GetClientsResponse) *GetGetClientsOK {
+func (o *GetGetClientsOK) WithPayload(payload *models.GetClientsResponse) *GetGetClientsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get get clients o k response
-func (o *GetGetClientsOK) SetPayload(payload []*models.GetClientsResponse) {
+func (o *GetGetClientsOK) SetPayload(payload *models.GetClientsResponse) {
 	o.Payload = payload
 }
 
@@ -50,14 +50,11 @@ func (o *GetGetClientsOK) SetPayload(payload []*models.GetClientsResponse) {
 func (o *GetGetClientsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
-	payload := o.Payload
-	if payload == nil {
-		// return empty array
-		payload = make([]*models.GetClientsResponse, 0, 50)
-	}
-
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }
 

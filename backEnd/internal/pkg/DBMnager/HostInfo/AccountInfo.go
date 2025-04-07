@@ -1,6 +1,7 @@
 package HostInfo
 
 import (
+	"augeu/public/pkg/logger"
 	"errors"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -77,11 +78,30 @@ func InsertHostInfo(db *gorm.DB, account *Account) error {
 		// 1. 先查询是否存在记录
 		var existing Account
 		if err := tx.First(&existing, "uuid = ?", account.UUID).Error; err != nil {
-			if !errors.Is(gorm.ErrRecordNotFound, err) {
+			if !errors.Is(err, gorm.ErrRecordNotFound) {
+				logger.Info("查询账号记录时出错: %v", err)
 				return err // 其他查询错误
 			}
+			// 确保关联的 Patch 记录存在
+			if err := ensurePatchesExist(tx, account.System.Patches); err != nil {
+				logger.Info("确保补丁记录存在时出错: %v", err)
+				return err
+			}
+			// 手动刷新 Patch 记录的 ID
+			for i, patch := range account.System.Patches {
+				var existingPatch Patch
+				if err := tx.First(&existingPatch, "hot_fix_id = ?", patch.HotFixID).Error; err != nil {
+					logger.Info("查询补丁记录时出错: %v", err)
+					return err
+				}
+				account.System.Patches[i].ID = existingPatch.ID
+			}
 			// 2. 不存在则创建（包含关联IP）
-			return tx.Create(account).Error
+			if err := tx.Preload("System").Preload("IPAddresses").Preload("System.Patches").Create(account).Error; err != nil {
+				logger.Info("创建账号记录时出错: %v", err)
+				return err
+			}
+			return nil
 		}
 
 		// 3. 存在则执行更新（仅更新非自动字段+关联IP）
@@ -91,10 +111,26 @@ func InsertHostInfo(db *gorm.DB, account *Account) error {
 			IPAddresses: account.IPAddresses,
 		}
 
+		// 确保关联的 Patch 记录存在
+		if err := ensurePatchesExist(tx, updateFields.System.Patches); err != nil {
+			logger.Info("确保补丁记录存在时出错: %v", err)
+			return err
+		}
+		// 手动刷新 Patch 记录的 ID
+		for i, patch := range updateFields.System.Patches {
+			var existingPatch Patch
+			if err := tx.First(&existingPatch, "hot_fix_id = ?", patch.HotFixID).Error; err != nil {
+				logger.Info("查询补丁记录时出错: %v", err)
+				return err
+			}
+			updateFields.System.Patches[i].ID = existingPatch.ID
+		}
+
 		// 主表更新（排除自动管理字段）
 		if err := tx.Model(&existing).
 			Select("client_id", "system"). // 明确指定更新字段
 			Updates(updateFields).Error; err != nil {
+			logger.Info("更新账号记录时出错: %v", err)
 			return err
 		}
 
@@ -102,6 +138,7 @@ func InsertHostInfo(db *gorm.DB, account *Account) error {
 		if err := tx.Model(&existing).
 			Association("IPAddresses").
 			Replace(account.IPAddresses); err != nil {
+			logger.Info("替换 IP 列表时出错: %v", err)
 			return err
 		}
 
@@ -111,6 +148,26 @@ func InsertHostInfo(db *gorm.DB, account *Account) error {
 	})
 }
 
+// 确保关联的 Patch 记录存在
+func ensurePatchesExist(tx *gorm.DB, patches []Patch) error {
+	for _, patch := range patches {
+		var existing Patch
+		if err := tx.First(&existing, "hot_fix_id = ?", patch.HotFixID).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				// 不存在则创建
+				if err := tx.Create(&patch).Error; err != nil {
+					logger.Info("创建补丁记录时出错: %v", err)
+					return err
+				}
+			} else {
+				logger.Info("查询补丁记录时出错: %v", err)
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func GetAgentInfoByUuid(db *gorm.DB, clientId string) (*Account, error) {
 	var account Account
 	err := db.Preload("System").Preload("IPAddresses").Where("uuid = ?", clientId).First(&account).Error
@@ -118,4 +175,22 @@ func GetAgentInfoByUuid(db *gorm.DB, clientId string) (*Account, error) {
 		return nil, err
 	}
 	return &account, nil
+}
+
+func GetAgentInfoByClientId(db *gorm.DB, clientId string) (*Account, error) {
+	var account Account
+	err := db.Preload("System").Preload("IPAddresses").Where("client_id = ?", clientId).First(&account).Error
+	if err != nil {
+		return nil, err
+	}
+	return &account, nil
+}
+
+func GetAgentsByClientIds(db *gorm.DB, clientIds []string) ([]Account, error) {
+	var accounts []Account
+	err := db.Preload("System").Preload("IPAddresses").Preload("System.Patches").Where("client_id IN ?", clientIds).Find(&accounts).Error
+	if err != nil {
+		return nil, err
+	}
+	return accounts, nil
 }

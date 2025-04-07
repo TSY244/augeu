@@ -87,3 +87,13 @@ func (s *Server) CheckClientId(clientId string) bool {
 	}
 	return false
 }
+
+func (s *Server) GetAllClientId() ([]string, error) {
+	locker.RLock()
+	defer locker.RUnlock()
+	ids := make([]string, 0)
+	for _, v := range ClientMap {
+		ids = append(ids, v)
+	}
+	return ids, nil
+}

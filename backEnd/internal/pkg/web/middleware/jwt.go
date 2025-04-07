@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"augeu/backEnd/internal/pkg/DBMnager/HostInfo"
+	"augeu/backEnd/internal/pkg/DBMnager/UserInfo"
 	"augeu/backEnd/internal/pkg/server"
 	"augeu/public/pkg/augeuJwt"
 	"augeu/public/pkg/logger"
@@ -11,6 +12,7 @@ import (
 	"fmt"
 	"github.com/go-openapi/runtime/middleware"
 	"net/http"
+	"strings"
 )
 
 // parseJwtInfo 提取公共JWT解析逻辑
@@ -19,6 +21,8 @@ func parseJwtInfo(r *http.Request) (*augeuJwt.Info, error) {
 	if tokenStr == "" {
 		return nil, fmt.Errorf("missing %s header", HeadKey)
 	}
+	// 先去除 Bearer
+	tokenStr = strings.TrimPrefix(tokenStr, "Bearer ")
 
 	jwtInfo, err := augeuJwt.ParseJwt(tokenStr)
 	if err != nil {
@@ -121,4 +125,58 @@ func CheckAgentRole(r *http.Request, s *server.Server) middleware.Responder {
 	}
 
 	return nil
+}
+
+func CheckUserRole(r *http.Request, s *server.Server) middleware.Responder {
+	info, err := GetInfo(r)
+	if err != nil {
+		logger.Errorf("CheckUserRole -> GetRole err:%v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("get role is error"),
+		})
+	}
+
+	if info.Role != RoleUser {
+		logger.Errorf("CheckUserRole -> role:%v", info.Role)
+	}
+	userName, err := GetUserName(r)
+	if err != nil {
+		logger.Errorf("CheckUserRole -> GetUserName err:%v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("get user is error"),
+		})
+	}
+	user, err := UserInfo.GetUserByName(s.DBM.DB, userName)
+	if err != nil {
+		logger.Errorf("CheckUserRole -> GetUserByName err:%v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("get user is invalid"),
+		})
+	}
+	if user.UserName != info.UserInfo.Name {
+		logger.Errorf("CheckUserRole -> userName is invalid")
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("userName is invalid"),
+		})
+	}
+	return nil
+}
+
+func CheckJwt(r *http.Request, s *server.Server) middleware.Responder {
+	info, err := GetInfo(r)
+	if err != nil {
+		logger.Errorf("CheckJwt -> GetInfo error: %v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("jwt is invalid"),
+		})
+	}
+	if info.Role == RoleUser {
+		return CheckUserRole(r, s)
+	}
+	return CheckAgentRole(r, s)
 }

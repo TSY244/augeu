@@ -15,6 +15,7 @@ import (
 const (
 	GetClientIdApiPath      = "/getClientId"
 	UploadLoginEventApiPath = "/upload/loginEvent"
+	UploadRdpEventApiPath   = "/upload/rdpEvent"
 )
 
 func (s *Server) GetClientId() (string, string, error) {
@@ -29,10 +30,12 @@ func (s *Server) GetClientId() (string, string, error) {
 	info, err := systeminfo.GetSystemInfo()
 
 	payload := models.GetClientIDRequest{
-		Secret:     &s.Conf.Secret,
-		UUID:       &uuid,
-		IP:         *ips,
-		SystemInfo: info,
+		Secret: &s.Conf.Secret,
+		ClientInfo: &models.ClientInfo{
+			UUID:       &uuid,
+			IP:         *ips,
+			SystemInfo: info,
+		},
 	}
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
@@ -71,4 +74,11 @@ func (s *Server) PushLoginEvent(evtxMap chan *evtx.GoEvtxMap) error {
 	}
 	logger.Infof("PushLoginEvent success")
 	return nil
+}
+
+func (s *Server) PushRdpEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	events := windowsLog.GetEventsForRdpEvent(evtxMap)
+	resq := convert.ArrayCopy(events, convert.RdpEvent2RRdpEventResq)
+	jsonData, err := json.Marshal(resq)
+
 }

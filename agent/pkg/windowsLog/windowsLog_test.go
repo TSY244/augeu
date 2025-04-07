@@ -3,7 +3,7 @@ package windowsLog
 import "testing"
 
 func TestRun(t *testing.T) {
-	if err := Run(LoginEvenType); err != nil {
+	if err := Run(RdpEventType); err != nil {
 		t.Error(err)
 	}
 }

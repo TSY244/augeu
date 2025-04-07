@@ -7,6 +7,7 @@ import (
 	augueMq "augeu/public/pkg/augeuMq"
 	"augeu/public/pkg/logger"
 	"context"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"os"
 	"strings"
@@ -86,6 +87,22 @@ func (s *Server) Run() {
 	go s.cmdHandler()
 	s.receiveClientId() // 获取 ClientId
 	s.sendClientId()    // 建立websocket连接
+	go func() {
+		for {
+			// 尝试接受数据，当断开链接的时候说明和服务器失去链接，应该exit
+			_, _, err := s.WebsocketConn.ReadMessage()
+			if err != nil {
+				logger.Errorf("Lost Connection to server: %v", err)
+				s.Cancel()
+				return
+			}
+			select {
+			case <-s.RootCtx.Done():
+				return
+			default:
+			}
+		}
+	}()
 	s.core()
 
 }
@@ -94,16 +111,19 @@ func (s *Server) Run() {
 
 func (s *Server) core() {
 	windowsLog.RegisterFunctionMap(windowsLog.LoginEvenType, s.PushLoginEvent)
-	//for {
-	err := s.GetLoginEventInfo()
-	if err != nil {
-		logger.Errorf("Failed to get login event info: %v", err)
-		time.Sleep(10 * time.Second)
-		//continue
-	}
 
-	time.Sleep(10 * time.Second)
-	//}
+	for {
+		err := s.GetEventInfo(windowsLog.LoginTypeKey)
+		if err != nil {
+			logger.Errorf("Failed to get login event info: %v", err)
+			time.Sleep(10 * time.Second)
+			continue
+		}
+
+		fmt.Println("start get login event info")
+		time.Sleep(60 * time.Second)
+
+	}
 }
 
 func initMq(ctx context.Context) error {

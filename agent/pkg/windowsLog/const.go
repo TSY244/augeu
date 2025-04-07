@@ -1,8 +1,8 @@
 package windowsLog
 
 const (
-	LoginEvenType    EventNameType = "LoginEvenType"
-	RdpFileEventType EventNameType = "RdpFileEventType"
+	LoginEvenType EventNameType = "LoginEvenType"
+	RdpEventType  EventNameType = "RdpEventType"
 )
 
 var (
@@ -10,7 +10,7 @@ var (
 		LoginEvenType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
-		RdpFileEventType: {
+		RdpEventType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
 	}
@@ -43,4 +43,20 @@ const (
 	subjectUserNamePath = "/Event/EventData/SubjectUserName"
 	subjectDomainPath   = "/Event/EventData/SubjectDomainName"
 	processNamePath     = "/Event/EventData/ProcessName"
+)
+
+// rdp event info key
+const (
+	AccountNameKey   = "AccountName"
+	AccountDomainKey = "AccountDomain"
+	ClientNameKey    = "ClientName"
+	ClientAddressKey = "ClientAddress"
+)
+
+// rdp event value path
+const (
+	AccountNamePath   = "/Event/EventData/AccountName"
+	AccountDomainPath = "/Event/EventData/AccountDomain"
+	ClientNamePath    = "/Event/EventData/ClientName"
+	ClientAddressPath = "/Event/EventData/ClientAddress"
 )

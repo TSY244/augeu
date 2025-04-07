@@ -20,6 +20,7 @@ type ExternalFunctionForMap func(evtxMap *evtx.GoEvtxMap)
 var (
 	FunctionMap = map[EventNameType]ExternalFunctionForMapChan{
 		LoginEvenType: loginEvent,
+		RdpEventType:  rdpEvent,
 	}
 )
 
@@ -57,6 +58,19 @@ func GetEventsForLoginEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
 		}
 		eventInfo := getBaseInfo(event)
 		addLoginEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForRdpEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := RdpEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		addRdpEventInfoForEvent(event, &eventInfo)
 		events = append(events, eventInfo)
 	}
 	return events
@@ -164,4 +178,21 @@ func addLoginEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
 	(*eventUnit)[SubjectUsernameKey] = GetString(evtxMap, Wrapper(subjectUserNamePath))
 	(*eventUnit)[SubjectDomainKey] = GetString(evtxMap, Wrapper(subjectDomainPath))
 	(*eventUnit)[ProcessNameKey] = GetString(evtxMap, Wrapper(processNamePath))
+}
+
+// rdp event functions
+
+// rdpEvent 用于处理远程桌面事件
+func rdpEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForRdpEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+func addRdpEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+	(*eventUnit)[AccountNameKey] = GetString(evtxMap, Wrapper(AccountNamePath))
+	(*eventUnit)[AccountDomainKey] = GetString(evtxMap, Wrapper(AccountDomainPath))
+	(*eventUnit)[ClientAddressKey] = GetString(evtxMap, Wrapper(ClientAddressPath))
+	(*eventUnit)[ClientNameKey] = GetString(evtxMap, Wrapper(ClientNamePath))
 }

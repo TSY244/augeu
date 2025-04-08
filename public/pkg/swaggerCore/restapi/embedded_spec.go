@@ -244,7 +244,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/CommonQuery"
+              "$ref": "#/definitions/GetRdpEventRequest"
             }
           }
         ],
@@ -254,7 +254,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventRDPLogon"
+                "$ref": "#/definitions/GetRdpEventRepose"
               }
             }
           },
@@ -1024,36 +1024,6 @@ func init() {
         }
       }
     },
-    "EventRDPLogon": {
-      "type": "object",
-      "properties": {
-        "Address": {
-          "type": "string"
-        },
-        "CreateAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
-        "EventID": {
-          "type": "string"
-        },
-        "ID": {
-          "type": "integer"
-        },
-        "LoginName": {
-          "type": "string"
-        },
-        "UUID": {
-          "type": "string"
-        }
-      }
-    },
     "GetClientIdRequest": {
       "type": "object",
       "required": [
@@ -1142,6 +1112,35 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "GetRdpEventRepose": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RDPEventUnit"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "GetRdpEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "LoginEvent": {
@@ -1832,7 +1831,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/CommonQuery"
+              "$ref": "#/definitions/GetRdpEventRequest"
             }
           }
         ],
@@ -1842,7 +1841,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventRDPLogon"
+                "$ref": "#/definitions/GetRdpEventRepose"
               }
             }
           },
@@ -2612,36 +2611,6 @@ func init() {
         }
       }
     },
-    "EventRDPLogon": {
-      "type": "object",
-      "properties": {
-        "Address": {
-          "type": "string"
-        },
-        "CreateAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
-        "EventID": {
-          "type": "string"
-        },
-        "ID": {
-          "type": "integer"
-        },
-        "LoginName": {
-          "type": "string"
-        },
-        "UUID": {
-          "type": "string"
-        }
-      }
-    },
     "GetClientIdRequest": {
       "type": "object",
       "required": [
@@ -2730,6 +2699,35 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "GetRdpEventRepose": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RDPEventUnit"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "GetRdpEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "LoginEvent": {

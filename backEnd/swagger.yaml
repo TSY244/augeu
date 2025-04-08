@@ -13,11 +13,10 @@ consumes:
 produces:
   - application/json
 
-
 paths:
   /version:
     get:
-      security: [ ]
+      security: []
       responses:
         200:
           description: "返回 Augeu Api 版本号"
@@ -26,7 +25,7 @@ paths:
 
   /getClientId:
     post:
-      security: [ ]
+      security: []
       parameters:
         - in: body
           name: data
@@ -48,7 +47,7 @@ paths:
 
   /login:
     post:
-      security: [ ]
+      security: []
       parameters:
         - in: body
           name: credentials
@@ -70,7 +69,7 @@ paths:
             $ref: "#/definitions/ActionFailure"
   /register:
     post:
-      security: [ ]
+      security: []
       parameters:
         - in: body
           name: data
@@ -93,7 +92,7 @@ paths:
 
   /upload/loginEvent:
     post:
-      security: [ ]
+      security: []
       parameters:
         - in: body
           name: eventLog
@@ -125,7 +124,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/GetLoginEventRequest'
+            $ref: "#/definitions/GetLoginEventRequest"
       responses:
         200:
           description: "成功返回事件数组"
@@ -177,14 +176,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/GetRdpEventRequest"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/EventRDPLogon'
+              $ref: "#/definitions/GetRdpEventRepose"
         400:
           description: "输入参数错误"
           schema:
@@ -207,7 +206,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/ServiceEventUpload'
+              $ref: "#/definitions/ServiceEventUpload"
       responses:
         200:
           description: 上传成功
@@ -233,14 +232,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回服务事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/ServiceInfo'
+              $ref: "#/definitions/ServiceInfo"
         400:
           description: "输入参数错误"
           schema:
@@ -263,7 +262,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/EventCreateProcess'
+              $ref: "#/definitions/EventCreateProcess"
       responses:
         200:
           description: 上传成功
@@ -289,14 +288,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/EventCreateProcess'
+              $ref: "#/definitions/EventCreateProcess"
         400:
           description: "输入参数错误"
           schema:
@@ -319,7 +318,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/EventPowerShell'
+              $ref: "#/definitions/EventPowerShell"
       responses:
         200:
           description: 上传成功
@@ -345,14 +344,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/EventPowerShell'
+              $ref: "#/definitions/EventPowerShell"
         400:
           description: "输入参数错误"
           schema:
@@ -375,7 +374,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SystemEvent'
+              $ref: "#/definitions/SystemEvent"
 
       responses:
         200:
@@ -402,14 +401,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/SystemEvent'
+              $ref: "#/definitions/SystemEvent"
         400:
           description: "输入参数错误"
           schema:
@@ -432,7 +431,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/ApplicationEvent'
+              $ref: "#/definitions/ApplicationEvent"
       responses:
         200:
           description: 上传成功
@@ -458,14 +457,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/ApplicationEvent'
+              $ref: "#/definitions/ApplicationEvent"
         400:
           description: "输入参数错误"
           schema:
@@ -488,7 +487,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SecurityEvent'
+              $ref: "#/definitions/SecurityEvent"
       responses:
         200:
           description: 上传成功
@@ -502,14 +501,14 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/CommonQuery'
+            $ref: "#/definitions/CommonQuery"
       responses:
         200:
           description: 成功返回事件数组
           schema:
             type: array
             items:
-              $ref: '#/definitions/SecurityEvent'
+              $ref: "#/definitions/SecurityEvent"
         400:
           description: "输入参数错误"
           schema:
@@ -530,7 +529,7 @@ paths:
         200:
           description: 成功返回客户端列表
           schema:
-            $ref: '#/definitions/GetClientsResponse'
+            $ref: "#/definitions/GetClientsResponse"
         400:
           description: "输入参数错误"
           schema:
@@ -543,10 +542,6 @@ paths:
           description: "没有权限"
           schema:
             $ref: "#/definitions/UnauthorizedError"
-
-
-
-
 
 definitions:
   Version:
@@ -577,7 +572,6 @@ definitions:
         default: true
         description: "是否成功"
 
-
   PageMeta:
     type: object
     properties:
@@ -605,10 +599,7 @@ definitions:
       size:
         type: integer
         default: 10
-        description:
-          "每页数量"
-
-
+        description: "每页数量"
 
   UnauthorizedError:
     type: object
@@ -674,7 +665,6 @@ definitions:
         $ref: "#/definitions/SystemInfo"
         description: "系统信息"
 
-
   GetClientIdRequest:
     type: object
     required:
@@ -686,7 +676,6 @@ definitions:
         description: "密钥"
       client_info:
         $ref: "#/definitions/ClientInfo"
-
 
   SystemInfo:
     type: object
@@ -781,7 +770,6 @@ definitions:
       secrete:
         type: string
         description: "server 提供的token"
-
 
   RegisterResponse:
     type: object
@@ -941,8 +929,6 @@ definitions:
         format: date-time
         description: "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）"
 
-
-
   RDPEventUnit:
     type: object
     required:
@@ -953,7 +939,7 @@ definitions:
       - ClientAddress
     properties:
       Base:
-        $ref: '#/definitions/EventBase'
+        $ref: "#/definitions/EventBase"
         description: "事件基本信息"
       AccountName:
         type: string
@@ -974,10 +960,27 @@ definitions:
     items:
       $ref: "#/definitions/RDPEventUnit"
 
+  GetRdpEventRequest:
+    type: array
+    items:
+      $ref: "#/definitions/RDPEventUnit"
 
-
-
-
+  GetRdpEventRepose:
+    type: object
+    required:
+      - data
+      - page
+      - success
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/RDPEventUnit"
+      page:
+        $ref: "#/definitions/PageMeta"
+      success:
+        type: boolean
+        default: true
 
   ServiceEventUpload:
     type: object
@@ -987,26 +990,26 @@ definitions:
       description:
         type: string
 
-  EventRDPLogon:
-    type: object
-    properties:
-      CreateAt:
-        type: string
-        format: date-time
-      ID:
-        type: integer
-      UUID:
-        type: string
-      EventID:
-        type: string
-      LoginName:
-        type: string
-      Address:
-        type: string
-      Domain:
-        type: string
-      Description:
-        type: string
+  #  EventRDPLogon:
+  #    type: object
+  #    properties:
+  #      CreateAt:
+  #        type: string
+  #        format: date-time
+  #      ID:
+  #        type: integer
+  #      UUID:
+  #        type: string
+  #      EventID:
+  #        type: string
+  #      LoginName:
+  #        type: string
+  #      Address:
+  #        type: string
+  #      Domain:
+  #        type: string
+  #      Description:
+  #        type: string
 
   ServiceInfo:
     type: object
@@ -1115,8 +1118,7 @@ definitions:
       clients:
         type: array
         items:
-          $ref: '#/definitions/ClientInfo'
-
+          $ref: "#/definitions/ClientInfo"
 
   GetLoginEventResponse:
     type: object
@@ -1128,10 +1130,9 @@ definitions:
       data:
         type: array
         items:
-          $ref: '#/definitions/LoginEvent'
+          $ref: "#/definitions/LoginEvent"
       page:
-        $ref: '#/definitions/PageMeta'
+        $ref: "#/definitions/PageMeta"
       success:
         type: boolean
         default: true
-

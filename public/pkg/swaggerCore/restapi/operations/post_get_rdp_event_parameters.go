@@ -36,7 +36,7 @@ type PostGetRdpEventParams struct {
 	/*
 	  In: body
 	*/
-	Body *models.CommonQuery
+	Body models.GetRdpEventRequest
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *PostGetRdpEventParams) BindRequest(r *http.Request, route *middleware.M
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.CommonQuery
+		var body models.GetRdpEventRequest
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {
@@ -65,7 +65,7 @@ func (o *PostGetRdpEventParams) BindRequest(r *http.Request, route *middleware.M
 			}
 
 			if len(res) == 0 {
-				o.Body = &body
+				o.Body = body
 			}
 		}
 	}

@@ -26,7 +26,7 @@ type PostGetRdpEventOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models.EventRDPLogon `json:"body,omitempty"`
+	Payload []*models.GetRdpEventRepose `json:"body,omitempty"`
 }
 
 // NewPostGetRdpEventOK creates PostGetRdpEventOK with default headers values
@@ -36,13 +36,13 @@ func NewPostGetRdpEventOK() *PostGetRdpEventOK {
 }
 
 // WithPayload adds the payload to the post get rdp event o k response
-func (o *PostGetRdpEventOK) WithPayload(payload []*models.EventRDPLogon) *PostGetRdpEventOK {
+func (o *PostGetRdpEventOK) WithPayload(payload []*models.GetRdpEventRepose) *PostGetRdpEventOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the post get rdp event o k response
-func (o *PostGetRdpEventOK) SetPayload(payload []*models.EventRDPLogon) {
+func (o *PostGetRdpEventOK) SetPayload(payload []*models.GetRdpEventRepose) {
 	o.Payload = payload
 }
 
@@ -53,7 +53,7 @@ func (o *PostGetRdpEventOK) WriteResponse(rw http.ResponseWriter, producer runti
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]*models.EventRDPLogon, 0, 50)
+		payload = make([]*models.GetRdpEventRepose, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

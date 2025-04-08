@@ -27,7 +27,7 @@ func (LoginEvent) TableName() string {
 	return "login_event"
 }
 
-func TableUniqueConstraints(db *gorm.DB) error {
+func TableUniqueConstraintsForLoginEvent(db *gorm.DB) error {
 	// 检查索引是否存在
 	if !db.Migrator().HasIndex(&LoginEvent{}, "idx_unique_login_event") {
 		// 使用CONCURRENTLY避免锁表
@@ -61,8 +61,7 @@ func InsertLoginEvent(ctx context.Context, db *gorm.DB, loginEvent *LoginEvent) 
 		Error
 }
 
-// InsertLoginEventBatch 保持原样
-
+// InsertLoginEventBatch
 func InsertLoginEventBatch(ctx context.Context, db *gorm.DB, loginEvents []*LoginEvent, benchSize ...int) error {
 	size := 500
 	if len(benchSize) > 0 {

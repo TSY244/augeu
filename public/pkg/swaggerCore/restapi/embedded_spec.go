@@ -244,7 +244,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/CommonQuery"
+              "$ref": "#/definitions/GetRdpEventRequest"
             }
           }
         ],
@@ -254,7 +254,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventRDPLogon"
+                "$ref": "#/definitions/GetRdpEventRepose"
               }
             }
           },
@@ -646,13 +646,10 @@ func init() {
         "summary": "上传RDP事件",
         "parameters": [
           {
-            "name": "events",
+            "name": "data",
             "in": "body",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/RDPEventUpload"
-              }
+              "$ref": "#/definitions/UploadLoginEventRequest"
             }
           }
         ],
@@ -660,7 +657,25 @@ func init() {
           "200": {
             "description": "上传成功",
             "schema": {
-              "$ref": "#/definitions/RDPEventUpload"
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -935,6 +950,28 @@ func init() {
         }
       }
     },
+    "EventBase": {
+      "type": "object",
+      "required": [
+        "EventID",
+        "uuid",
+        "EventTime"
+      ],
+      "properties": {
+        "EventID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "EventTime": {
+          "description": "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）",
+          "type": "string",
+          "format": "date-time"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
     "EventCreateProcess": {
       "type": "object",
       "properties": {
@@ -981,36 +1018,6 @@ func init() {
         },
         "ID": {
           "type": "integer"
-        },
-        "UUID": {
-          "type": "string"
-        }
-      }
-    },
-    "EventRDPLogon": {
-      "type": "object",
-      "properties": {
-        "Address": {
-          "type": "string"
-        },
-        "CreateAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
-        "EventID": {
-          "type": "string"
-        },
-        "ID": {
-          "type": "integer"
-        },
-        "LoginName": {
-          "type": "string"
         },
         "UUID": {
           "type": "string"
@@ -1105,6 +1112,35 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "GetRdpEventRepose": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RDPEventUnit"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "GetRdpEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "LoginEvent": {
@@ -1303,13 +1339,35 @@ func init() {
         }
       }
     },
-    "RDPEventUpload": {
+    "RDPEventUnit": {
       "type": "object",
+      "required": [
+        "Base",
+        "AccountName",
+        "AccountDomain",
+        "ClientName",
+        "ClientAddress"
+      ],
       "properties": {
-        "description": {
+        "AccountDomain": {
+          "description": "登录用户域",
           "type": "string"
         },
-        "event_id": {
+        "AccountName": {
+          "description": "登录用户名",
+          "type": "string",
+          "example": "admin"
+        },
+        "Base": {
+          "description": "事件基本信息",
+          "$ref": "#/definitions/EventBase"
+        },
+        "ClientAddress": {
+          "description": "客户端地址",
+          "type": "string"
+        },
+        "ClientName": {
+          "description": "客户端名称",
           "type": "string"
         }
       }
@@ -1526,6 +1584,12 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "UploadRDPEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "Version": {
@@ -1767,7 +1831,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/CommonQuery"
+              "$ref": "#/definitions/GetRdpEventRequest"
             }
           }
         ],
@@ -1777,7 +1841,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventRDPLogon"
+                "$ref": "#/definitions/GetRdpEventRepose"
               }
             }
           },
@@ -2169,13 +2233,10 @@ func init() {
         "summary": "上传RDP事件",
         "parameters": [
           {
-            "name": "events",
+            "name": "data",
             "in": "body",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/RDPEventUpload"
-              }
+              "$ref": "#/definitions/UploadLoginEventRequest"
             }
           }
         ],
@@ -2183,7 +2244,25 @@ func init() {
           "200": {
             "description": "上传成功",
             "schema": {
-              "$ref": "#/definitions/RDPEventUpload"
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
             }
           }
         }
@@ -2458,6 +2537,28 @@ func init() {
         }
       }
     },
+    "EventBase": {
+      "type": "object",
+      "required": [
+        "EventID",
+        "uuid",
+        "EventTime"
+      ],
+      "properties": {
+        "EventID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "EventTime": {
+          "description": "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）",
+          "type": "string",
+          "format": "date-time"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
     "EventCreateProcess": {
       "type": "object",
       "properties": {
@@ -2504,36 +2605,6 @@ func init() {
         },
         "ID": {
           "type": "integer"
-        },
-        "UUID": {
-          "type": "string"
-        }
-      }
-    },
-    "EventRDPLogon": {
-      "type": "object",
-      "properties": {
-        "Address": {
-          "type": "string"
-        },
-        "CreateAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
-        "EventID": {
-          "type": "string"
-        },
-        "ID": {
-          "type": "integer"
-        },
-        "LoginName": {
-          "type": "string"
         },
         "UUID": {
           "type": "string"
@@ -2628,6 +2699,35 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "GetRdpEventRepose": {
+      "type": "object",
+      "required": [
+        "data",
+        "page",
+        "success"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RDPEventUnit"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMeta"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "GetRdpEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "LoginEvent": {
@@ -2826,13 +2926,35 @@ func init() {
         }
       }
     },
-    "RDPEventUpload": {
+    "RDPEventUnit": {
       "type": "object",
+      "required": [
+        "Base",
+        "AccountName",
+        "AccountDomain",
+        "ClientName",
+        "ClientAddress"
+      ],
       "properties": {
-        "description": {
+        "AccountDomain": {
+          "description": "登录用户域",
           "type": "string"
         },
-        "event_id": {
+        "AccountName": {
+          "description": "登录用户名",
+          "type": "string",
+          "example": "admin"
+        },
+        "Base": {
+          "description": "事件基本信息",
+          "$ref": "#/definitions/EventBase"
+        },
+        "ClientAddress": {
+          "description": "客户端地址",
+          "type": "string"
+        },
+        "ClientName": {
+          "description": "客户端名称",
           "type": "string"
         }
       }
@@ -3049,6 +3171,12 @@ func init() {
           "type": "boolean",
           "default": true
         }
+      }
+    },
+    "UploadRDPEventRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RDPEventUnit"
       }
     },
     "Version": {

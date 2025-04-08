@@ -59,7 +59,6 @@ func (manager *Manager) AutoMigrate() error {
 		&Log2.Event7045{},
 		&Log2.EventCreateProcess{},
 		&Log2.EventPowerShell{},
-		&Log2.EventRDPConnect{},
 		&Log2.EventRDPLogon{},
 		&Log2.EventSIDHistory{},
 		&Log2.EventUser{},
@@ -94,10 +93,15 @@ func (manager *Manager) AutoMigrate() error {
 }
 
 func CreateIndex(db *gorm.DB) error {
-	err := Log2.TableUniqueConstraints(db)
+	err := Log2.TableUniqueConstraintsForLoginEvent(db)
 	if err != nil {
 		return err
 	}
+	err = Log2.TableUniqueConstraintsForRdpEvent(db)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"augeu/public/pkg/swaggerCore/models"
 )
@@ -35,7 +36,7 @@ type PostUpdataRdpEventParams struct {
 	/*
 	  In: body
 	*/
-	Events []*models.RDPEventUpload
+	Data models.UploadLoginEventRequest
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -49,24 +50,22 @@ func (o *PostUpdataRdpEventParams) BindRequest(r *http.Request, route *middlewar
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body []*models.RDPEventUpload
+		var body models.UploadLoginEventRequest
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
-			res = append(res, errors.NewParseError("events", "body", "", err))
+			res = append(res, errors.NewParseError("data", "body", "", err))
 		} else {
+			// validate body object
+			if err := body.Validate(route.Formats); err != nil {
+				res = append(res, err)
+			}
 
-			// validate array of body objects
-			for i := range body {
-				if body[i] == nil {
-					continue
-				}
-				if err := body[i].Validate(route.Formats); err != nil {
-					res = append(res, err)
-					break
-				}
+			ctx := validate.WithOperationRequest(r.Context())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
 			}
 
 			if len(res) == 0 {
-				o.Events = body
+				o.Data = body
 			}
 		}
 	}

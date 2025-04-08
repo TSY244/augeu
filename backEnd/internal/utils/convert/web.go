@@ -3,6 +3,7 @@ package convert
 import (
 	"augeu/backEnd/internal/pkg/DBMnager/HostInfo"
 	"augeu/backEnd/internal/pkg/DBMnager/Log"
+	"augeu/public/pkg/logger"
 	"augeu/public/pkg/swaggerCore/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -100,5 +101,30 @@ func DbLoginEvent2modelLogEvent(loginEvent Log.LoginEvent) *models.LoginEvent {
 		ProcessName:   swag.String(loginEvent.ProcessName),
 		SourceIP:      swag.String(loginEvent.SourceIp),
 		SubjectDomain: swag.String(loginEvent.SubjectDomain),
+	}
+}
+
+func ModelRdpEvent2DbRdpEvent(rdpEvent *models.RDPEventUnit) Log.EventRDPLogon {
+	if rdpEvent == nil {
+		logger.Errorf("rdpEvent is nil")
+		return Log.EventRDPLogon{}
+	}
+	if rdpEvent.Base == nil {
+		logger.Errorf("rdpEvent.Base is nil")
+		return Log.EventRDPLogon{}
+	}
+	if rdpEvent.AccountName == nil || rdpEvent.AccountDomain == nil ||
+		rdpEvent.ClientAddress == nil || rdpEvent.ClientName == nil ||
+		rdpEvent.Base.EventID == nil || rdpEvent.Base.UUID == nil {
+		logger.Errorf("rdpEvent is invalid")
+		return Log.EventRDPLogon{}
+	}
+	return Log.EventRDPLogon{
+		AccountDomain: *rdpEvent.AccountDomain,
+		AccountName:   *rdpEvent.AccountName,
+		ClientAddress: *rdpEvent.ClientAddress,
+		ClientName:    *rdpEvent.ClientName,
+		EventID:       *rdpEvent.Base.EventID,
+		UUID:          *rdpEvent.Base.UUID,
 	}
 }

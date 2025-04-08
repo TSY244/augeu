@@ -14,10 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// RDPEventUpload r d p event upload
+// RDPEventUnit r d p event unit
 //
-// swagger:model RDPEventUpload
-type RDPEventUpload struct {
+// swagger:model RDPEventUnit
+type RDPEventUnit struct {
 
 	// 登录用户域
 	// Required: true
@@ -41,8 +41,8 @@ type RDPEventUpload struct {
 	ClientName *string `json:"ClientName"`
 }
 
-// Validate validates this r d p event upload
-func (m *RDPEventUpload) Validate(formats strfmt.Registry) error {
+// Validate validates this r d p event unit
+func (m *RDPEventUnit) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAccountDomain(formats); err != nil {
@@ -71,7 +71,7 @@ func (m *RDPEventUpload) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RDPEventUpload) validateAccountDomain(formats strfmt.Registry) error {
+func (m *RDPEventUnit) validateAccountDomain(formats strfmt.Registry) error {
 
 	if err := validate.Required("AccountDomain", "body", m.AccountDomain); err != nil {
 		return err
@@ -80,7 +80,7 @@ func (m *RDPEventUpload) validateAccountDomain(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RDPEventUpload) validateAccountName(formats strfmt.Registry) error {
+func (m *RDPEventUnit) validateAccountName(formats strfmt.Registry) error {
 
 	if err := validate.Required("AccountName", "body", m.AccountName); err != nil {
 		return err
@@ -89,7 +89,7 @@ func (m *RDPEventUpload) validateAccountName(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RDPEventUpload) validateBase(formats strfmt.Registry) error {
+func (m *RDPEventUnit) validateBase(formats strfmt.Registry) error {
 
 	if err := validate.Required("Base", "body", m.Base); err != nil {
 		return err
@@ -109,7 +109,7 @@ func (m *RDPEventUpload) validateBase(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RDPEventUpload) validateClientAddress(formats strfmt.Registry) error {
+func (m *RDPEventUnit) validateClientAddress(formats strfmt.Registry) error {
 
 	if err := validate.Required("ClientAddress", "body", m.ClientAddress); err != nil {
 		return err
@@ -118,7 +118,7 @@ func (m *RDPEventUpload) validateClientAddress(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RDPEventUpload) validateClientName(formats strfmt.Registry) error {
+func (m *RDPEventUnit) validateClientName(formats strfmt.Registry) error {
 
 	if err := validate.Required("ClientName", "body", m.ClientName); err != nil {
 		return err
@@ -127,8 +127,8 @@ func (m *RDPEventUpload) validateClientName(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validate this r d p event upload based on the context it is used
-func (m *RDPEventUpload) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this r d p event unit based on the context it is used
+func (m *RDPEventUnit) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateBase(ctx, formats); err != nil {
@@ -141,7 +141,7 @@ func (m *RDPEventUpload) ContextValidate(ctx context.Context, formats strfmt.Reg
 	return nil
 }
 
-func (m *RDPEventUpload) contextValidateBase(ctx context.Context, formats strfmt.Registry) error {
+func (m *RDPEventUnit) contextValidateBase(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Base != nil {
 
@@ -159,7 +159,7 @@ func (m *RDPEventUpload) contextValidateBase(ctx context.Context, formats strfmt
 }
 
 // MarshalBinary interface implementation
-func (m *RDPEventUpload) MarshalBinary() ([]byte, error) {
+func (m *RDPEventUnit) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -167,8 +167,8 @@ func (m *RDPEventUpload) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *RDPEventUpload) UnmarshalBinary(b []byte) error {
-	var res RDPEventUpload
+func (m *RDPEventUnit) UnmarshalBinary(b []byte) error {
+	var res RDPEventUnit
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

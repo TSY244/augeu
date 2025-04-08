@@ -128,7 +128,7 @@ paths:
             $ref: '#/definitions/LoginEventQuery'
       responses:
         200:
-          description: 成功返回事件数组
+          description: "成功返回事件数组"
           schema:
             type: array
             items:
@@ -151,16 +151,26 @@ paths:
       summary: 上传RDP事件
       parameters:
         - in: body
-          name: events
+          name: data
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/RDPEventUpload'
+            $ref: "#/definitions/UploadLoginEventRequest"
       responses:
         200:
-          description: 上传成功
+          description: "上传成功"
           schema:
-            $ref: "#/definitions/RDPEventUpload"
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
 
   /get/rdpEvent:
     post:
@@ -892,13 +902,60 @@ definitions:
       ip:
         type: string
 
-  RDPEventUpload:
+  EventBase:
     type: object
+    required:
+      - EventID
+      - uuid
+      - EventTime
     properties:
-      event_id:
+      EventID:
+        type: integer
+        format: int64
+      uuid:
         type: string
-      description:
+      EventTime:
         type: string
+        format: date-time
+        description: "事件时间，格式：2006-01-02 15:04:05（注意原数据日期时间连写问题）"
+
+
+
+  RDPEventUnit:
+    type: object
+    required:
+      - Base
+      - AccountName
+      - AccountDomain
+      - ClientName
+      - ClientAddress
+    properties:
+      Base:
+        $ref: '#/definitions/EventBase'
+        description: "事件基本信息"
+      AccountName:
+        type: string
+        description: "登录用户名"
+        example: "admin"
+      AccountDomain:
+        type: string
+        description: "登录用户域"
+      ClientName:
+        type: string
+        description: "客户端名称"
+      ClientAddress:
+        type: string
+        description: "客户端地址"
+
+  UploadRDPEventRequest:
+    type: array
+    items:
+      $ref: "#/definitions/RDPEventUnit"
+
+
+
+
+
 
   ServiceEventUpload:
     type: object
@@ -907,29 +964,6 @@ definitions:
         type: string
       description:
         type: string
-
-#  LoginEvent:
-#    type: object
-#    properties:
-#      EventId:
-#        type: integer
-#      EventTime:
-#        type: string
-#        format: date-time
-#      LoginType:
-#        type: string
-#      SourceIp:
-#        type: string
-#      Username:
-#        type: string
-#      SubjectUsername:
-#        type: string
-#      SubjectDomain:
-#        type: string
-#      ProcessName:
-#        type: string
-#      UUID:
-#        type: string
 
   EventRDPLogon:
     type: object

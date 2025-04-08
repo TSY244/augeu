@@ -34,8 +34,20 @@ func (apiManager *ApiManager) UploadLoginEventApiHandlerFunc() operations2.PostU
 				Message: convert.StrPtr("event is nil"),
 			})
 		}
+		legalEvent := make([]*models.LoginEvent, 0)
+		for _, data := range event {
+			if data == nil {
+				continue
+			}
+			if data.MachineUUID == nil {
+				continue
+			}
+			if *data.MachineUUID == uuid {
+				legalEvent = append(legalEvent, data)
+			}
+		}
 
-		dbData := convert2.ArrayCopy(event, convert2.LoginEvent2Db)
+		dbData := convert2.ArrayCopy(legalEvent, convert2.LoginEvent2Db)
 		instertData := make([]*Log.LoginEvent, 0)
 		for _, data := range dbData {
 			data.UUID = uuid

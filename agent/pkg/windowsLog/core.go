@@ -28,6 +28,7 @@ var (
 		ReadLsassEventType:  readLsassEvent,
 		SystemEventType:     systemEvent,
 		UserEventType:       userEvent,
+		SysmonEventType:     test,
 	}
 )
 
@@ -370,4 +371,15 @@ func addUserEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
 	(*eventUnit)[UserEventSubjectDomainNameKey] = GetString(evtxMap, Wrapper(UserEventSubjectDomainNamePath))
 	(*eventUnit)[UserEventSubjectUserSidKey] = GetString(evtxMap, Wrapper(UserEventSubjectUserSidPath))
 	(*eventUnit)[DescriptionKey] = UserEvent[evtxMap.EventID()]
+}
+
+func test(evtxMap chan *evtx.GoEvtxMap) error {
+	temoEvent := map[int64]struct{}{}
+	for event := range evtxMap {
+		temoEvent[event.EventID()] = struct{}{}
+	}
+	for k, v := range temoEvent {
+		fmt.Println(k, v)
+	}
+	return nil
 }

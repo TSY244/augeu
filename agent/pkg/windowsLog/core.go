@@ -20,9 +20,14 @@ type ExternalFunctionForMap func(evtxMap *evtx.GoEvtxMap)
 
 var (
 	FunctionMap = map[EventNameType]ExternalFunctionForMapChan{
-		LoginEvenType:    loginEvent,
-		RdpEventType:     rdpEvent,
-		ServiceEventType: serviceEvent,
+		LoginEvenType:       loginEvent,
+		RdpEventType:        rdpEvent,
+		ServiceEventType:    serviceEvent,
+		CreateProcessType:   createProcessEvent,
+		PowershellEventType: powershellEvent,
+		ReadLsassEventType:  readLsassEvent,
+		SystemEventType:     systemEvent,
+		UserEventType:       userEvent,
 	}
 )
 
@@ -88,6 +93,71 @@ func GetEventsForServiceEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
 		}
 		eventInfo := getBaseInfo(event)
 		addServiceEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForCreateProcessEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := CreateProcessEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		//addCreateProcessEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForPowershellEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := PowershellEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		//addPowershellEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForReadLsassEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := ReadLsassEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		//addReadLsassEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForSystemEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := SystemEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		//addSystemEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForUserEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := UserEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		addUserEventInfoForEvent(event, &eventInfo)
 		events = append(events, eventInfo)
 	}
 	return events
@@ -230,4 +300,74 @@ func addServiceEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) 
 	(*eventUnit)[ServiceEventStartTypePathKey] = GetString(evtxMap, Wrapper(serviceEventStartTypePath))
 	(*eventUnit)[ServiceEventAccountNamePathKey] = GetString(evtxMap, Wrapper(ServiceEventAccountNamePath))
 
+}
+
+// create process event functions
+// createProcessEvent 用于处理进程创建事件
+func createProcessEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForCreateProcessEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+// func addCreateProcessEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+// 	(*eventUnit)[CreateProcessEventProcessNamePathKey] = GetString(evtxMap, Wrapper(CreateProcessEventProcessNamePath))
+//}
+
+// powershell event functions
+// powershellEvent 用于处理powershell事件
+func powershellEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForPowershellEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+func addPowershellEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+	//(*eventUnit)[PowershellEventCommandLinePathKey] = GetString(evtxMap, Wrapper(PowershellEventCommandLinePath))
+}
+
+// read lsass event functions
+// readLsassEvent 用于处理读取lsass事件
+func readLsassEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForReadLsassEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+func addReadLsassEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+	//(*eventUnit)[ReadLsassEventProcessNamePathKey] = GetString(evtxMap, Wrapper(ReadLsassEventProcessNamePath))
+}
+
+// system event functions
+// systemEvent 用于处理系统事件
+func systemEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForSystemEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+func addSystemEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+
+}
+
+// user event functions
+// userEvent 用于处理用户事件
+func userEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForUserEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+func addUserEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+	(*eventUnit)[UserEventTargetUserNameKey] = GetString(evtxMap, Wrapper(UserEventTargetUserNamePath))
+	(*eventUnit)[UserEventTargetDomainNameKey] = GetString(evtxMap, Wrapper(UserEventTargetDomainNamePath))
+	(*eventUnit)[UserEventTargetSidKey] = GetString(evtxMap, Wrapper(UserEventTargetSidPath))
+	(*eventUnit)[UserEventSubjectUserNameKey] = GetString(evtxMap, Wrapper(UserEventSubjectUserNamePath))
+	(*eventUnit)[UserEventSubjectDomainNameKey] = GetString(evtxMap, Wrapper(UserEventSubjectDomainNamePath))
+	(*eventUnit)[UserEventSubjectUserSidKey] = GetString(evtxMap, Wrapper(UserEventSubjectUserSidPath))
+	(*eventUnit)[DescriptionKey] = UserEvent[evtxMap.EventID()]
 }

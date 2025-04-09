@@ -1,7 +1,8 @@
 package windowsLog
 
 import (
-	"augeu/agent/pkg/machine"
+	"augeu/agent/pkg/windowsWmi"
+
 	"augeu/public/pkg/logger"
 	_const "augeu/public/util/const"
 	"errors"
@@ -19,8 +20,9 @@ type ExternalFunctionForMap func(evtxMap *evtx.GoEvtxMap)
 
 var (
 	FunctionMap = map[EventNameType]ExternalFunctionForMapChan{
-		LoginEvenType: loginEvent,
-		RdpEventType:  rdpEvent,
+		LoginEvenType:    loginEvent,
+		RdpEventType:     rdpEvent,
+		ServiceEventType: serviceEvent,
 	}
 )
 
@@ -52,6 +54,7 @@ func RegisterFunctionMap(eventName EventNameType, function ExternalFunctionForMa
 
 func GetEventsForLoginEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
 	events := make([]EventUnit, 0)
+	logger.Info("len(evtxMap): ", len(evtxMap))
 	for event := range evtxMap {
 		if _, ok := LoginEvent[event.EventID()]; !ok {
 			continue
@@ -59,6 +62,7 @@ func GetEventsForLoginEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
 		eventInfo := getBaseInfo(event)
 		addLoginEventInfoForEvent(event, &eventInfo)
 		events = append(events, eventInfo)
+		logger.Info("eventInfo: ", eventInfo, "len events: ", len(events), "event: ", event.EventID(), "eventInfo: ", eventInfo)
 	}
 	return events
 }
@@ -71,6 +75,19 @@ func GetEventsForRdpEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
 		}
 		eventInfo := getBaseInfo(event)
 		addRdpEventInfoForEvent(event, &eventInfo)
+		events = append(events, eventInfo)
+	}
+	return events
+}
+
+func GetEventsForServiceEvent(evtxMap chan *evtx.GoEvtxMap) []EventUnit {
+	events := make([]EventUnit, 0)
+	for event := range evtxMap {
+		if _, ok := ServiceEvent[event.EventID()]; !ok {
+			continue
+		}
+		eventInfo := getBaseInfo(event)
+		addServiceEventInfoForEvent(event, &eventInfo)
 		events = append(events, eventInfo)
 	}
 	return events
@@ -125,7 +142,7 @@ func runBase(eventName EventNameType, mapChanFunctions []ExternalFunctionForMapC
 
 func getBaseInfo(event *evtx.GoEvtxMap) EventUnit {
 	// time : year-month-day hour:minute:second
-	machineUUid, err := machine.GetWindowsGuid()
+	machineUUid, err := windowsWmi.QueryUuid()
 	if err != nil {
 		fmt.Println("getBaseInfo -> get windows guid error: ", err)
 	}
@@ -195,4 +212,22 @@ func addRdpEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
 	(*eventUnit)[AccountDomainKey] = GetString(evtxMap, Wrapper(AccountDomainPath))
 	(*eventUnit)[ClientAddressKey] = GetString(evtxMap, Wrapper(ClientAddressPath))
 	(*eventUnit)[ClientNameKey] = GetString(evtxMap, Wrapper(ClientNamePath))
+}
+
+// service event functions
+// serviceEvent 用于处理服务事件
+func serviceEvent(evtxMap chan *evtx.GoEvtxMap) error {
+	//fmt.Println("total event count: ", len(evtxMap))
+	events := GetEventsForServiceEvent(evtxMap)
+	fmt.Println(events)
+	return nil
+}
+
+func addServiceEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
+	(*eventUnit)[ServiceEventServiceNamePathKey] = GetString(evtxMap, Wrapper(ServiceEventServiceNamePath))
+	(*eventUnit)[ServiceEventImagePathKey] = GetString(evtxMap, Wrapper(ServiceEventImagePath))
+	(*eventUnit)[ServiceEventServiceTypePathKey] = GetString(evtxMap, Wrapper(ServiceEventServiceTypePath))
+	(*eventUnit)[ServiceEventStartTypePathKey] = GetString(evtxMap, Wrapper(serviceEventStartTypePath))
+	(*eventUnit)[ServiceEventAccountNamePathKey] = GetString(evtxMap, Wrapper(ServiceEventAccountNamePath))
+
 }

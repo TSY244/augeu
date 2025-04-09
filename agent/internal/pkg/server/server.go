@@ -111,16 +111,24 @@ func (s *Server) Run() {
 
 func (s *Server) core() {
 	windowsLog.RegisterFunctionMap(windowsLog.LoginEvenType, s.PushLoginEvent)
+	windowsLog.RegisterFunctionMap(windowsLog.RdpEventType, s.PushRdpEvent)
 
 	for {
-		err := s.GetEventInfo(windowsLog.LoginTypeKey)
+		fmt.Println("start get login event info")
+		err := s.GetEventInfo(windowsLog.LoginEvenType)
 		if err != nil {
 			logger.Errorf("Failed to get login event info: %v", err)
 			time.Sleep(10 * time.Second)
 			continue
 		}
 
-		fmt.Println("start get login event info")
+		fmt.Println("start get rdp event info")
+		err = s.GetEventInfo(windowsLog.RdpEventType)
+		if err != nil {
+			logger.Errorf("Failed to get rdp event info: %v", err)
+			time.Sleep(10 * time.Second)
+			continue
+		}
 		time.Sleep(60 * time.Second)
 
 	}

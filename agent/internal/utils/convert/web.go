@@ -38,3 +38,37 @@ func LoginEvent2RLoginEventResq(event windowsLog.EventUnit) *models.LoginEvent {
 		ProcessName:   &processName,
 	}
 }
+
+//const (
+//	AccountNamePath   = "/Event/EventData/AccountName"
+//	AccountDomainPath = "/Event/EventData/AccountDomain"
+//	ClientNamePath    = "/Event/EventData/ClientName"
+//	ClientAddressPath = "/Event/EventData/ClientAddress"
+//)
+
+func RdpEvent2RdpEventResq(event windowsLog.EventUnit) *models.RDPEventUpload {
+	eventId := event[windowsLog.EventIdKey].(int64)
+	eventTime := event[windowsLog.EventTimeKey].(string)
+	machineUuid := event[windowsLog.MachineUUIDKey].(string)
+	accountName := event[windowsLog.AccountNameKey].(string)
+	accountDomain := event[windowsLog.AccountDomainKey].(string)
+	clientName := event[windowsLog.ClientNameKey].(string)
+	clientAddress := event[windowsLog.ClientAddressKey].(string)
+
+	tempTime, err := convert.StrTime2DateTime(eventTime)
+	if err != nil {
+		logger.Errorf("tempTime is error: %v", err)
+		tempTime, _ = convert.StrTime2DateTime(`0-0-0 12:00:00`)
+	}
+	return &models.RDPEventUpload{
+		Base: &models.EventBase{
+			EventID:   &eventId,
+			EventTime: tempTime,
+			UUID:      &machineUuid,
+		},
+		AccountName:   &accountName,
+		AccountDomain: &accountDomain,
+		ClientName:    &clientName,
+		ClientAddress: &clientAddress,
+	}
+}

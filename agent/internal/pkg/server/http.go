@@ -78,7 +78,17 @@ func (s *Server) PushLoginEvent(evtxMap chan *evtx.GoEvtxMap) error {
 
 func (s *Server) PushRdpEvent(evtxMap chan *evtx.GoEvtxMap) error {
 	events := windowsLog.GetEventsForRdpEvent(evtxMap)
-	resq := convert.ArrayCopy(events, convert.RdpEvent2RRdpEventResq)
+	resq := convert.ArrayCopy(events, convert.RdpEvent2RdpEventResq)
 	jsonData, err := json.Marshal(resq)
-
+	if err != nil {
+		logger.Errorf("PushRdpEvent json.Marshal error: %v", err)
+		return err
+	}
+	_, err = augeuHttp.PostRequestWithJson(s.Conf.RemoteAddr+UploadRdpEventApiPath, s.Header, string(jsonData))
+	if err != nil {
+		logger.Errorf("PushRdpEvent PostRequestWithJson error: %v", err)
+		return err
+	}
+	logger.Infof("PushRdpEvent success")
+	return nil
 }

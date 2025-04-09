@@ -117,11 +117,6 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.PostUpdataProcessEvent has not yet been implemented")
 		})
 	}
-	if api.PostUpdataRdpEventHandler == nil {
-		api.PostUpdataRdpEventHandler = operations.PostUpdataRdpEventHandlerFunc(func(params operations.PostUpdataRdpEventParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.PostUpdataRdpEvent has not yet been implemented")
-		})
-	}
 	if api.PostUpdataSecurityEventHandler == nil {
 		api.PostUpdataSecurityEventHandler = operations.PostUpdataSecurityEventHandlerFunc(func(params operations.PostUpdataSecurityEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.PostUpdataSecurityEvent has not yet been implemented")
@@ -140,6 +135,11 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 	if api.PostUploadLoginEventHandler == nil {
 		api.PostUploadLoginEventHandler = operations.PostUploadLoginEventHandlerFunc(func(params operations.PostUploadLoginEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.PostUploadLoginEvent has not yet been implemented")
+		})
+	}
+	if api.PostUploadRdpEventHandler == nil {
+		api.PostUploadRdpEventHandler = operations.PostUploadRdpEventHandlerFunc(func(params operations.PostUploadRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUploadRdpEvent has not yet been implemented")
 		})
 	}
 

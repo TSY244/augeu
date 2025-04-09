@@ -16,19 +16,19 @@ import (
 	"augeu/public/pkg/swaggerCore/models"
 )
 
-// NewPostUpdataRdpEventParams creates a new PostUpdataRdpEventParams object
+// NewPostUploadRdpEventParams creates a new PostUploadRdpEventParams object
 //
 // There are no default values defined in the spec.
-func NewPostUpdataRdpEventParams() PostUpdataRdpEventParams {
+func NewPostUploadRdpEventParams() PostUploadRdpEventParams {
 
-	return PostUpdataRdpEventParams{}
+	return PostUploadRdpEventParams{}
 }
 
-// PostUpdataRdpEventParams contains all the bound params for the post updata rdp event operation
+// PostUploadRdpEventParams contains all the bound params for the post upload rdp event operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters PostUpdataRdpEvent
-type PostUpdataRdpEventParams struct {
+// swagger:parameters PostUploadRdpEvent
+type PostUploadRdpEventParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -42,8 +42,8 @@ type PostUpdataRdpEventParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewPostUpdataRdpEventParams() beforehand.
-func (o *PostUpdataRdpEventParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewPostUploadRdpEventParams() beforehand.
+func (o *PostUploadRdpEventParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r

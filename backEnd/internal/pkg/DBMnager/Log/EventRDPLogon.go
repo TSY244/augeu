@@ -14,6 +14,7 @@ type EventRDPLogon struct {
 	ID            uint           `gorm:"primaryKey;autoIncrement"`
 	UUID          string         `gorm:"type:varchar(255);column:uuid"`
 	EventID       int64          `gorm:"column:event_id"`
+	EventTime     time.Time      `gorm:"type:timestamp(3);column:event_time"`
 	AccountDomain string         `gorm:"column:account_domain"`
 	AccountName   string         `gorm:"column:account_name"`
 	ClientAddress string         `gorm:"column:client_address"`
@@ -31,7 +32,7 @@ func TableUniqueConstraintsForRdpEvent(db *gorm.DB) error {
 		err := db.Exec(`
             CREATE UNIQUE INDEX CONCURRENTLY idx_unique_rdp_event 
             ON event_rdplogon 
-            (uuid, account_domain, account_name, client_address,client_name)
+            (uuid, account_domain, account_name, client_address,client_name,event_time)
         `).Error
 
 		if err != nil {
@@ -52,6 +53,7 @@ func InsertRdpEvent(ctx context.Context, db *gorm.DB, rdpEvent *EventRDPLogon) e
 				{Name: "account_name"},
 				{Name: "client_address"},
 				{Name: "client_name"},
+				{Name: "event_time"},
 			},
 			DoNothing: true,
 		}).
@@ -74,6 +76,7 @@ func InsertRdpEventBatch(ctx context.Context, db *gorm.DB, rdpEvents []EventRDPL
 				{Name: "account_name"},
 				{Name: "client_address"},
 				{Name: "client_name"},
+				{Name: "event_time"},
 			},
 			DoNothing: true,
 		}).

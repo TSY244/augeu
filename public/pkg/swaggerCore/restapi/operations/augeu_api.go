@@ -90,9 +90,6 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		PostUpdataProcessEventHandler: PostUpdataProcessEventHandlerFunc(func(params PostUpdataProcessEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostUpdataProcessEvent has not yet been implemented")
 		}),
-		PostUpdataRdpEventHandler: PostUpdataRdpEventHandlerFunc(func(params PostUpdataRdpEventParams) middleware.Responder {
-			return middleware.NotImplemented("operation PostUpdataRdpEvent has not yet been implemented")
-		}),
 		PostUpdataSecurityEventHandler: PostUpdataSecurityEventHandlerFunc(func(params PostUpdataSecurityEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostUpdataSecurityEvent has not yet been implemented")
 		}),
@@ -104,6 +101,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		}),
 		PostUploadLoginEventHandler: PostUploadLoginEventHandlerFunc(func(params PostUploadLoginEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostUploadLoginEvent has not yet been implemented")
+		}),
+		PostUploadRdpEventHandler: PostUploadRdpEventHandlerFunc(func(params PostUploadRdpEventParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUploadRdpEvent has not yet been implemented")
 		}),
 	}
 }
@@ -173,8 +173,6 @@ type AugeuAPI struct {
 	PostUpdataPowershellEventHandler PostUpdataPowershellEventHandler
 	// PostUpdataProcessEventHandler sets the operation handler for the post updata process event operation
 	PostUpdataProcessEventHandler PostUpdataProcessEventHandler
-	// PostUpdataRdpEventHandler sets the operation handler for the post updata rdp event operation
-	PostUpdataRdpEventHandler PostUpdataRdpEventHandler
 	// PostUpdataSecurityEventHandler sets the operation handler for the post updata security event operation
 	PostUpdataSecurityEventHandler PostUpdataSecurityEventHandler
 	// PostUpdataServiceEventHandler sets the operation handler for the post updata service event operation
@@ -183,6 +181,8 @@ type AugeuAPI struct {
 	PostUpdataSystemEventHandler PostUpdataSystemEventHandler
 	// PostUploadLoginEventHandler sets the operation handler for the post upload login event operation
 	PostUploadLoginEventHandler PostUploadLoginEventHandler
+	// PostUploadRdpEventHandler sets the operation handler for the post upload rdp event operation
+	PostUploadRdpEventHandler PostUploadRdpEventHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -308,9 +308,6 @@ func (o *AugeuAPI) Validate() error {
 	if o.PostUpdataProcessEventHandler == nil {
 		unregistered = append(unregistered, "PostUpdataProcessEventHandler")
 	}
-	if o.PostUpdataRdpEventHandler == nil {
-		unregistered = append(unregistered, "PostUpdataRdpEventHandler")
-	}
 	if o.PostUpdataSecurityEventHandler == nil {
 		unregistered = append(unregistered, "PostUpdataSecurityEventHandler")
 	}
@@ -322,6 +319,9 @@ func (o *AugeuAPI) Validate() error {
 	}
 	if o.PostUploadLoginEventHandler == nil {
 		unregistered = append(unregistered, "PostUploadLoginEventHandler")
+	}
+	if o.PostUploadRdpEventHandler == nil {
+		unregistered = append(unregistered, "PostUploadRdpEventHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -478,10 +478,6 @@ func (o *AugeuAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/updata/rdpEvent"] = NewPostUpdataRdpEvent(o.context, o.PostUpdataRdpEventHandler)
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
 	o.handlers["POST"]["/updata/securityEvent"] = NewPostUpdataSecurityEvent(o.context, o.PostUpdataSecurityEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -495,6 +491,10 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/upload/loginEvent"] = NewPostUploadLoginEvent(o.context, o.PostUploadLoginEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/upload/rdpEvent"] = NewPostUploadRdpEvent(o.context, o.PostUploadRdpEventHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

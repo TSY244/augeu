@@ -17,8 +17,9 @@ var (
 
 // Account 账号信息表
 type Account struct {
-	CreatedAt time.Time      `gorm:"autoCreateTime"`
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	CreatedAt     time.Time      `gorm:"autoCreateTime"`
+	DeletedAt     gorm.DeletedAt `gorm:"index"`
+	LastLoginTime time.Time      `gorm:"autoUpdateTime"`
 	// 使用中间表 account_ips 建立与 IPAddress 的多对多关系
 	IPAddresses []IPAddress `gorm:"many2many:account_ips;"`
 	ClientID    string      `gorm:"type:varchar(255);not null"` // 动态的，用于绑定任务

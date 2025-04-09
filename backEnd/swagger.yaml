@@ -143,14 +143,14 @@ paths:
           schema:
             $ref: "#/definitions/UnauthorizedError"
 
-  /updata/rdpEvent:
+  /upload/rdpEvent:
     post:
       summary: 上传RDP事件
       parameters:
         - in: body
           name: data
           schema:
-            $ref: "#/definitions/UploadLoginEventRequest"
+            $ref: "#/definitions/UploadRDPEventRequest"
       responses:
         200:
           description: "上传成功"

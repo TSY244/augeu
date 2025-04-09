@@ -641,46 +641,6 @@ func init() {
         }
       }
     },
-    "/updata/rdpEvent": {
-      "post": {
-        "summary": "上传RDP事件",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UploadLoginEventRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "上传成功",
-            "schema": {
-              "$ref": "#/definitions/SuccessResponse"
-            }
-          },
-          "400": {
-            "description": "输入参数错误",
-            "schema": {
-              "$ref": "#/definitions/BadRequestError"
-            }
-          },
-          "403": {
-            "description": "没有权限",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedError"
-            }
-          },
-          "500": {
-            "description": "内部错误",
-            "schema": {
-              "$ref": "#/definitions/ActionFailure"
-            }
-          }
-        }
-      }
-    },
     "/updata/securityEvent": {
       "post": {
         "summary": "上传安全日志事件",
@@ -810,6 +770,46 @@ func init() {
             "description": "事件日志上传成功",
             "schema": {
               "$ref": "#/definitions/UploadLoginEventResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/upload/rdpEvent": {
+      "post": {
+        "summary": "上传RDP事件",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UploadRDPEventRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
             }
           },
           "400": {
@@ -2228,46 +2228,6 @@ func init() {
         }
       }
     },
-    "/updata/rdpEvent": {
-      "post": {
-        "summary": "上传RDP事件",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UploadLoginEventRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "上传成功",
-            "schema": {
-              "$ref": "#/definitions/SuccessResponse"
-            }
-          },
-          "400": {
-            "description": "输入参数错误",
-            "schema": {
-              "$ref": "#/definitions/BadRequestError"
-            }
-          },
-          "403": {
-            "description": "没有权限",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedError"
-            }
-          },
-          "500": {
-            "description": "内部错误",
-            "schema": {
-              "$ref": "#/definitions/ActionFailure"
-            }
-          }
-        }
-      }
-    },
     "/updata/securityEvent": {
       "post": {
         "summary": "上传安全日志事件",
@@ -2397,6 +2357,46 @@ func init() {
             "description": "事件日志上传成功",
             "schema": {
               "$ref": "#/definitions/UploadLoginEventResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/upload/rdpEvent": {
+      "post": {
+        "summary": "上传RDP事件",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UploadRDPEventRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
             }
           },
           "400": {

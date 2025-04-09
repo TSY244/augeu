@@ -115,7 +115,8 @@ func ModelRdpEvent2DbRdpEvent(rdpEvent *models.RDPEventUnit) Log.EventRDPLogon {
 	}
 	if rdpEvent.AccountName == nil || rdpEvent.AccountDomain == nil ||
 		rdpEvent.ClientAddress == nil || rdpEvent.ClientName == nil ||
-		rdpEvent.Base.EventID == nil || rdpEvent.Base.UUID == nil {
+		rdpEvent.Base.EventID == nil || rdpEvent.Base.UUID == nil ||
+		rdpEvent.Base.EventTime == nil {
 		logger.Errorf("rdpEvent is invalid")
 		return Log.EventRDPLogon{}
 	}
@@ -126,5 +127,6 @@ func ModelRdpEvent2DbRdpEvent(rdpEvent *models.RDPEventUnit) Log.EventRDPLogon {
 		ClientName:    *rdpEvent.ClientName,
 		EventID:       *rdpEvent.Base.EventID,
 		UUID:          *rdpEvent.Base.UUID,
+		EventTime:     time.Time(*rdpEvent.Base.EventTime),
 	}
 }

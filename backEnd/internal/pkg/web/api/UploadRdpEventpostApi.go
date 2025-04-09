@@ -13,8 +13,8 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostGetRdpEventHandlerFunc {
-	return func(params operations.PostGetRdpEventParams) middleware.Responder {
+func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostUploadRdpEventHandlerFunc {
+	return func(params operations.PostUploadRdpEventParams) middleware.Responder {
 		apiName := "UploadRdpEventApi"
 		if resp := middleware2.CheckAgentRole(params.HTTPRequest, apiManager.s); resp != nil {
 			return resp
@@ -27,7 +27,7 @@ func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostGetR
 				Message: convert.StrPtr("GetClientUuid error"),
 			})
 		}
-		events := params.Body
+		events := params.Data
 		if events == nil {
 			return operations.NewPostGetRdpEventBadRequest().WithPayload(&models.BadRequestError{
 				Code:    convert.Int64P(int64(operations.PostGetRdpEventBadRequestCode)),

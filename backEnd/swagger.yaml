@@ -543,6 +543,32 @@ paths:
           schema:
             $ref: "#/definitions/UnauthorizedError"
 
+  /upload/userInfo:
+    post:
+      summary: 上传用户信息
+      parameters:
+        - in: body
+          name: data
+          schema:
+            $ref: "#/definitions/UploadUserInfoRequest"
+      responses:
+        200:
+          description: 上传成功
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+
 definitions:
   Version:
     type: object
@@ -1136,3 +1162,37 @@ definitions:
       success:
         type: boolean
         default: true
+
+  UserInfo:
+    type: object
+    required:
+      - name
+      - description
+      - localAccount
+      - sid
+      - isFocus
+      - uuid
+    properties:
+      name:
+        type: string
+        description: "名字"
+      description:
+        type: string
+        description: "描述"
+      localAccount:
+        type: boolean
+        description: "是否本地账户"
+      sid:
+        type: string
+        description: "SID"
+      isFocus:
+        type: boolean
+        description: "是否是可疑的用户"
+      uuid:
+        type: string
+        description: "UUID"
+
+  UploadUserInfoRequest:
+    type: array
+    items:
+      $ref: "#/definitions/UserInfo"

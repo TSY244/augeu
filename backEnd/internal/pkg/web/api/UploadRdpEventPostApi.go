@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostUploadRdpEventHandlerFunc {
+func (apiManager *ApiManager) UploadRdpEventPostApiHandlerFunc() operations.PostUploadRdpEventHandlerFunc {
 	return func(params operations.PostUploadRdpEventParams) middleware.Responder {
 		apiName := "UploadRdpEventApi"
 		if resp := middleware2.CheckAgentRole(params.HTTPRequest, apiManager.s); resp != nil {
@@ -21,7 +21,7 @@ func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostUplo
 		}
 		uuid, err := middleware2.GetClientUuid(params.HTTPRequest)
 		if err != nil {
-			logger.Errorf("UploadRdpEventApiHandlerFunc -> GetClientUuid error: %v", err)
+			logger.Errorf("UploadRdpEventPostApiHandlerFunc -> GetClientUuid error: %v", err)
 			return operations.NewPostGetRdpEventBadRequest().WithPayload(&models.BadRequestError{
 				Code:    convert.Int64P(int64(operations.PostGetRdpEventBadRequestCode)),
 				Message: convert.StrPtr("GetClientUuid error"),
@@ -54,7 +54,7 @@ func (apiManager *ApiManager) UploadRdpEventApiHandlerFunc() operations.PostUplo
 		}
 		dbEvent := convert2.ArrayCopy(events, convert2.ModelRdpEvent2DbRdpEvent)
 		if err := Log.InsertRdpEventBatch(apiManager.s.RootCtx, apiManager.s.DBM.DB, dbEvent); err != nil {
-			logger.Errorf("UploadRdpEventApiHandlerFunc -> HostInfo.InsertRdpEvent error: %v", err)
+			logger.Errorf("UploadRdpEventPostApiHandlerFunc -> HostInfo.InsertRdpEvent error: %v", err)
 			return operations.NewPostGetRdpEventInternalServerError().WithPayload(&models.ActionFailure{
 				From:    utils.StrP(apiName),
 				Reason:  utils.StrP(web.InternalError),

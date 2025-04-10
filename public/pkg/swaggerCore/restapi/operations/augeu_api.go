@@ -105,6 +105,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		PostUploadRdpEventHandler: PostUploadRdpEventHandlerFunc(func(params PostUploadRdpEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostUploadRdpEvent has not yet been implemented")
 		}),
+		PostUploadUserInfoHandler: PostUploadUserInfoHandlerFunc(func(params PostUploadUserInfoParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostUploadUserInfo has not yet been implemented")
+		}),
 	}
 }
 
@@ -183,6 +186,8 @@ type AugeuAPI struct {
 	PostUploadLoginEventHandler PostUploadLoginEventHandler
 	// PostUploadRdpEventHandler sets the operation handler for the post upload rdp event operation
 	PostUploadRdpEventHandler PostUploadRdpEventHandler
+	// PostUploadUserInfoHandler sets the operation handler for the post upload user info operation
+	PostUploadUserInfoHandler PostUploadUserInfoHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -322,6 +327,9 @@ func (o *AugeuAPI) Validate() error {
 	}
 	if o.PostUploadRdpEventHandler == nil {
 		unregistered = append(unregistered, "PostUploadRdpEventHandler")
+	}
+	if o.PostUploadUserInfoHandler == nil {
+		unregistered = append(unregistered, "PostUploadUserInfoHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -495,6 +503,10 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/upload/rdpEvent"] = NewPostUploadRdpEvent(o.context, o.PostUploadRdpEventHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/upload/userInfo"] = NewPostUploadUserInfo(o.context, o.PostUploadUserInfoHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

@@ -142,6 +142,11 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.PostUploadRdpEvent has not yet been implemented")
 		})
 	}
+	if api.PostUploadUserInfoHandler == nil {
+		api.PostUploadUserInfoHandler = operations.PostUploadUserInfoHandlerFunc(func(params operations.PostUploadUserInfoParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostUploadUserInfo has not yet been implemented")
+		})
+	}
 
 	api.PreServerShutdown = func() {}
 

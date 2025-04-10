@@ -833,6 +833,46 @@ func init() {
         }
       }
     },
+    "/upload/userInfo": {
+      "post": {
+        "summary": "上传用户信息",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UploadUserInfoRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
@@ -1590,6 +1630,49 @@ func init() {
       "type": "array",
       "items": {
         "$ref": "#/definitions/RDPEventUnit"
+      }
+    },
+    "UploadUserInfoRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UserInfo"
+      }
+    },
+    "UserInfo": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "localAccount",
+        "sid",
+        "isFocus",
+        "uuid"
+      ],
+      "properties": {
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "isFocus": {
+          "description": "是否是可疑的用户",
+          "type": "boolean"
+        },
+        "localAccount": {
+          "description": "是否本地账户",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "名字",
+          "type": "string"
+        },
+        "sid": {
+          "description": "SID",
+          "type": "string"
+        },
+        "uuid": {
+          "description": "UUID",
+          "type": "string"
+        }
       }
     },
     "Version": {
@@ -2420,6 +2503,46 @@ func init() {
         }
       }
     },
+    "/upload/userInfo": {
+      "post": {
+        "summary": "上传用户信息",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UploadUserInfoRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/version": {
       "get": {
         "security": [],
@@ -3177,6 +3300,49 @@ func init() {
       "type": "array",
       "items": {
         "$ref": "#/definitions/RDPEventUnit"
+      }
+    },
+    "UploadUserInfoRequest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UserInfo"
+      }
+    },
+    "UserInfo": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "localAccount",
+        "sid",
+        "isFocus",
+        "uuid"
+      ],
+      "properties": {
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "isFocus": {
+          "description": "是否是可疑的用户",
+          "type": "boolean"
+        },
+        "localAccount": {
+          "description": "是否本地账户",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "名字",
+          "type": "string"
+        },
+        "sid": {
+          "description": "SID",
+          "type": "string"
+        },
+        "uuid": {
+          "description": "UUID",
+          "type": "string"
+        }
       }
     },
     "Version": {

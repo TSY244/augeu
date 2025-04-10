@@ -7,6 +7,7 @@ import (
 	"augeu/public/pkg/swaggerCore/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -128,5 +129,16 @@ func ModelRdpEvent2DbRdpEvent(rdpEvent *models.RDPEventUnit) Log.EventRDPLogon {
 		EventID:       *rdpEvent.Base.EventID,
 		UUID:          *rdpEvent.Base.UUID,
 		EventTime:     time.Time(*rdpEvent.Base.EventTime),
+	}
+}
+
+func ModelUser2DbUser(user *models.UserInfo) HostInfo.User {
+	return HostInfo.User{
+		Description:  *user.Description,
+		IsFocus:      *user.IsFocus,
+		LocalAccount: *user.LocalAccount,
+		Name:         *user.Name,
+		SID:          *user.Sid,
+		UUID:         uuid.MustParse(*user.UUID),
 	}
 }

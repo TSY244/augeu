@@ -101,7 +101,10 @@ func CreateIndex(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
-
+	err = HostInfo2.TableUniqueConstraintsForUser(db)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

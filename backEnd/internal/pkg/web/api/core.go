@@ -70,7 +70,6 @@ func (rw *responseWriter) Write(b []byte) (int, error) {
 }
 
 func (apiManager *ApiManager) InitApi(swapi *operations.AugeuAPI) {
-	//todo add api handler
 	swapi.GetVersionHandler = apiManager.GetVersionApiHandlerFunc()
 	swapi.PostGetClientIDHandler = apiManager.GetClientIdPostApiHandlerFunc()
 	swapi.PostLoginHandler = apiManager.LoginPostApiHandlerFunc()
@@ -78,5 +77,6 @@ func (apiManager *ApiManager) InitApi(swapi *operations.AugeuAPI) {
 	swapi.PostUploadLoginEventHandler = apiManager.UploadLoginEventApiHandlerFunc()
 	swapi.GetGetClientsHandler = apiManager.GetClientsGetHandlerFunc()
 	swapi.PostGetLoginEventHandler = apiManager.GetLoginEventGetApi()
-	swapi.PostUploadRdpEventHandler = apiManager.UploadRdpEventApiHandlerFunc()
+	swapi.PostUploadRdpEventHandler = apiManager.UploadRdpEventPostApiHandlerFunc()
+	swapi.PostUploadRdpEventHandler = apiManager.UploadRdpEventPostApiHandlerFunc()
 }

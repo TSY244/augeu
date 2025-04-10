@@ -10,6 +10,7 @@ const (
 	SystemEventType     EventNameType = "SystemEventType"
 	UserEventType       EventNameType = "UserEventType"
 	SysmonEventType     EventNameType = "SysmonEventType"
+	RegistryEventType   EventNameType = "RegistryEventType"
 )
 
 var (
@@ -39,6 +40,9 @@ var (
 			"C:\\Windows\\System32\\winevt\\Logs\\Security.evtx",
 		},
 		SysmonEventType: {
+			"C:\\Windows\\System32\\winevt\\Logs\\Microsoft-Windows-Sysmon%4Operational.evtx",
+		},
+		RegistryEventType: {
 			"C:\\Windows\\System32\\winevt\\Logs\\Microsoft-Windows-Sysmon%4Operational.evtx",
 		},
 	}

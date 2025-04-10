@@ -28,7 +28,7 @@ var (
 		ReadLsassEventType:  readLsassEvent,
 		SystemEventType:     systemEvent,
 		UserEventType:       userEvent,
-		SysmonEventType:     test,
+		RegistryEventType:   test,
 	}
 )
 
@@ -374,12 +374,15 @@ func addUserEventInfoForEvent(evtxMap *evtx.GoEvtxMap, eventUnit *EventUnit) {
 }
 
 func test(evtxMap chan *evtx.GoEvtxMap) error {
-	temoEvent := map[int64]struct{}{}
+	have := map[int64]interface{}{}
 	for event := range evtxMap {
-		temoEvent[event.EventID()] = struct{}{}
-	}
-	for k, v := range temoEvent {
-		fmt.Println(k, v)
+		//if _, ok := RegistryEvent[event.EventID()]; !ok {
+		//	continue
+		//}
+		if _, ok := have[event.EventID()]; !ok {
+			have[event.EventID()] = nil
+			fmt.Println(event.EventID())
+		}
 	}
 	return nil
 }

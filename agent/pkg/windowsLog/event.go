@@ -42,4 +42,10 @@ var (
 	DnsEvent = map[int64]string{
 		22: "DNS 查询",
 	}
+	// 注册表
+	RegistryEvent = map[int64]string{
+		12: "注册表值创建",
+		13: "注册表值重命名",
+		14: "注册表值删除",
+	}
 )

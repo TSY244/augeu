@@ -205,3 +205,8 @@ func (s *Server) receiveClientId() {
 	logger.Info("Received client id: ", clientId)
 	logger.Info("Received jwt: ", jwt)
 }
+
+func (s *Server) initPush() {
+	// 第一次启动时推送相关的信息
+
+}

@@ -8,13 +8,6 @@ import (
 	"runtime"
 )
 
-//type nil struct {
-//	Description string
-//	HotFixID    string
-//	InstalledBy string
-//	InstalledOn string
-//}
-
 func GetSystemInfo() (*models.SystemInfo, error) {
 	osName, err := windowsWmi.QueryOsName()
 	if err != nil {

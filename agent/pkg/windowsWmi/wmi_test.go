@@ -30,13 +30,13 @@ func TestQuery(t *testing.T) {
 	//	t.Error(err)
 	//}
 	//t.Log("hotFix: ", ret2)
-	//ret3, err := QueryUsers()
-	//if err != nil {
-	//	t.Error(err)
-	//}
-	//for _, user := range ret3 {
-	//	t.Log(user)
-	//}
+	ret3, err := QueryUsers()
+	if err != nil {
+		t.Error(err)
+	}
+	for _, user := range ret3 {
+		t.Log(user)
+	}
 	//ret4, err := QueryScheduledTasks()
 	//if err != nil {
 	//	t.Error(err)
@@ -44,12 +44,12 @@ func TestQuery(t *testing.T) {
 	//for _, task := range ret4 {
 	//	t.Log(task)
 	//}
-	ret, err := QueryServices()
-	if err != nil {
-		t.Error(err)
-	}
-	for _, task := range ret {
-		t.Log(task)
-	}
+	//ret5, err := QueryServices()
+	//if err != nil {
+	//	t.Error(err)
+	//}
+	//for _, task := range ret5 {
+	//	t.Log(task)
+	//}
 
 }

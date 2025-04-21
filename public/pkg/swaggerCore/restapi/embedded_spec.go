@@ -110,6 +110,46 @@ func init() {
         }
       }
     },
+    "/get/file/report": {
+      "post": {
+        "summary": "获取文件信誉报告",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetFileReportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/GetFileReportResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/get/loginEvent": {
       "post": {
         "summary": "查询登录事件",
@@ -256,6 +296,37 @@ func init() {
               "items": {
                 "$ref": "#/definitions/GetRdpEventRepose"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/get/rules": {
+      "get": {
+        "summary": "查询规则列表",
+        "responses": {
+          "200": {
+            "description": "成功返回规则列表",
+            "schema": {
+              "$ref": "#/definitions/GetRulesResponse"
             }
           },
           "400": {
@@ -1111,6 +1182,34 @@ func init() {
         }
       }
     },
+    "GetFileReportRequest": {
+      "type": "object",
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "description": "sha256/sha1/md5",
+          "type": "string"
+        }
+      }
+    },
+    "GetFileReportResponse": {
+      "type": "object",
+      "required": [
+        "response_code",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WeiBuData"
+        },
+        "response_code": {
+          "description": "返回码",
+          "type": "integer"
+        }
+      }
+    },
     "GetLoginEventRequest": {
       "type": "object",
       "required": [
@@ -1181,6 +1280,23 @@ func init() {
       "type": "array",
       "items": {
         "$ref": "#/definitions/RDPEventUnit"
+      }
+    },
+    "GetRulesResponse": {
+      "type": "object",
+      "required": [
+        "response_code",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "规则内容",
+          "type": "string"
+        },
+        "response_code": {
+          "description": "返回码",
+          "type": "integer"
+        }
       }
     },
     "LoginEvent": {
@@ -1511,6 +1627,32 @@ func init() {
         }
       }
     },
+    "Strings": {
+      "type": "object",
+      "required": [
+        "sha256",
+        "pcap"
+      ],
+      "properties": {
+        "pcap": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sha256": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "SuccessResponse": {
       "type": "object",
       "required": [
@@ -1682,6 +1824,248 @@ func init() {
           "description": "版本号",
           "type": "string",
           "default": "0.0.1"
+        }
+      }
+    },
+    "WeiBuData": {
+      "type": "object",
+      "required": [
+        "ThreatLevel",
+        "ThreatType",
+        "MalwareFamily",
+        "SubmitTime",
+        "Tag",
+        "ThreatScore",
+        "MultiEngines",
+        "Signature",
+        "Network",
+        "Strings",
+        "Permalink"
+      ],
+      "properties": {
+        "MalwareFamily": {
+          "description": "恶意软件家族",
+          "type": "string"
+        },
+        "MultiEngines": {
+          "description": "多引擎检测结果",
+          "type": "string"
+        },
+        "Network": {
+          "$ref": "#/definitions/WeiBuNetwork"
+        },
+        "Permalink": {
+          "description": "文件报告页网址",
+          "type": "string"
+        },
+        "Signature": {
+          "$ref": "#/definitions/WeiBuSignature"
+        },
+        "Strings": {
+          "$ref": "#/definitions/Strings"
+        },
+        "SubmitTime": {
+          "description": "文件提交时间",
+          "type": "string"
+        },
+        "Tag": {
+          "description": "标签",
+          "$ref": "#/definitions/WeiBuTag"
+        },
+        "ThreatLevel": {
+          "description": "威胁等级",
+          "type": "string"
+        },
+        "ThreatScore": {
+          "description": "威胁分值",
+          "type": "integer"
+        },
+        "ThreatType": {
+          "description": "威胁类型",
+          "type": "string"
+        }
+      }
+    },
+    "WeiBuNetwork": {
+      "type": "object",
+      "required": [
+        "fingerprint",
+        "tls",
+        "udp",
+        "dns_servers",
+        "http",
+        "irc",
+        "smtp",
+        "tcp",
+        "smtp_ex",
+        "mitm",
+        "hosts",
+        "dns",
+        "http_ex",
+        "domains",
+        "dead_hosts",
+        "icmp",
+        "https_ex"
+      ],
+      "properties": {
+        "dead_hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dns_servers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fingerprint": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "http": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "http_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "https_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icmp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "irc": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mitm": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smtp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smtp_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tcp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "udp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "WeiBuSignature": {
+      "type": "object",
+      "required": [
+        "severity"
+      ],
+      "properties": {
+        "severity": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeiBuSignatureBase"
+          }
+        }
+      }
+    },
+    "WeiBuSignatureBase": {
+      "type": "object",
+      "required": [
+        "severity",
+        "sigClass",
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "severity": {
+          "description": "严重程度",
+          "type": "string"
+        },
+        "sigClass": {
+          "description": "分类",
+          "type": "string"
+        }
+      }
+    },
+    "WeiBuTag": {
+      "type": "object",
+      "required": [
+        "s",
+        "x"
+      ],
+      "properties": {
+        "s": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "x": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
@@ -1780,6 +2164,46 @@ func init() {
         }
       }
     },
+    "/get/file/report": {
+      "post": {
+        "summary": "获取文件信誉报告",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetFileReportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "上传成功",
+            "schema": {
+              "$ref": "#/definitions/GetFileReportResponse"
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
     "/get/loginEvent": {
       "post": {
         "summary": "查询登录事件",
@@ -1926,6 +2350,37 @@ func init() {
               "items": {
                 "$ref": "#/definitions/GetRdpEventRepose"
               }
+            }
+          },
+          "400": {
+            "description": "输入参数错误",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          },
+          "403": {
+            "description": "没有权限",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "内部错误",
+            "schema": {
+              "$ref": "#/definitions/ActionFailure"
+            }
+          }
+        }
+      }
+    },
+    "/get/rules": {
+      "get": {
+        "summary": "查询规则列表",
+        "responses": {
+          "200": {
+            "description": "成功返回规则列表",
+            "schema": {
+              "$ref": "#/definitions/GetRulesResponse"
             }
           },
           "400": {
@@ -2781,6 +3236,34 @@ func init() {
         }
       }
     },
+    "GetFileReportRequest": {
+      "type": "object",
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "description": "sha256/sha1/md5",
+          "type": "string"
+        }
+      }
+    },
+    "GetFileReportResponse": {
+      "type": "object",
+      "required": [
+        "response_code",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WeiBuData"
+        },
+        "response_code": {
+          "description": "返回码",
+          "type": "integer"
+        }
+      }
+    },
     "GetLoginEventRequest": {
       "type": "object",
       "required": [
@@ -2851,6 +3334,23 @@ func init() {
       "type": "array",
       "items": {
         "$ref": "#/definitions/RDPEventUnit"
+      }
+    },
+    "GetRulesResponse": {
+      "type": "object",
+      "required": [
+        "response_code",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "规则内容",
+          "type": "string"
+        },
+        "response_code": {
+          "description": "返回码",
+          "type": "integer"
+        }
       }
     },
     "LoginEvent": {
@@ -3181,6 +3681,32 @@ func init() {
         }
       }
     },
+    "Strings": {
+      "type": "object",
+      "required": [
+        "sha256",
+        "pcap"
+      ],
+      "properties": {
+        "pcap": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sha256": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "SuccessResponse": {
       "type": "object",
       "required": [
@@ -3352,6 +3878,248 @@ func init() {
           "description": "版本号",
           "type": "string",
           "default": "0.0.1"
+        }
+      }
+    },
+    "WeiBuData": {
+      "type": "object",
+      "required": [
+        "ThreatLevel",
+        "ThreatType",
+        "MalwareFamily",
+        "SubmitTime",
+        "Tag",
+        "ThreatScore",
+        "MultiEngines",
+        "Signature",
+        "Network",
+        "Strings",
+        "Permalink"
+      ],
+      "properties": {
+        "MalwareFamily": {
+          "description": "恶意软件家族",
+          "type": "string"
+        },
+        "MultiEngines": {
+          "description": "多引擎检测结果",
+          "type": "string"
+        },
+        "Network": {
+          "$ref": "#/definitions/WeiBuNetwork"
+        },
+        "Permalink": {
+          "description": "文件报告页网址",
+          "type": "string"
+        },
+        "Signature": {
+          "$ref": "#/definitions/WeiBuSignature"
+        },
+        "Strings": {
+          "$ref": "#/definitions/Strings"
+        },
+        "SubmitTime": {
+          "description": "文件提交时间",
+          "type": "string"
+        },
+        "Tag": {
+          "description": "标签",
+          "$ref": "#/definitions/WeiBuTag"
+        },
+        "ThreatLevel": {
+          "description": "威胁等级",
+          "type": "string"
+        },
+        "ThreatScore": {
+          "description": "威胁分值",
+          "type": "integer"
+        },
+        "ThreatType": {
+          "description": "威胁类型",
+          "type": "string"
+        }
+      }
+    },
+    "WeiBuNetwork": {
+      "type": "object",
+      "required": [
+        "fingerprint",
+        "tls",
+        "udp",
+        "dns_servers",
+        "http",
+        "irc",
+        "smtp",
+        "tcp",
+        "smtp_ex",
+        "mitm",
+        "hosts",
+        "dns",
+        "http_ex",
+        "domains",
+        "dead_hosts",
+        "icmp",
+        "https_ex"
+      ],
+      "properties": {
+        "dead_hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dns_servers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fingerprint": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "http": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "http_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "https_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icmp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "irc": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mitm": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smtp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smtp_ex": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tcp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "udp": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "WeiBuSignature": {
+      "type": "object",
+      "required": [
+        "severity"
+      ],
+      "properties": {
+        "severity": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeiBuSignatureBase"
+          }
+        }
+      }
+    },
+    "WeiBuSignatureBase": {
+      "type": "object",
+      "required": [
+        "severity",
+        "sigClass",
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "severity": {
+          "description": "严重程度",
+          "type": "string"
+        },
+        "sigClass": {
+          "description": "分类",
+          "type": "string"
+        }
+      }
+    },
+    "WeiBuTag": {
+      "type": "object",
+      "required": [
+        "s",
+        "x"
+      ],
+      "properties": {
+        "s": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "x": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

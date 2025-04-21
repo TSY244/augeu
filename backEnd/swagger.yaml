@@ -569,6 +569,56 @@ paths:
           schema:
             $ref: "#/definitions/UnauthorizedError"
 
+  /get/file/report:
+    post:
+      summary: 获取文件信誉报告
+      parameters:
+        - in: body
+          name: data
+          schema:
+            $ref: "#/definitions/GetFileReportRequest"
+      responses:
+        200:
+          description: 上传成功
+          schema:
+            $ref: "#/definitions/GetFileReportResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+
+  /get/rules:
+    get:
+      summary: 查询规则列表
+      responses:
+        200:
+          description: 成功返回规则列表
+          schema:
+            $ref: "#/definitions/GetRulesResponse"
+        400:
+          description: "输入参数错误"
+          schema:
+            $ref: "#/definitions/BadRequestError"
+        500:
+          description: "内部错误"
+          schema:
+            $ref: "#/definitions/ActionFailure"
+        403:
+          description: "没有权限"
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+
+
+
+
 definitions:
   Version:
     type: object
@@ -1016,26 +1066,6 @@ definitions:
       description:
         type: string
 
-  #  EventRDPLogon:
-  #    type: object
-  #    properties:
-  #      CreateAt:
-  #        type: string
-  #        format: date-time
-  #      ID:
-  #        type: integer
-  #      UUID:
-  #        type: string
-  #      EventID:
-  #        type: string
-  #      LoginName:
-  #        type: string
-  #      Address:
-  #        type: string
-  #      Domain:
-  #        type: string
-  #      Description:
-  #        type: string
 
   ServiceInfo:
     type: object
@@ -1196,3 +1226,240 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/UserInfo"
+
+  GetFileReportRequest:
+    type: object
+    required:
+      - target
+    properties:
+      target:
+        type: string
+        description: "sha256/sha1/md5"
+
+  WeiBuTag:
+    type: object
+    required:
+      - s
+      - x
+    properties:
+      s:
+        type: array
+        items:
+          type: string
+      x:
+        type: array
+        items:
+          type: string
+
+  WeiBuSignatureBase:
+    type: object
+    required:
+      - severity
+      - sigClass
+      - description
+    properties:
+      severity:
+        type: string
+        description: "严重程度"
+      sigClass:
+        type: string
+        description: "分类"
+      description:
+        type: string
+        description: "描述"
+
+
+
+
+  WeiBuSignature:
+    type: object
+    required:
+      - severity
+    properties:
+      severity:
+        type: array
+        items:
+          $ref: '#/definitions/WeiBuSignatureBase'
+
+
+  WeiBuNetwork:
+    type: object
+    required:
+      - fingerprint
+      - tls
+      - udp
+      - dns_servers
+      - http
+      - irc
+      - smtp
+      - tcp
+      - smtp_ex
+      - mitm
+      - hosts
+      - dns
+      - http_ex
+      - domains
+      - dead_hosts
+      - icmp
+      - https_ex
+    properties:
+      fingerprint:
+        type: array
+        items:
+          type: string
+      tls:
+        type: array
+        items:
+          type: string
+      udp:
+        type: array
+        items:
+          type: string
+      dns_servers:
+        type: array
+        items:
+          type: string
+      http:
+        type: array
+        items:
+          type: string
+      irc:
+        type: array
+        items:
+          type: string
+      smtp:
+        type: array
+        items:
+          type: string
+      tcp:
+        type: array
+        items:
+          type: string
+      smtp_ex:
+        type: array
+        items:
+          type: string
+      mitm:
+        type: array
+        items:
+          type: string
+      hosts:
+        type: array
+        items:
+          type: string
+      dns:
+        type: array
+        items:
+          type: string
+      http_ex:
+        type: array
+        items:
+          type: string
+      domains:
+        type: array
+        items:
+          type: string
+      dead_hosts:
+        type: array
+        items:
+          type: string
+      icmp:
+        type: array
+        items:
+          type: string
+      https_ex:
+        type: array
+        items:
+          type: string
+
+  Strings:
+    type: object
+    required:
+      - sha256
+      - pcap
+    properties:
+      sha256:
+        type: array
+        items:
+          type: string
+      pcap:
+        type: array
+        items:
+          type: string
+          properties:
+            type:
+              type: string
+
+
+  WeiBuData:
+    type: object
+    required:
+      - ThreatLevel
+      - ThreatType
+      - MalwareFamily
+      - SubmitTime
+      - Tag
+      - ThreatScore
+      - MultiEngines
+      - Signature
+      - Network
+      - Strings
+      - Permalink
+    properties:
+      ThreatLevel:
+        type: string
+        description: "威胁等级"
+      ThreatType:
+        type: string
+        description: "威胁类型"
+      MalwareFamily:
+        type: string
+        description: "恶意软件家族"
+      SubmitTime:
+        type: string
+        description: "文件提交时间"
+      Tag:
+        $ref: '#/definitions/WeiBuTag'
+        description: "标签"
+      ThreatScore:
+        type: integer
+        description: "威胁分值"
+      MultiEngines:
+        type: string
+        description: "多引擎检测结果"
+      Signature:
+        $ref: '#/definitions/WeiBuSignature'
+      Network:
+        $ref: '#/definitions/WeiBuNetwork'
+      Strings:
+        $ref: '#/definitions/Strings'
+      Permalink:
+        type: string
+        description: "文件报告页网址"
+
+
+
+  GetFileReportResponse:
+    type: object
+    required:
+      - response_code
+      - data
+    properties:
+      response_code:
+        type: integer
+        description: "返回码"
+      data:
+        $ref: '#/definitions/WeiBuData'
+
+  GetRulesResponse:
+    type: object
+    required:
+      - response_code
+      - data
+    properties:
+      response_code:
+        type: integer
+        description: "返回码"
+      data:
+        type: string
+        description: "规则内容"

@@ -119,3 +119,11 @@ func QueryServices() ([]Win32_Service, error) {
 	}
 	return dst, nil
 }
+
+func QueryServicesTest() ([]Test, error) {
+	var dst []Test
+	if err := baseSlice(&dst, QueryServiceKey); err != nil {
+		return nil, err
+	}
+	return dst, nil
+}

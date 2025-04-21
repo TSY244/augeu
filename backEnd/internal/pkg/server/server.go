@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"sync"
 )
 
 type Server struct {
@@ -16,6 +17,7 @@ type Server struct {
 	DBM             *DBMnager.Manager
 	WebsocketServer *websocket.Conn
 	//Secrete         string // 减少查询数据库次数
+	RuleRWLocker sync.RWMutex
 }
 
 func NewServer(config *Config) (*Server, error) {
@@ -30,9 +32,10 @@ func NewServer(config *Config) (*Server, error) {
 	}
 	rootCtx, cancel := context.WithCancel(context.Background())
 	return &Server{
-		RootCtx: rootCtx,
-		Cancel:  cancel,
-		Config:  config,
-		DBM:     dbm,
+		RootCtx:      rootCtx,
+		Cancel:       cancel,
+		Config:       config,
+		DBM:          dbm,
+		RuleRWLocker: sync.RWMutex{},
 	}, nil
 }

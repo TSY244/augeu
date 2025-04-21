@@ -49,6 +49,7 @@ func (manager *Manager) AutoMigrate() error {
 		&HostInfo2.ServiceInfo{},
 		&HostInfo2.ScheduledTask{},
 		&HostInfo2.StartupItem{},
+		&HostInfo2.User{},
 
 		// user info
 		&UserInfo.UserInfo{},

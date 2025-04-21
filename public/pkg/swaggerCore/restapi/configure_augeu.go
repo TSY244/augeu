@@ -42,6 +42,11 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetGetClients has not yet been implemented")
 		})
 	}
+	if api.GetGetRulesHandler == nil {
+		api.GetGetRulesHandler = operations.GetGetRulesHandlerFunc(func(params operations.GetGetRulesParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetGetRules has not yet been implemented")
+		})
+	}
 	if api.GetVersionHandler == nil {
 		api.GetVersionHandler = operations.GetVersionHandlerFunc(func(params operations.GetVersionParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetVersion has not yet been implemented")
@@ -55,6 +60,11 @@ func configureAPI(api *operations.AugeuAPI) http.Handler {
 	if api.PostGetClientIDHandler == nil {
 		api.PostGetClientIDHandler = operations.PostGetClientIDHandlerFunc(func(params operations.PostGetClientIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.PostGetClientID has not yet been implemented")
+		})
+	}
+	if api.PostGetFileReportHandler == nil {
+		api.PostGetFileReportHandler = operations.PostGetFileReportHandlerFunc(func(params operations.PostGetFileReportParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.PostGetFileReport has not yet been implemented")
 		})
 	}
 	if api.PostGetLoginEventHandler == nil {

@@ -11,6 +11,8 @@ type Config struct {
 	DbConfig      config.DbConf  `mapstructure:"DatabaseConf"`
 	LogConfig     config.LogConf `mapstructure:"LogConf"`
 	WebsocketConf WebsocketConf  `mapstructure:"WebsocketConf"`
+	WeiBuConf     WeiBuConf      `mapstructure:"WeiBuConf"`
+	Rule          Rule           `mapstructure:"Rule"`
 }
 
 type HttpServerConf struct {
@@ -29,4 +31,12 @@ type WebsocketConf struct {
 	PingPeriod       int    `mapstructure:"PingPeriod"`
 	MaxMessageSize   int    `mapstructure:"MaxMessageSize"`
 	HandshakeTimeout uint64 `mapstructure:"HandshakeTimeout"`
+}
+
+type WeiBuConf struct {
+	ApiKey string `mapstructure:"ApiKey"`
+}
+
+type Rule struct {
+	Rules string `mapstructure:"Rules"`
 }

@@ -64,3 +64,11 @@ type Win32_Service struct {
 	StartMode   string `wmi:"StartMode"`
 	StartName   string `wmi:"StartName"`
 }
+
+type Test struct {
+	Name        interface{}
+	DisplayName interface{}
+	State       interface{}
+	StartMode   interface{}
+	StartName   interface{}
+}

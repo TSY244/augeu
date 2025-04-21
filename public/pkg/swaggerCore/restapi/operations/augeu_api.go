@@ -45,6 +45,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		GetGetClientsHandler: GetGetClientsHandlerFunc(func(params GetGetClientsParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetGetClients has not yet been implemented")
 		}),
+		GetGetRulesHandler: GetGetRulesHandlerFunc(func(params GetGetRulesParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetGetRules has not yet been implemented")
+		}),
 		GetVersionHandler: GetVersionHandlerFunc(func(params GetVersionParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetVersion has not yet been implemented")
 		}),
@@ -53,6 +56,9 @@ func NewAugeuAPI(spec *loads.Document) *AugeuAPI {
 		}),
 		PostGetClientIDHandler: PostGetClientIDHandlerFunc(func(params PostGetClientIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostGetClientID has not yet been implemented")
+		}),
+		PostGetFileReportHandler: PostGetFileReportHandlerFunc(func(params PostGetFileReportParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostGetFileReport has not yet been implemented")
 		}),
 		PostGetLoginEventHandler: PostGetLoginEventHandlerFunc(func(params PostGetLoginEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation PostGetLoginEvent has not yet been implemented")
@@ -146,12 +152,16 @@ type AugeuAPI struct {
 
 	// GetGetClientsHandler sets the operation handler for the get get clients operation
 	GetGetClientsHandler GetGetClientsHandler
+	// GetGetRulesHandler sets the operation handler for the get get rules operation
+	GetGetRulesHandler GetGetRulesHandler
 	// GetVersionHandler sets the operation handler for the get version operation
 	GetVersionHandler GetVersionHandler
 	// PostGetApplicationEventHandler sets the operation handler for the post get application event operation
 	PostGetApplicationEventHandler PostGetApplicationEventHandler
 	// PostGetClientIDHandler sets the operation handler for the post get client ID operation
 	PostGetClientIDHandler PostGetClientIDHandler
+	// PostGetFileReportHandler sets the operation handler for the post get file report operation
+	PostGetFileReportHandler PostGetFileReportHandler
 	// PostGetLoginEventHandler sets the operation handler for the post get login event operation
 	PostGetLoginEventHandler PostGetLoginEventHandler
 	// PostGetPowershellEventHandler sets the operation handler for the post get powershell event operation
@@ -268,6 +278,9 @@ func (o *AugeuAPI) Validate() error {
 	if o.GetGetClientsHandler == nil {
 		unregistered = append(unregistered, "GetGetClientsHandler")
 	}
+	if o.GetGetRulesHandler == nil {
+		unregistered = append(unregistered, "GetGetRulesHandler")
+	}
 	if o.GetVersionHandler == nil {
 		unregistered = append(unregistered, "GetVersionHandler")
 	}
@@ -276,6 +289,9 @@ func (o *AugeuAPI) Validate() error {
 	}
 	if o.PostGetClientIDHandler == nil {
 		unregistered = append(unregistered, "PostGetClientIDHandler")
+	}
+	if o.PostGetFileReportHandler == nil {
+		unregistered = append(unregistered, "PostGetFileReportHandler")
 	}
 	if o.PostGetLoginEventHandler == nil {
 		unregistered = append(unregistered, "PostGetLoginEventHandler")
@@ -426,6 +442,10 @@ func (o *AugeuAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/get/rules"] = NewGetGetRules(o.context, o.GetGetRulesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/version"] = NewGetVersion(o.context, o.GetVersionHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -435,6 +455,10 @@ func (o *AugeuAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/getClientId"] = NewPostGetClientID(o.context, o.PostGetClientIDHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/get/file/report"] = NewPostGetFileReport(o.context, o.PostGetFileReportHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

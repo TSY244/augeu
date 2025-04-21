@@ -11,7 +11,7 @@ import (
 
 func (apiManager *ApiManager) GetRulesGetHandlerFunc() operations.GetGetRulesHandlerFunc {
 	return func(params operations.GetGetRulesParams) middleware.Responder {
-		if resp := middleware2.CheckAgentRole(params.HTTPRequest, apiManager.s); resp != nil {
+		if resp := middleware2.CheckAgentJwt(params.HTTPRequest, apiManager.s); resp != nil {
 			return resp
 		}
 		rule, err := apiManager.s.GetRule()

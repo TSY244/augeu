@@ -185,3 +185,49 @@ func CheckJwt(r *http.Request, s *server.Server) middleware.Responder {
 	return CheckAgentRole(r, s)
 
 }
+
+// CheckAgentJwt 检查agent的jwt，不用检查clientId
+//
+// 注意：
+//   - 这个检测函数只给getRule 使用
+func CheckAgentJwt(r *http.Request, s *server.Server) middleware.Responder {
+	info, err := GetInfo(r)
+	if err != nil {
+		logger.Errorf("CheckJwt -> GetInfo error: %v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("jwt is invalid"),
+		})
+	}
+	if info.Role != RoleAgent {
+		logger.Errorf("CheckAgentJwt -> info.Role != middleware2.RoleAgent")
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("jwt is invalid"),
+		})
+	}
+	uuid := info.ClientInfo.Uuid
+	if uuid == "" {
+		logger.Errorf("CheckAgentJwt -> uuid is empty")
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("uuid is empty"),
+		})
+	}
+	agent, err := HostInfo.GetAgentInfoByUuid(s.DBM.DB, uuid)
+	if err != nil {
+		logger.Errorf("CheckAgentJwt -> GetAgentInfoByUuid err:%v", err)
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("uuid is invalid"),
+		})
+	}
+	if agent.ClientID != info.ClientInfo.ClientId {
+		logger.Errorf("CheckAgentJwt -> agent.ClientID != info.ClientInfo.ClientId")
+		return operations2.NewPostUploadLoginEventBadRequest().WithPayload(&models.BadRequestError{
+			Code:    convert.Int64P(int64(operations2.PostUploadLoginEventBadRequestCode)),
+			Message: convert.StrPtr("uuid is invalid"),
+		})
+	}
+	return nil
+}

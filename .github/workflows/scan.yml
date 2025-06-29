@@ -26,7 +26,7 @@ jobs:
         run: mkdir -p $GITHUB_WORKSPACE/report
 
       - name: Run FindCode Action
-        uses: TSY244/FindCode-Action@main
+        uses: TSY244/FindCode-Action@v2.1.1
         with:
           target-path: ./
           code-type: go-swagger

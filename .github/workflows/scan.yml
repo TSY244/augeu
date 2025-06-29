@@ -21,15 +21,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 创建报告目录（宿主机和容器共享此路径）
+      - name: Prepare report directory
+        run: mkdir -p $GITHUB_WORKSPACE/report
+
       - name: Run FindCode Action
         uses: TSY244/FindCode-Action@main
         with:
           target-path: ./
           code-type: go-swagger
-          output-report: ${{ github.workspace }}/report/findcode-results.txt  # 绝对路径
+#          output-report: ${{ github.workspace }}/report/findcode-results.txt  # 绝对路径
+          output-report: $GITHUB_WORKSPACE/report/findcode-results.txt  # 关键点：使用共享路径
 
       - name: Upload FindCode report
         uses: actions/upload-artifact@v4
         with:
           name: findcode-report
-          path: ${{ github.workspace }}/report/ # 绝对路径
+#          path: ${{ github.workspace }}/report/  # 绝对路径
+          path: $GITHUB_WORKSPACE/report/

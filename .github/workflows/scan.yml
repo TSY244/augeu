@@ -26,11 +26,10 @@ jobs:
         with:
           target-path: ./
           code-type: go-swagger
-          output-report: ./report/findcode-results.txt
+          output-report: ${{ github.workspace }}/report/findcode-results.txt  # 绝对路径
 
       - name: Upload FindCode report
-        uses: actions/upload-artifact@v4.6.2  # 升级到 v4
+        uses: actions/upload-artifact@v4
         with:
           name: findcode-report
-          path: ./report/
-          retention-days: 7
+          path: ${{ github.workspace }}/report/  # 绝对路径

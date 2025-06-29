@@ -3,6 +3,16 @@ name: Scan Code with FindCode
 on:
   push:
     branches: [main]
+  workflow_dispatch:  # 添加手动触发事件
+    inputs:
+      target-path:
+        description: '扫描目标路径'
+        default: './'
+        required: false
+      code-type:
+        description: '代码类型'
+        default: 'go-swagger'
+        required: false
 
 jobs:
   scan:

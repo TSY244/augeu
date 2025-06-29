@@ -16,11 +16,11 @@ jobs:
         with:
           target-path: ./
           code-type: go-swagger
-          output-report: ./report/findcode-results.txt  # 报告生成路径
+          output-report: ./report/findcode-results.txt
 
       - name: Upload FindCode report
-        uses: actions/upload-artifact@v3  # 新增上传步骤
+        uses: actions/upload-artifact@v4.6.2  # 升级到 v4
         with:
-          name: findcode-report  # Artifact 名称（在 GitHub UI 中显示）
-          path: ./report/        # 要上传的文件路径，与 output-report 匹配
-          retention-days: 7      # 保留 7 天（可选，默认 90 天）
+          name: findcode-report
+          path: ./report/
+          retention-days: 7

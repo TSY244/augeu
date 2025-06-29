@@ -1,0 +1,26 @@
+name: Scan Code with FindCode
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run FindCode Action
+        uses: TSY244/FindCode-Action@v2
+        with:
+          target-path: ./
+          code-type: go-swagger
+          output-report: ./report/findcode-results.txt  # 报告生成路径
+
+      - name: Upload FindCode report
+        uses: actions/upload-artifact@v3  # 新增上传步骤
+        with:
+          name: findcode-report  # Artifact 名称（在 GitHub UI 中显示）
+          path: ./report/        # 要上传的文件路径，与 output-report 匹配
+          retention-days: 7      # 保留 7 天（可选，默认 90 天）

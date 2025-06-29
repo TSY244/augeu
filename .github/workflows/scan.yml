@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: findcode-report
-          path: ${{ github.workspace }}/report/  # 绝对路径
+          path: ${{ github.workspace }}/report/findcode-results.txt  # 绝对路径
